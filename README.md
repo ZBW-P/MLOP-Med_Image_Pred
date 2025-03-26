@@ -19,7 +19,7 @@ link to their contributions in all repos here. -->
 | Name                            | Responsible for | Link to their commits in this repo |
 |---------------------------------|-----------------|------------------------------------|
 | All team members                |                 |                                    |
-| Team member 1                   |                 |                                    |
+| Qin Huai               |Model training and training platforms                 | https://github.com/ZBW-P/MLOP-Med_Image_Pred?tab=readme-ov-file#model-training-and-training-platforms                                  |
 | Team member 2                   |                 |                                    |
 | Team member 3                   |                 |                                    |
 | Team member 4 (if there is one) |                 |                                    |
