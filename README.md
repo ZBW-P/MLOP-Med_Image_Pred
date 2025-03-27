@@ -21,7 +21,7 @@ link to their contributions in all repos here. -->
 | All team members                |                 |                                    |
 | Qin Huai               |Model training and training platforms                 | https://github.com/ZBW-P/MLOP-Med_Image_Pred?tab=readme-ov-file#model-training-and-training-platforms                                  |
 | Team member 2                   |                 |                                    |
-| Team member 3                   |                 |                                    |
+| Junjie Mai                   |Data Pipeline                 |                                    |
 | Team member 4 (if there is one) |                 |                                    |
 
 
