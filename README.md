@@ -38,19 +38,19 @@ all the data. -->
 Name of data/model, conditions under which it was created (ideally with links/references), 
 conditions under which it may be used. -->
 
-Our overall approach is to leverage the dataset detailed in the table below as the foundation for our ML operations system. We will:
+Our overall approach is to leverage the dataset detailed in the table below as the foundation for our ML operations system. Our pipeline integrates persistent storage, device-based processing, and Docker orchestration to streamline training, evaluation, and validation. Specifically, we plan to:
 
 - **Centralize Data Storage:**  
-  Store the collected chest X-ray images in a clear and organized library, segmented into training, evaluation, and testing sets. These datasets will be arranged in a zipped format into three folders: `train`, `test`, and `val`.
+  Store the collected chest X-ray images in a clear and organized library on persistent storage. The data will be segmented into three zipped folders (`train`, `test`, and `val`), ensuring that all training, evaluation, and testing sets are easily accessible to our system.
 
-- **Integration with Our Pipeline:**  
-  Use Python scripts to read and preprocess the images from these folders. This process will ensure that our images are correctly sized (to be defined based on model requirements) and formatted for ingestion into our training pipeline.
+- **Integration with Our Pipeline and Device Infrastructure:**  
+  Use Python scripts to read and preprocess images from the persistent storage. These scripts will run on dedicated devices (e.g., GPU-enabled servers) that are integrated into our Docker-based ML operations system. The images will be resized and formatted as needed based on our model requirements, ensuring that data is properly prepared for ingestion into our training pipeline.
 
 - **Training, Evaluation, and Validation:**  
-  The datasets will serve multiple purposes within our Docker-based ML operations system:
-  - **Training:** The training set will be used to fine-tune our own custom model for medical image classification.
-  - **Evaluation:** The evaluation set will help us monitor the model’s performance during training and adjust hyperparameters accordingly.
-  - **Testing/Validation:** The testing set will be used for final validation and to simulate image upload scenarios, ensuring that the system meets business use requirements.
+  The datasets will serve multiple purposes within our device-accelerated, Docker-based ML system:
+  - **Training:** The training set will be used to fine-tune our custom model for medical image classification. The model training process will be executed on dedicated GPU devices to optimize performance.
+  - **Evaluation:** The evaluation set will be used to monitor the model’s performance during training, allowing us to adjust hyperparameters based on real-time feedback from our processing devices.
+  - **Testing/Validation:** The testing set will validate final model performance. Additionally, simulated image upload scenarios will run on our devices to ensure the system meets business requirements for real-time inference.
 
 The table below summarizes the datasets we plan to use, including details on how each dataset was created and the conditions under which it may be used.
 
