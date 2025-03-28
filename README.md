@@ -38,6 +38,22 @@ all the data. -->
 Name of data/model, conditions under which it was created (ideally with links/references), 
 conditions under which it may be used. -->
 
+Our overall approach is to leverage the dataset detailed in the table below as the foundation for our ML operations system. We will:
+
+- **Centralize Data Storage:**  
+  Store the collected chest X-ray images in a clear and organized library, segmented into training, evaluation, and testing sets. These datasets will be arranged in a zipped format into three folders: `train`, `test`, and `val`.
+
+- **Integration with Our Pipeline:**  
+  Use Python scripts to read and preprocess the images from these folders. This process will ensure that our images are correctly sized (to be defined based on model requirements) and formatted for ingestion into our training pipeline.
+
+- **Training, Evaluation, and Validation:**  
+  The datasets will serve multiple purposes within our Docker-based ML operations system:
+  - **Training:** The training set will be used to fine-tune our own custom model for medical image classification.
+  - **Evaluation:** The evaluation set will help us monitor the model’s performance during training and adjust hyperparameters accordingly.
+  - **Testing/Validation:** The testing set will be used for final validation and to simulate image upload scenarios, ensuring that the system meets business use requirements.
+
+The table below summarizes the datasets we plan to use, including details on how each dataset was created and the conditions under which it may be used.
+
 | Name of Data/Model                              | How it was Created                                                                                                                                                                                                                                                                                                                                                                                                                 | Conditions of Use                                                                                                                                                                                                                                                       |
 |-------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Chest X-Ray Images (Pneumonia)**             | This dataset comprises 5,863 JPEG chest X-ray images organized into three folders (train, test, val) with two subcategories (Pneumonia/Normal). The images were retrospectively collected from pediatric patients (ages 1–5) at Guangzhou Women and Children’s Medical Center. All radiographs underwent quality control by removing unreadable scans, and diagnoses were graded by two expert physicians (with a third review for evaluation). Refer to [Cell Article](http://www.cell.com/cell/fulltext/S0092-8674(18)30154-5) and the [Mendeley Data Repository](https://data.mendeley.com/datasets/rscbjbr9sj/2). | Licensed under CC BY 4.0. The dataset is available for academic and non-commercial research. Proper citation of the original article and dataset is required. |
