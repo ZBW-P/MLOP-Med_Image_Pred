@@ -83,6 +83,73 @@ diagram, (3) justification for your strategy, (4) relate back to lecture materia
 <!-- Make sure to clarify how you will satisfy the Unit 4 and Unit 5 requirements, 
 and which optional "difficulty" points you are attempting. -->
 
+##### Overview
+
+- **Image Classification (ViT):**  
+  Train a robust ViT model on a large-scale dataset (5+ GB) consisting of x-ray images categorized into 10 classes (e.g., pneumonia, fractures, and other diseases). This model is engineered to extract fine-grained features from complex medical images and provide initial diagnostic insights.
+
+- **Derivation & Suggestion (LLM):**  
+  Develop a 7B+ parameter LLM to analyze the output from the classification model and generate detailed suggestions. These suggestions serve as a secondary check, aiding doctors in their diagnosis and giving patients early pre-diagnostic insights.
+
+---
+
+##### Model Training Details
+
+Medical Image Classification (ViT)
+
+- **Dataset:**  
+  Over 5 GB of medical x-ray images classified into 10 distinct disease categories.
+
+- **Architecture:**  
+  A large Vision Transformer (ViT) model tailored to capture the nuanced features of x-ray images.
+
+- **Distributed Training Strategies:**  
+  - **DDP (Distributed Data Parallel):** Every GPU computes the gradient for the entire model.  
+  - **FSDP (Fully Sharded Data Parallel):** Each GPU computes only a portion of the outcome and gradient, improving memory efficiency.
+
+- **Hardware Setup:**  
+  Utilizing 4 GPUs in parallel to accelerate training and manage the heavy computational load.
+
+- **Objective:**  
+  Deliver high-accuracy predictions that help researchers rapidly analyze images and assist doctors in making informed decisions. Even if the suggestions are not perfect, they provide a valuable second opinion in the diagnostic process.
+
+Derivation & Suggestion (LLM)
+
+- **Purpose:**  
+  Leverage a large language model to process the output from the ViT and generate clinical suggestions, enhancing both the efficiency and the accuracy of preliminary diagnoses.
+
+- **Architecture:**  
+  An LLM with a minimum of 7B parameters designed to handle large-scale, detailed derivations.
+
+- **Training Strategies:**  
+  - Use of smaller batch sizes and gradient accumulation.  
+  - Reduced precision training for efficiency.  
+  - Parameter-efficient fine-tuning techniques such as LoRA and QLoRA, inspired by methods from our lab assignments.
+
+- **Integration:**  
+  The refined parameters from the ViT model will be passed to the LLM to inform its derivation process, ensuring that the final output is both contextually relevant and actionable.
+
+---
+
+##### Experiment Tracking & Training Infrastructure
+
+Experiment Tracking
+
+- **MLFlow Integration:**  
+  All experiments are tracked using MLFlow. This includes logging model accuracy, infrastructure utilization, configuration details, and code changes.  
+- **Purpose:**  
+  Systematically log every experiment to enable performance comparison, reproducibility, and smooth deployment of the best-performing model.
+
+Distributed Training & Job Scheduling
+
+- **Ray Train:**  
+  - **Distributed Training:** Easily distribute training across multiple nodes and GPUs.  
+  - **Resource Management:** Utilize ScalingConfig to allocate GPU, CPU, and memory resources effectively.  
+  - **Integration:** Seamlessly integrates with PyTorch Lightning for features such as cross-node synchronization and checkpoint management.
+  
+- **Ray Tune:**  
+  - **Hyperparameter Tuning:** Run hyperparameter optimization concurrently with training.  
+  - **Efficiency:** Use smart scheduling algorithms like ASHA to terminate underperforming runs early, thus conserving resources and expediting the search for optimal configurations.
 
 #### Model serving and monitoring platforms
 
