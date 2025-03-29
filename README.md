@@ -83,7 +83,7 @@ diagram, (3) justification for your strategy, (4) relate back to lecture materia
 <!-- Make sure to clarify how you will satisfy the Unit 4 and Unit 5 requirements, 
 and which optional "difficulty" points you are attempting. -->
 
-##### Overview
+#### Overview
 
 - **Image Classification (ViT):**  
   Train a robust ViT model on a large-scale dataset (5+ GB) consisting of x-ray images categorized into 10 classes (e.g., pneumonia, fractures, and other diseases). This model is engineered to extract fine-grained features from complex medical images and provide initial diagnostic insights.
@@ -93,7 +93,7 @@ and which optional "difficulty" points you are attempting. -->
 
 ---
 
-##### Model Training Details
+#### Model Training Details
 
 Medical Image Classification (ViT)
 
@@ -131,7 +131,7 @@ Derivation & Suggestion (LLM)
 
 ---
 
-##### Experiment Tracking & Training Infrastructure
+#### Experiment Tracking & Training Infrastructure
 
 Experiment Tracking
 
@@ -151,17 +151,17 @@ Distributed Training & Job Scheduling
   - **Hyperparameter Tuning:** Run hyperparameter optimization concurrently with training.  
   - **Efficiency:** Use smart scheduling algorithms like ASHA to terminate underperforming runs early, thus conserving resources and expediting the search for optimal configurations.
 
-#### Model serving and monitoring platforms
+### Model serving and monitoring platforms
 
 <!-- Make sure to clarify how you will satisfy the Unit 6 and Unit 7 requirements, 
 and which optional "difficulty" points you are attempting. -->
 
-#### Data pipeline
+### Data pipeline
 
 <!-- Make sure to clarify how you will satisfy the Unit 8 requirements,  and which 
 optional "difficulty" points you are attempting. -->
 
-#### Continuous X
+### Continuous X
 
 <!-- Make sure to clarify how you will satisfy the Unit 3 requirements,  and which 
 optional "difficulty" points you are attempting. -->
