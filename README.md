@@ -78,7 +78,7 @@ The table below shows an example, it is not a recommendation. -->
 diagram, (3) justification for your strategy, (4) relate back to lecture material, 
 (5) include specific numbers. -->
 
-#### Model training and training platforms
+### Model training and training platforms
 
 <!-- Make sure to clarify how you will satisfy the Unit 4 and Unit 5 requirements, 
 and which optional "difficulty" points you are attempting. -->
