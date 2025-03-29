@@ -46,11 +46,6 @@ Our overall approach is to leverage the dataset detailed in the table below as t
 - **Integration with Our Pipeline and Device Infrastructure:**  
   Use Python scripts to read and preprocess images from the persistent storage. These scripts will run on dedicated devices (e.g., GPU-enabled servers) that are integrated into our Docker-based ML operations system. The images will be resized and formatted as needed based on our model requirements, ensuring that data is properly prepared for ingestion into our training pipeline.
 
-- **Training, Evaluation, and Validation:**  
-  The datasets will serve multiple purposes within our device-accelerated, Docker-based ML system:
-  - **Training:** The training set will be used to fine-tune our custom model for medical image classification. The model training process will be executed on dedicated GPU devices to optimize performance.
-  - **Evaluation:** The evaluation set will be used to monitor the model’s performance during training, allowing us to adjust hyperparameters based on real-time feedback from our processing devices.
-  - **Testing/Validation:** The testing set will validate final model performance. Additionally, simulated image upload scenarios will run on our devices to ensure the system meets business requirements for real-time inference.
 
 The table below summarizes the datasets we plan to use, including details on how each dataset was created and the conditions under which it may be used.
 
