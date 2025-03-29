@@ -43,21 +43,8 @@ Our overall approach is to leverage the dataset detailed in the table below as t
 - **Centralize Data Storage:**  
   Store the collected chest X-ray images in a clear and organized library on persistent storage. The data will be segmented into three zipped folders (`train`, `test`, and `val`), ensuring that all training, evaluation, and testing sets are easily accessible to our system.
   
-- **Custom ViT Model for Image Classification:**  
-  - **Training:**  
-    The images in the `train` folder will be used to train our custom Vision Transformer (ViT) model for medical image classification. This model is designed to accurately classify chest X-rays into clinically relevant categories.
-  - **Evaluation:**  
-    The `test` and `val` sets will be used to evaluate the model’s performance during training. We will monitor key metrics such as accuracy, loss, and inference latency.
-  - **Re-Training:**  
-    Our training pipeline will support continuous re-training on new or updated data to ensure the model remains current and adapts to evolving clinical requirements.
-
-- **LLM for Diagnostic Derivation (Based on LitGPT):**  
-  - **Integration:**  
-    In parallel, we will integrate an LLM derived from LitGPT into our system. This model will process the outputs of our ViT-based image classifier to provide diagnostic derivations and actionable recommendations.
-  - **Fine-Tuning:**  
-    We will fine-tune the LitGPT-derived model on domain-specific data, ensuring that its outputs are aligned with clinical insights and the context of medical imaging.
-  - **Evaluation and Monitoring:**  
-    This LLM will be continuously evaluated for the quality of its diagnostic outputs. Its performance will be monitored and updated as part of our overall model service, ensuring reliable derivation of diagnoses and recommendations.
+- **Model training and evaluation:**
+  We will train a custom Vision Transformer (ViT) model on chest X-ray images for accurate medical image classification. A LitGPT-derived LLM will be employed to generate diagnostic derivations and actionable recommendations based on the outputs of the ViT model. Our training pipeline will support continuous training, evaluation, and re-training on new or updated data to ensure that both models remain current and adapt to evolving clinical requirements.
     
 - **Integration with Our Pipeline and Device Infrastructure:**  
   Use Python scripts to read and preprocess images from the persistent storage. These scripts will run on dedicated devices (e.g., GPU-enabled servers) that are integrated into our Docker-based ML operations system. The images will be resized and formatted as needed based on our model requirements, ensuring that data is properly prepared for ingestion into our training pipeline.
