@@ -83,13 +83,13 @@ diagram, (3) justification for your strategy, (4) relate back to lecture materia
 <!-- Make sure to clarify how you will satisfy the Unit 4 and Unit 5 requirements, 
 and which optional "difficulty" points you are attempting. -->
 
-# Medical X-Ray Image Classification & Suggestion System
+##### Medical X-Ray Image Classification & Suggestion System
 
 This project is focused on building a dual-model system designed to assist both medical professionals and patients. It consists of a Vision Transformer (ViT) model for image classification of medical x-rays and a large Language Model (LLM) for deriving actionable suggestions based on those classifications.
 
 ---
 
-## Overview
+###### Overview
 
 - **Image Classification (ViT):**  
   Train a robust ViT model on a large-scale dataset (5+ GB) consisting of x-ray images categorized into 10 classes (e.g., pneumonia, fractures, and other diseases). This model is engineered to extract fine-grained features from complex medical images and provide initial diagnostic insights.
@@ -99,9 +99,9 @@ This project is focused on building a dual-model system designed to assist both 
 
 ---
 
-## Model Training Details
+###### Model Training Details
 
-### Medical Image Classification (ViT)
+####### Medical Image Classification (ViT)
 
 - **Dataset:**  
   Over 5 GB of medical x-ray images classified into 10 distinct disease categories.
@@ -119,7 +119,7 @@ This project is focused on building a dual-model system designed to assist both 
 - **Objective:**  
   Deliver high-accuracy predictions that help researchers rapidly analyze images and assist doctors in making informed decisions. Even if the suggestions are not perfect, they provide a valuable second opinion in the diagnostic process.
 
-### Derivation & Suggestion (LLM)
+####### Derivation & Suggestion (LLM)
 
 - **Purpose:**  
   Leverage a large language model to process the output from the ViT and generate clinical suggestions, enhancing both the efficiency and the accuracy of preliminary diagnoses.
@@ -137,16 +137,16 @@ This project is focused on building a dual-model system designed to assist both 
 
 ---
 
-## Experiment Tracking & Training Infrastructure
+###### Experiment Tracking & Training Infrastructure
 
-### Experiment Tracking
+####### Experiment Tracking
 
 - **MLFlow Integration:**  
   All experiments are tracked using MLFlow. This includes logging model accuracy, infrastructure utilization, configuration details, and code changes.  
 - **Purpose:**  
   Systematically log every experiment to enable performance comparison, reproducibility, and smooth deployment of the best-performing model.
 
-### Distributed Training & Job Scheduling
+####### Distributed Training & Job Scheduling
 
 - **Ray Train:**  
   - **Distributed Training:** Easily distribute training across multiple nodes and GPUs.  
@@ -159,7 +159,7 @@ This project is focused on building a dual-model system designed to assist both 
 
 —
 
-## Conclusion
+###### Conclusion
 
 By combining state-of-the-art vision transformers with a powerful language model, this project aims to significantly enhance the diagnostic process in medical settings. The integration of distributed training techniques, comprehensive experiment tracking, and advanced resource management ensures that the final system is both efficient and reliable. Our approach not only expedites image classification and suggestion derivation but also lays the groundwork for future innovations in medical diagnostics.
 
