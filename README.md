@@ -112,19 +112,19 @@ Medical Image Classification (ViT)
 
 - **Training process:**  
 
-  Our group plans to:
+  Our group plans to do the following training process:
   
-    1.**Build a Docker Container:**  
+    - 1.**Build a Docker Container:**  
       - Set up a Docker container with all the required resources, including the NVIDIA container toolkit. The most important component in our environment is the PyTorch library like PyTorch Lightning.
     
-    2.**Implement Distributed Training Strategies:**  
+    - 2.**Implement Distributed Training Strategies:**  
       - To utilize both DDP and FSDP, our group will incorporate the PyTorch Lightning library. With PyTorch, we can configure the trainer using `DDPStrategy` and `FSDPStrategy` for effective model training.
     
-    3.**Monitoring and Performance Tracking:**  
+    - 3.**Monitoring and Performance Tracking:**  
       - Use `nvtop` to monitor GPU usage and performance.
       - Employ `myflow` and Ray Training to track the model's performance under different training strategies.
     
-    4.**Objective:**  
+    - 4.**Objective:**  
       - Deliver high-accuracy predictions that help researchers rapidly analyze images and assist doctors in making informed decisions. Even if the suggestions are not perfect, they provide a valuable second opinion in the diagnostic process.
 
 Derivation & Suggestion (LLM)
