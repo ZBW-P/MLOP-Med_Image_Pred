@@ -95,7 +95,7 @@ and which optional "difficulty" points you are attempting. -->
 
 #### Model Training Details
 
-Medical Image Classification (ViT)
+**Medical Image Classification (ViT)**
 
 - **Dataset:**  
   Over 5 GB of medical x-ray images classified into 10 distinct disease categories.
@@ -110,10 +110,24 @@ Medical Image Classification (ViT)
 - **Hardware Setup:**  
   Utilizing 4 GPUs in parallel to accelerate training and manage the heavy computational load.
 
+- **Training process:**  
+
+Our group plans to:
+
+- **Build a Docker Container:**  
+  Set up a Docker container with all the required resources, including the NVIDIA container toolkit. The most important component in our environment is the PyTorch library like PyTorch Lightning.
+
+- **Implement Distributed Training Strategies:**  
+  To utilize both DDP and FSDP, our group will incorporate the PyTorch Lightning library. With PyTorch, we can configure the trainer using `DDPStrategy` and `FSDPStrategy` for effective model training.
+
+- **Monitoring and Performance Tracking:**  
+  - Use `nvtop` to monitor GPU usage and performance.
+  - Employ `myflow` and Ray Training to track the model's performance under different training strategies.
+
 - **Objective:**  
   Deliver high-accuracy predictions that help researchers rapidly analyze images and assist doctors in making informed decisions. Even if the suggestions are not perfect, they provide a valuable second opinion in the diagnostic process.
 
-Derivation & Suggestion (LLM)
+**Derivation & Suggestion (LLM)**
 
 - **Purpose:**  
   Leverage a large language model to process the output from the ViT and generate clinical suggestions, enhancing both the efficiency and the accuracy of preliminary diagnoses.
@@ -129,6 +143,19 @@ Derivation & Suggestion (LLM)
 - **Integration:**  
   The refined parameters from the ViT model will be passed to the LLM to inform its derivation process, ensuring that the final output is both contextually relevant and actionable.
 
+- **Training Process**：
+Our group plans to follow a similar approach as in the lab assignment:
+
+- **Initial Testing:**  
+  Begin by testing the training speed for Reduced precision training and Gradient accumulation strategies depends on our model setup (May be larger).
+
+- **Model Setup:**  
+  Define our LLM model with a minimal size (pre-trained) to meet initial requirements. The model will leverage:
+  - Reduced precision training
+  - Gradient accumulation
+
+- **Potential Enhancements:**  
+  If improved accuracy is required for our service in the future, we plan to explore parameter-efficient fine-tuning techniques such as LoRA to further accelerate training and enhance the LLM’s derivation performance.
 ---
 
 #### Experiment Tracking & Training Infrastructure
