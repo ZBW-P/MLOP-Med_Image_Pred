@@ -95,7 +95,7 @@ and which optional "difficulty" points you are attempting. -->
 
 #### Model Training Details
 
-**Medical Image Classification (ViT)**
+Medical Image Classification (ViT)
 
 **Dataset:**  
   - Over 5 GB of medical x-ray images classified into 10 distinct disease categories.
@@ -127,7 +127,7 @@ Our group plans to:
 **Objective:**  
   - Deliver high-accuracy predictions that help researchers rapidly analyze images and assist doctors in making informed decisions. Even if the suggestions are not perfect, they provide a valuable second opinion in the diagnostic process.
 
-**Derivation & Suggestion (LLM)**
+Derivation & Suggestion (LLM)
 
 **Purpose:**  
   - Leverage a large language model to process the output from the ViT and generate clinical suggestions, enhancing both the efficiency and the accuracy of preliminary diagnoses.
