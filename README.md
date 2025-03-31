@@ -166,9 +166,6 @@ Experiment Tracking
 - **MLFlow Integration:**  
   All experiments are tracked using MLFlow. This includes logging model accuracy, infrastructure utilization, configuration details, and code changes.
 
-- **Purpose:**  
-  Systematically log every experiment to enable performance comparison, reproducibility, and smooth deployment of the best-performing model.
-
 - **MLFlow Setting Process:**  
 
   Our group will follow the process below to track our ViT model training with DDP or FSDP:
@@ -177,7 +174,7 @@ Experiment Tracking
     We will configure the environment for MLFlow by:
     - Setting the tracking URI via an environment variable to point to our remote MLFlow tracking server.
     - Defining an experiment name so that all logs, metrics, and model artifacts are associated with this experiment.
-    - Configuring MinIO as the object storage backend for MLFlow. This ensures that when MLFlow logs artifacts (e.g., model weights, output images), they are stored in MinIO for persistent and centralized storage.
+    - Configuring MinIO as the object storage backend for MLFlow. 
 
   - **Integrating MLFlow Logging into the Training Script:**  
     In our revised training script, we will:
@@ -191,11 +188,37 @@ Experiment Tracking
     - Run the PyTorch training code with MLFlow logging enabled.
     - Optionally, use MLFlow autolog features in combination with PyTorch Lightning for enhanced logging in distributed settings.
 
-  - **Logging Training Metrics and Artifacts:**  
+  - **Logging Training Metrics and Verification:**  
     - At the end of each training epoch, our revised training strategy will log key metrics (e.g., average training loss, test loss, and accuracy).
-
-  - **Finalization and Verification:**  
     - Finally, we will verify that all experiment details, system metrics, and model artifacts are correctly tracked by using the MLFlow UI.
+
+Distributed Training & Job Scheduling
+
+Our process for building and managing training and hands-on jobs using Ray Train is as follows:
+
+- **Preparation:**  
+  - Package all python code (VIT), configurations, and environment files (such as `requirements.txt` and `runtime.json`) into my working directory.
+
+- **Runtime Environment Setup:**  
+  - Create a `runtime.json` that specifies:
+    - The list of required Python packages (via `requirements.txt`).
+    - Build Essential environment variables.
+
+- **Submitting a Job to the Ray Cluster:**  
+  - Use the `ray job submit` command from your Jupyter container to dispatch your training job to the Ray cluster.
+  - Specify the required resources (e.g., number of GPUs and CPUs) for the job. For example:
+    ```bash
+    ray job submit --runtime-env runtime.json --entrypoint-num-gpus 1 --entrypoint-num-cpus 8 --verbose --working-dir . -- python your_training_script.py
+    ```
+  - This command packages your current working directory, applies the runtime environment, and directs Ray to run your training job on the available worker nodes.
+
+- **Monitoring and Verification:**  
+  - Access the Ray dashboard to verify that the cluster is running properly.
+  - Check that the head node and all worker nodes are online and that resource allocations (GPUs/CPUs) match your job requirements.
+  - Inspect job logs to ensure that training is proceeding as expected.
+
+- **Using Ray Train:**  
+  - Integrate Ray Train within my training script to manage distributed training, including handling checkpoints and recovering from interruptions.
 
 ### Model serving and monitoring platforms
 
