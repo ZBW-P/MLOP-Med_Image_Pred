@@ -147,15 +147,15 @@ Derivation & Suggestion (LLM)
 
   Our group plans to follow a similar approach as in the lab assignment:
   
-    1.**Initial Testing:**  
+    - 1.**Initial Testing:**  
       Begin by testing the training speed for Reduced precision training and Gradient accumulation strategies depends on our model setup (May be larger).
     
-    3.**Model Setup:**  
+    - 3.**Model Setup:**  
       Define our LLM model with a minimal size (pre-trained) to meet initial requirements. The model will leverage:
       - Reduced precision training
       - Gradient accumulation
     
-    4.**Potential Enhancements:**  
+    - 4.**Potential Enhancements:**  
       If improved accuracy is required for our service in the future, we plan to explore parameter-efficient fine-tuning techniques such as LoRA to further accelerate training and enhance the LLM’s derivation performance.
   
 ---
