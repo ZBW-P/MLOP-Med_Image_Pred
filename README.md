@@ -127,23 +127,23 @@ Our group plans to:
 **Objective:**  
   Deliver high-accuracy predictions that help researchers rapidly analyze images and assist doctors in making informed decisions. Even if the suggestions are not perfect, they provide a valuable second opinion in the diagnostic process.
 
-**Derivation & Suggestion (LLM)**
+Derivation & Suggestion (LLM)
 
-- **Purpose:**  
+**Purpose:**  
   Leverage a large language model to process the output from the ViT and generate clinical suggestions, enhancing both the efficiency and the accuracy of preliminary diagnoses.
 
-- **Architecture:**  
+**Architecture:**  
   An LLM with a minimum of 7B parameters designed to handle large-scale, detailed derivations.
 
-- **Training Strategies:**  
+**Training Strategies:**  
   - Use of smaller batch sizes and gradient accumulation.  
   - Reduced precision training for efficiency.  
   - Parameter-efficient fine-tuning techniques such as LoRA and QLoRA, inspired by methods from our lab assignments.
 
-- **Integration:**  
+**Integration:**  
   The refined parameters from the ViT model will be passed to the LLM to inform its derivation process, ensuring that the final output is both contextually relevant and actionable.
 
-- **Training Process**：
+**Training Process**：
 Our group plans to follow a similar approach as in the lab assignment:
 
 - **Initial Testing:**  
