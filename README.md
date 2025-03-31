@@ -114,18 +114,18 @@ Medical Image Classification (ViT)
 
   Our group plans to do the following training process:
   
-    - 1.**Build a Docker Container:**  
-        - Set up a Docker container with all the required resources, including the NVIDIA container toolkit. The most important component in our environment is the PyTorch library like PyTorch Lightning.
-    
-    - 2.**Implement Distributed Training Strategies:**  
-        - To utilize both DDP and FSDP, our group will incorporate the PyTorch Lightning library. With PyTorch, we can configure the trainer using `DDPStrategy` and `FSDPStrategy` for effective model training.
-    
-    - 3.**Monitoring and Performance Tracking:**  
-        - Use `nvtop` to monitor GPU usage and performance.
-        - Employ `myflow` and Ray Training to track the model's performance under different training strategies.
-    
-    - 4.**Objective:**  
-        - Deliver high-accuracy predictions that help researchers rapidly analyze images and assist doctors in making informed decisions. Even if the suggestions are not perfect, they provide a valuable second opinion in the diagnostic process.
+    1. **Build a Docker Container:**  
+          - Set up a Docker container with all the required resources, including the NVIDIA container toolkit. The most important component in our environment is the PyTorch library like PyTorch Lightning.
+      
+    2. **Implement Distributed Training Strategies:**  
+          - To utilize both DDP and FSDP, our group will incorporate the PyTorch Lightning library. With PyTorch, we can configure the trainer using `DDPStrategy` and `FSDPStrategy` for effective model training.
+      
+    3. **Monitoring and Performance Tracking:**  
+          - Use `nvtop` to monitor GPU usage and performance.
+          - Employ `myflow` and Ray Training to track the model's performance under different training strategies.
+      
+    4. **Objective:**  
+          - Deliver high-accuracy predictions that help researchers rapidly analyze images and assist doctors in making informed decisions. Even if the suggestions are not perfect, they provide a valuable second opinion in the diagnostic process.
 
 Derivation & Suggestion (LLM)
 
@@ -147,17 +147,17 @@ Derivation & Suggestion (LLM)
 
   Our group plans to follow a similar approach as in the lab assignment:
   
-    - 1.**Initial Testing:**  
-        - Begin by testing the training speed for Reduced precision training and Gradient accumulation strategies depends on our model setup (May be larger).
-    
-    - 3.**Model Setup:**  
-        - Define our LLM model with a minimal size (pre-trained) to meet initial requirements. The model will leverage:
-          - Reduced precision training
-          - Gradient accumulation
-    
-    - 4.**Potential Enhancements:**  
-        - Define our LLM model with a minimal size (pre-trained) to meet initial requirements. The model will leverage:
-        If improved accuracy is required for our service in the future, we plan to explore parameter-efficient fine-tuning techniques such as LoRA to further accelerate training and enhance the LLM’s derivation performance.
+    1. **Initial Testing:**  
+      - Begin by testing the training speed for Reduced precision training and Gradient accumulation strategies depends on our model setup (May be larger).
+  
+    3. **Model Setup:**  
+      - Define our LLM model with a minimal size (pre-trained) to meet initial requirements. The model will leverage:
+        - Reduced precision training
+        - Gradient accumulation
+  
+    4. **Potential Enhancements:**  
+      - Define our LLM model with a minimal size (pre-trained) to meet initial requirements. The model will leverage:
+      If improved accuracy is required for our service in the future, we plan to explore parameter-efficient fine-tuning techniques such as LoRA to further accelerate training and enhance the LLM’s derivation performance.
   
 ---
 
@@ -172,27 +172,27 @@ Experiment Tracking
 
   Our group will follow the process below to track our ViT model training with DDP or FSDP:
 
-  - 1.**Setting Up the Tracking Environment and Object Storage:**  
-      We will configure the environment for MLFlow by:
-      - Setting the tracking URI via an environment variable to point to our remote MLFlow tracking server.
-      - Defining an experiment name so that all logs, metrics, and model artifacts are associated with this experiment.
-      - Configuring MinIO as the object storage backend for MLFlow. 
-
-  - 2.**Integrating MLFlow Logging into the Training Script:**  
-      In our revised training script, we will:
-      - Initialize an MLFlow run at the beginning of the training process.
-      - Use MLFlow’s automatic logging for PyTorch to capture details such as model architecture, optimizer settings, and hyperparameters.
-      - Log key metrics (e.g., loss, accuracy) during training.
-      - Save the final model as an artifact. With MinIO configured as the artifact store, these outputs will be automatically saved there.
-
-  - 3.**DDP and FSDP Training:**  
-      - We will import and integrate MLFlow logging code specific to PyTorch.
-      - Run the PyTorch training code with MLFlow logging enabled.
-      - Optionally, use MLFlow autolog features in combination with PyTorch Lightning for enhanced logging in distributed settings.
-
-  - 4.**Logging Training Metrics and Verification:**  
-      - At the end of each training epoch, our revised training strategy will log key metrics (e.g., average training loss, test loss, and accuracy).
-      - Finally, we will verify that all experiment details, system metrics, and model artifacts are correctly tracked by using the MLFlow UI.
+    1. **Setting Up the Tracking Environment and Object Storage:**  
+        We will configure the environment for MLFlow by:
+        - Setting the tracking URI via an environment variable to point to our remote MLFlow tracking server.
+        - Defining an experiment name so that all logs, metrics, and model artifacts are associated with this experiment.
+        - Configuring MinIO as the object storage backend for MLFlow. 
+  
+    2. **Integrating MLFlow Logging into the Training Script:**  
+        In our revised training script, we will:
+        - Initialize an MLFlow run at the beginning of the training process.
+        - Use MLFlow’s automatic logging for PyTorch to capture details such as model architecture, optimizer settings, and hyperparameters.
+        - Log key metrics (e.g., loss, accuracy) during training.
+        - Save the final model as an artifact. With MinIO configured as the artifact store, these outputs will be automatically saved there.
+  
+    3. **DDP and FSDP Training:**  
+        - We will import and integrate MLFlow logging code specific to PyTorch.
+        - Run the PyTorch training code with MLFlow logging enabled.
+        - Optionally, use MLFlow autolog features in combination with PyTorch Lightning for enhanced logging in distributed settings.
+  
+    4. **Logging Training Metrics and Verification:**  
+        - At the end of each training epoch, our revised training strategy will log key metrics (e.g., average training loss, test loss, and accuracy).
+        - Finally, we will verify that all experiment details, system metrics, and model artifacts are correctly tracked by using the MLFlow UI.
 
 Distributed Training & Job Scheduling
 
