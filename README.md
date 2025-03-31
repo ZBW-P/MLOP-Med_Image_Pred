@@ -95,22 +95,22 @@ and which optional "difficulty" points you are attempting. -->
 
 #### Model Training Details
 
-**Medical Image Classification (ViT)**
+Medical Image Classification (ViT)
 
-- **Dataset:**  
+**Dataset:**  
   Over 5 GB of medical x-ray images classified into 10 distinct disease categories.
 
-- **Architecture:**  
+**Architecture:**  
   A large Vision Transformer (ViT) model tailored to capture the nuanced features of x-ray images.
 
-- **Distributed Training Strategies:**  
+**Distributed Training Strategies:**  
   - **DDP (Distributed Data Parallel):** Every GPU computes the gradient for the entire model.  
   - **FSDP (Fully Sharded Data Parallel):** Each GPU computes only a portion of the outcome and gradient, improving memory efficiency.
 
-- **Hardware Setup:**  
+**Hardware Setup:**  
   Utilizing 4 GPUs in parallel to accelerate training and manage the heavy computational load.
 
-- **Training process:**  
+**Training process:**  
 
 Our group plans to:
 
@@ -124,7 +124,7 @@ Our group plans to:
   - Use `nvtop` to monitor GPU usage and performance.
   - Employ `myflow` and Ray Training to track the model's performance under different training strategies.
 
-- **Objective:**  
+**Objective:**  
   Deliver high-accuracy predictions that help researchers rapidly analyze images and assist doctors in making informed decisions. Even if the suggestions are not perfect, they provide a valuable second opinion in the diagnostic process.
 
 **Derivation & Suggestion (LLM)**
