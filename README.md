@@ -115,17 +115,17 @@ Medical Image Classification (ViT)
   Our group plans to do the following training process:
   
     - 1.**Build a Docker Container:**  
-      - Set up a Docker container with all the required resources, including the NVIDIA container toolkit. The most important component in our environment is the PyTorch library like PyTorch Lightning.
+        - Set up a Docker container with all the required resources, including the NVIDIA container toolkit. The most important component in our environment is the PyTorch library like PyTorch Lightning.
     
     - 2.**Implement Distributed Training Strategies:**  
-      - To utilize both DDP and FSDP, our group will incorporate the PyTorch Lightning library. With PyTorch, we can configure the trainer using `DDPStrategy` and `FSDPStrategy` for effective model training.
+        - To utilize both DDP and FSDP, our group will incorporate the PyTorch Lightning library. With PyTorch, we can configure the trainer using `DDPStrategy` and `FSDPStrategy` for effective model training.
     
     - 3.**Monitoring and Performance Tracking:**  
-      - Use `nvtop` to monitor GPU usage and performance.
-      - Employ `myflow` and Ray Training to track the model's performance under different training strategies.
+        - Use `nvtop` to monitor GPU usage and performance.
+        - Employ `myflow` and Ray Training to track the model's performance under different training strategies.
     
     - 4.**Objective:**  
-      - Deliver high-accuracy predictions that help researchers rapidly analyze images and assist doctors in making informed decisions. Even if the suggestions are not perfect, they provide a valuable second opinion in the diagnostic process.
+        - Deliver high-accuracy predictions that help researchers rapidly analyze images and assist doctors in making informed decisions. Even if the suggestions are not perfect, they provide a valuable second opinion in the diagnostic process.
 
 Derivation & Suggestion (LLM)
 
@@ -148,16 +148,16 @@ Derivation & Suggestion (LLM)
   Our group plans to follow a similar approach as in the lab assignment:
   
     - 1.**Initial Testing:**  
-      - Begin by testing the training speed for Reduced precision training and Gradient accumulation strategies depends on our model setup (May be larger).
+        - Begin by testing the training speed for Reduced precision training and Gradient accumulation strategies depends on our model setup (May be larger).
     
     - 3.**Model Setup:**  
-      - Define our LLM model with a minimal size (pre-trained) to meet initial requirements. The model will leverage:
-        - Reduced precision training
-        - Gradient accumulation
+        - Define our LLM model with a minimal size (pre-trained) to meet initial requirements. The model will leverage:
+          - Reduced precision training
+          - Gradient accumulation
     
     - 4.**Potential Enhancements:**  
-      - Define our LLM model with a minimal size (pre-trained) to meet initial requirements. The model will leverage:
-      If improved accuracy is required for our service in the future, we plan to explore parameter-efficient fine-tuning techniques such as LoRA to further accelerate training and enhance the LLM’s derivation performance.
+        - Define our LLM model with a minimal size (pre-trained) to meet initial requirements. The model will leverage:
+        If improved accuracy is required for our service in the future, we plan to explore parameter-efficient fine-tuning techniques such as LoRA to further accelerate training and enhance the LLM’s derivation performance.
   
 ---
 
@@ -172,27 +172,27 @@ Experiment Tracking
 
   Our group will follow the process below to track our ViT model training with DDP or FSDP:
 
-  1.**Setting Up the Tracking Environment and Object Storage:**  
-    We will configure the environment for MLFlow by:
-    - Setting the tracking URI via an environment variable to point to our remote MLFlow tracking server.
-    - Defining an experiment name so that all logs, metrics, and model artifacts are associated with this experiment.
-    - Configuring MinIO as the object storage backend for MLFlow. 
+  - 1.**Setting Up the Tracking Environment and Object Storage:**  
+      We will configure the environment for MLFlow by:
+      - Setting the tracking URI via an environment variable to point to our remote MLFlow tracking server.
+      - Defining an experiment name so that all logs, metrics, and model artifacts are associated with this experiment.
+      - Configuring MinIO as the object storage backend for MLFlow. 
 
-  2.**Integrating MLFlow Logging into the Training Script:**  
-    In our revised training script, we will:
-    - Initialize an MLFlow run at the beginning of the training process.
-    - Use MLFlow’s automatic logging for PyTorch to capture details such as model architecture, optimizer settings, and hyperparameters.
-    - Log key metrics (e.g., loss, accuracy) during training.
-    - Save the final model as an artifact. With MinIO configured as the artifact store, these outputs will be automatically saved there.
+  - 2.**Integrating MLFlow Logging into the Training Script:**  
+      In our revised training script, we will:
+      - Initialize an MLFlow run at the beginning of the training process.
+      - Use MLFlow’s automatic logging for PyTorch to capture details such as model architecture, optimizer settings, and hyperparameters.
+      - Log key metrics (e.g., loss, accuracy) during training.
+      - Save the final model as an artifact. With MinIO configured as the artifact store, these outputs will be automatically saved there.
 
-  3.**DDP and FSDP Training:**  
-    - We will import and integrate MLFlow logging code specific to PyTorch.
-    - Run the PyTorch training code with MLFlow logging enabled.
-    - Optionally, use MLFlow autolog features in combination with PyTorch Lightning for enhanced logging in distributed settings.
+  - 3.**DDP and FSDP Training:**  
+      - We will import and integrate MLFlow logging code specific to PyTorch.
+      - Run the PyTorch training code with MLFlow logging enabled.
+      - Optionally, use MLFlow autolog features in combination with PyTorch Lightning for enhanced logging in distributed settings.
 
-  4.**Logging Training Metrics and Verification:**  
-    - At the end of each training epoch, our revised training strategy will log key metrics (e.g., average training loss, test loss, and accuracy).
-    - Finally, we will verify that all experiment details, system metrics, and model artifacts are correctly tracked by using the MLFlow UI.
+  - 4.**Logging Training Metrics and Verification:**  
+      - At the end of each training epoch, our revised training strategy will log key metrics (e.g., average training loss, test loss, and accuracy).
+      - Finally, we will verify that all experiment details, system metrics, and model artifacts are correctly tracked by using the MLFlow UI.
 
 Distributed Training & Job Scheduling
 
@@ -200,47 +200,47 @@ Distributed Training & Job Scheduling
   
   Our group follows the lab process to set up and manage the Ray cluster:
   
-    1. **Build a Container Image for Ray Worker Nodes:**  
-       - Create a container image with Ray and ROCm installed.
+    - 1. **Build a Container Image for Ray Worker Nodes:**  
+         - Create a container image with Ray and ROCm installed.
     
-    2. **Bring Up the Ray Cluster with Docker Compose:**  
-       - Launch the Ray head node and worker nodes using a Docker Compose file.
-       - The cluster will include one head node (for scheduling and managing jobs) and two worker nodes.
+    - 2. **Bring Up the Ray Cluster with Docker Compose:**  
+         - Launch the Ray head node and worker nodes using a Docker Compose file.
+         - The cluster will include one head node (for scheduling and managing jobs) and two worker nodes.
        
-    3. **Start a Jupyter Notebook Container (Without GPUs):**  
-       - Run a Jupyter container that is used solely to submit jobs to the Ray cluster.
+    - 3. **Start a Jupyter Notebook Container (Without GPUs):**  
+         - Run a Jupyter container that is used solely to submit jobs to the Ray cluster.
     
-    4. **Access the Ray Dashboard:**  
-       - The Ray head node serves a dashboard on port `8265`.  
-       - In a browser, open the dashboard using your public IP address (e.g., `http://<YOUR_IP>:8265`).
+    - 4. **Access the Ray Dashboard:**  
+         - The Ray head node serves a dashboard on port `8265`.  
+         - In a browser, open the dashboard using your public IP address (e.g., `http://<YOUR_IP>:8265`).
     
 - **Ray Train Process:**  
 
   Our process for building and managing training and hands-on jobs using Ray Train is as follows:
   
-    1.**Preparation:**  
-      - Package all python code (VIT), configurations, and environment files (such as `requirements.txt` and `runtime.json`) into my working directory.
+    - 1.**Preparation:**  
+        - Package all python code (VIT), configurations, and environment files (such as `requirements.txt` and `runtime.json`) into my working directory.
     
-    2.**Runtime Environment Setup:**  
-      - Create a `runtime.json` that specifies:
-        - The list of required Python packages (via `requirements.txt`).
-        - Build Essential environment variables.
+    - 2.**Runtime Environment Setup:**  
+        - Create a `runtime.json` that specifies:
+          - The list of required Python packages (via `requirements.txt`).
+          - Build Essential environment variables.
     
-    3.**Submitting a Job to the Ray Cluster:**  
-      - Use the `ray job submit` command from your Jupyter container to dispatch your training job to the Ray cluster.
-      - Specify the required resources (e.g., number of GPUs and CPUs) for the job. For example:
-        ```bash
-        ray job submit --runtime-env runtime.json --entrypoint-num-gpus 1 --entrypoint-num-cpus 8 --verbose --working-dir . -- python your_training_script.py
-        ```
-      - This command packages your current working directory, applies the runtime environment, and directs Ray to run your training job on the available worker nodes.
+    - 3.**Submitting a Job to the Ray Cluster:**  
+        - Use the `ray job submit` command from your Jupyter container to dispatch your training job to the Ray cluster.
+        - Specify the required resources (e.g., number of GPUs and CPUs) for the job. For example:
+          ```bash
+          ray job submit --runtime-env runtime.json --entrypoint-num-gpus 1 --entrypoint-num-cpus 8 --verbose --working-dir . -- python your_training_script.py
+          ```
+        - This command packages your current working directory, applies the runtime environment, and directs Ray to run your training job on the available worker nodes.
     
-    4.**Monitoring and Verification:**  
-      - Access the Ray dashboard to verify that the cluster is running properly.
-      - Check that the head node and all worker nodes are online and that resource allocations (GPUs/CPUs) match your job requirements.
-      - Inspect job logs to ensure that training is proceeding as expected.
+    - 4.**Monitoring and Verification:**  
+        - Access the Ray dashboard to verify that the cluster is running properly.
+        - Check that the head node and all worker nodes are online and that resource allocations (GPUs/CPUs) match your job requirements.
+        - Inspect job logs to ensure that training is proceeding as expected.
     
-    5.**Using Ray Train:**  
-      - Integrate Ray Train within my training script to manage distributed training, including handling checkpoints and recovering from interruptions.
+    - 5.**Using Ray Train:**  
+        - Integrate Ray Train within my training script to manage distributed training, including handling checkpoints and recovering from interruptions.
 
 ### Model serving and monitoring platforms
 
