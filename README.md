@@ -144,6 +144,7 @@ Derivation & Suggestion (LLM)
   - The refined parameters from the ViT model will be passed to the LLM to inform its derivation process, ensuring that the final output is both contextually relevant and actionable.
 
 **Training Process**：
+
 Our group plans to follow a similar approach as in the lab assignment:
 
 - **Initial Testing:**  
