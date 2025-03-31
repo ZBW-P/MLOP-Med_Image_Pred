@@ -200,17 +200,17 @@ Distributed Training & Job Scheduling
   
   Our group follows the lab process to set up and manage the Ray cluster:
   
-    - 1. **Build a Container Image for Ray Worker Nodes:**  
+    1. **Build a Container Image for Ray Worker Nodes:**  
          - Create a container image with Ray and ROCm installed.
     
-    - 2. **Bring Up the Ray Cluster with Docker Compose:**  
+    2. **Bring Up the Ray Cluster with Docker Compose:**  
          - Launch the Ray head node and worker nodes using a Docker Compose file.
          - The cluster will include one head node (for scheduling and managing jobs) and two worker nodes.
        
-    - 3. **Start a Jupyter Notebook Container (Without GPUs):**  
+    3. **Start a Jupyter Notebook Container (Without GPUs):**  
          - Run a Jupyter container that is used solely to submit jobs to the Ray cluster.
     
-    - 4. **Access the Ray Dashboard:**  
+    4. **Access the Ray Dashboard:**  
          - The Ray head node serves a dashboard on port `8265`.  
          - In a browser, open the dashboard using your public IP address (e.g., `http://<YOUR_IP>:8265`).
     
@@ -218,15 +218,15 @@ Distributed Training & Job Scheduling
 
   Our process for building and managing training and hands-on jobs using Ray Train is as follows:
   
-    - 1.**Preparation:**  
+    1. **Preparation:**  
         - Package all python code (VIT), configurations, and environment files (such as `requirements.txt` and `runtime.json`) into my working directory.
     
-    - 2.**Runtime Environment Setup:**  
+    2. **Runtime Environment Setup:**  
         - Create a `runtime.json` that specifies:
           - The list of required Python packages (via `requirements.txt`).
           - Build Essential environment variables.
     
-    - 3.**Submitting a Job to the Ray Cluster:**  
+    3. **Submitting a Job to the Ray Cluster:**  
         - Use the `ray job submit` command from your Jupyter container to dispatch your training job to the Ray cluster.
         - Specify the required resources (e.g., number of GPUs and CPUs) for the job. For example:
           ```bash
@@ -234,12 +234,12 @@ Distributed Training & Job Scheduling
           ```
         - This command packages your current working directory, applies the runtime environment, and directs Ray to run your training job on the available worker nodes.
     
-    - 4.**Monitoring and Verification:**  
+    4. **Monitoring and Verification:**  
         - Access the Ray dashboard to verify that the cluster is running properly.
         - Check that the head node and all worker nodes are online and that resource allocations (GPUs/CPUs) match your job requirements.
         - Inspect job logs to ensure that training is proceeding as expected.
     
-    - 5.**Using Ray Train:**  
+    5. **Using Ray Train:**  
         - Integrate Ray Train within my training script to manage distributed training, including handling checkpoints and recovering from interruptions.
 
 ### Model serving and monitoring platforms
