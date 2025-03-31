@@ -164,20 +164,38 @@ Our group plans to follow a similar approach as in the lab assignment:
 Experiment Tracking
 
 - **MLFlow Integration:**  
-  All experiments are tracked using MLFlow. This includes logging model accuracy, infrastructure utilization, configuration details, and code changes.  
+  All experiments are tracked using MLFlow. This includes logging model accuracy, infrastructure utilization, configuration details, and code changes.
+
 - **Purpose:**  
   Systematically log every experiment to enable performance comparison, reproducibility, and smooth deployment of the best-performing model.
 
-Distributed Training & Job Scheduling
+- **MLFlow Setting Process:**  
 
-- **Ray Train:**  
-  - **Distributed Training:** Easily distribute training across multiple nodes and GPUs.  
-  - **Resource Management:** Utilize ScalingConfig to allocate GPU, CPU, and memory resources effectively.  
-  - **Integration:** Seamlessly integrates with PyTorch Lightning for features such as cross-node synchronization and checkpoint management.
-  
-- **Ray Tune:**  
-  - **Hyperparameter Tuning:** Run hyperparameter optimization concurrently with training.  
-  - **Efficiency:** Use smart scheduling algorithms like ASHA to terminate underperforming runs early, thus conserving resources and expediting the search for optimal configurations.
+  Our group will follow the process below to track our ViT model training with DDP or FSDP:
+
+  - **Setting Up the Tracking Environment and Object Storage:**  
+    We will configure the environment for MLFlow by:
+    - Setting the tracking URI via an environment variable to point to our remote MLFlow tracking server.
+    - Defining an experiment name so that all logs, metrics, and model artifacts are associated with this experiment.
+    - Configuring MinIO as the object storage backend for MLFlow. This ensures that when MLFlow logs artifacts (e.g., model weights, output images), they are stored in MinIO for persistent and centralized storage.
+
+  - **Integrating MLFlow Logging into the Training Script:**  
+    In our revised training script, we will:
+    - Initialize an MLFlow run at the beginning of the training process.
+    - Use MLFlow’s automatic logging for PyTorch to capture details such as model architecture, optimizer settings, and hyperparameters.
+    - Log key metrics (e.g., loss, accuracy) during training.
+    - Save the final model as an artifact. With MinIO configured as the artifact store, these outputs will be automatically saved there.
+
+  - **DDP and FSDP Training:**  
+    - We will import and integrate MLFlow logging code specific to PyTorch.
+    - Run the PyTorch training code with MLFlow logging enabled.
+    - Optionally, use MLFlow autolog features in combination with PyTorch Lightning for enhanced logging in distributed settings.
+
+  - **Logging Training Metrics and Artifacts:**  
+    - At the end of each training epoch, our revised training strategy will log key metrics (e.g., average training loss, test loss, and accuracy).
+
+  - **Finalization and Verification:**  
+    - Finally, we will verify that all experiment details, system metrics, and model artifacts are correctly tracked by using the MLFlow UI.
 
 ### Model serving and monitoring platforms
 
