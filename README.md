@@ -20,7 +20,7 @@ link to their contributions in all repos here. -->
 |---------------------------------|-----------------|------------------------------------|
 | All team members                |                 |                                    |
 | Qin Huai               |Model training and training platforms                 | https://github.com/ZBW-P/MLOP-Med_Image_Pred?tab=readme-ov-file#model-training-and-training-platforms                                  |
-| Zhaochen Yang                  |Model serving                 |                                    |
+| Zhaochen Yang                  |Model serving                 |https://github.com/ZBW-P/MLOP-Med_Image_Pred/blob/main/README.md#model-serving-and-monitoring-platforms                                    |
 | Junjie Mai                   |Data Pipeline                 |                                    |
 | Team member 4 (if there is one) |                 |                                    |
 
