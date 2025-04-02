@@ -31,6 +31,7 @@ link to their contributions in all repos here. -->
 <!-- Overall digram of system. Doesn't need polish, does need to show all the pieces. 
 Must include: all the hardware, all the containers/software platforms, all the models, 
 all the data. -->
+![Diagram](https://example.com/path/to/diagram.png "System Diagram")
 
 ### Summary of outside materials
 
