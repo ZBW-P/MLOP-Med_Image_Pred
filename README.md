@@ -1,4 +1,4 @@
-## FF 1st
+## Title of project
 
 Our group is devoted to developing a hybrid machine learning system that integrates a Vision Transformer (ViT) for disease classification with a Large Language Model (LLM) for interpretability and actionable insights. In many clinical settings today, diagnoses from medical images such as chest X-rays are performed manually by radiologists—a process that is time-consuming, subjective, and inconsistent.
 
@@ -254,7 +254,6 @@ Our Model Serving component supports both **real-time (online)** and **batch (of
 The model will be encapsulated within a RESTful API to facilitate real-time predictions.
 
 Online Inference: Low latency is essential for interactive, single-sample predictions.
-
 Batch Inference: High throughput is required to process large datasets efficiently.
 
 Lightweight models may be deployed on edge devices to minimize latency, while more complex models could be deployed in the cloud to achieve higher accuracy.
@@ -457,7 +456,7 @@ Key Components:
 
   |Checkpoint             |Success Criteria    |Failure Action|
   |--|--|--|
-  |Model Accuracy         |\>90% on test set   |Halt pipeline|
+  |Model Accuracy         |\>70% on test set   |Halt pipeline|
   |Inference Latency      |\<300ms P99         |Rollback|
   |Resource Utilization   |\<80% GPU memory    |Scale up resources|
 
