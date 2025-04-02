@@ -356,30 +356,6 @@ Characteristics:
 - Diverse image types (COVID, Pneumonia, etc.)
 - Metadata attached to simulate realistic submissions
 
----
-
-#### Interactive Data Dashboard (Optional)
-
-**Purpose:**
-- Display insights: predictions, performance, retraining triggers
-
-**Technology Stack:**
-- **Backend:** FastAPI
-- **Visualization:** Grafana / Streamlit / Power BI
-- **Database:** PostgreSQL
-
-**Example Panels:**
-- Real-time predictions
-- Class distribution (pie chart)
-- Inference latency (line chart)
-- Model performance over time
-- Retraining events timeline
-
-**Grafana Integration:**
-- Query PostgreSQL for all metrics
-- Display live updates via dashboard panels
-
----
 
 
 ### Continuous X
