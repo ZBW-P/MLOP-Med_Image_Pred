@@ -69,9 +69,9 @@ The table below shows an example, it is not a recommendation. -->
 
 | Requirement     | How many/when                                     | Justification |
 |-----------------|---------------------------------------------------|---------------|
-| `m1.medium` VMs | 3 for entire project duration                     | ...           |
-| `gpu_mi100`     | 4 hour block twice a week                         |               |
-| Floating IPs    | 1 for entire project duration, 1 for sporadic use |               |
+| `m1.medium` VMs | 4 for entire project duration                    | Each team member requires a dedicated VM to execute assignments, ensuring consistent and reliable development environments throughout the project.           |
+| `gpu_a100`     | 4 GPUs for model training (using DDP/FSDP) and 2 GPUs for model evaluation/monitoring; 6-hour blocks twice a week   |The ViT model's training on a large dataset with significant parameters benefits from parallel GPU processing (4 GPUs) to efficiently handle computations, while evaluation and monitoring are supported with 2 GPUs. This setup balances training performance with resource availability.              |
+| Floating IPs    | 1 for the entire project duration and 1 for sporadic use | One persistent IP ensures continuous connectivity to services throughout the project, while an additional floating IP offers flexibility for temporary or ad-hoc connection needs.                |
 | etc             |                                                   |               |
 
 ### Detailed design plan
