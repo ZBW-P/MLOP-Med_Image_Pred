@@ -20,7 +20,7 @@ link to their contributions in all repos here. -->
 |---------------------------------|-----------------|------------------------------------|
 | All team members                |Build a web server using the model to serve customers.                  |                                    |
 | Qin Huai               |Model training and training platforms                 | https://github.com/ZBW-P/MLOP-Med_Image_Pred?tab=readme-ov-file#model-training-and-training-platforms                                  |
-| Zhaochen Yang                  |Model serving                 |https://github.com/ZBW-P/MLOP-Med_Image_Pred/blob/main/README.md#model-serving-and-monitoring-platforms                                    |
+| Zhaochen Yang                  |Model Serving, Evaluation and Monitoring                |https://github.com/ZBW-P/MLOP-Med_Image_Pred/blob/main/README.md#model-serving-and-monitoring-platforms                                    |
 | Junjie Mai                   |Data Pipeline                 |https://github.com/ZBW-P/MLOP-Med_Image_Pred/blob/main/README.md#data-pipeline                                    |
 | Hongshang Fan |Continuous X                 |https://github.com/ZBW-P/MLOP-Med_Image_Pred/blob/main/README.md#Continuous-X                                    |
 
