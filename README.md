@@ -31,7 +31,7 @@ link to their contributions in all repos here. -->
 <!-- Overall digram of system. Doesn't need polish, does need to show all the pieces. 
 Must include: all the hardware, all the containers/software platforms, all the models, 
 all the data. -->
-![Diagram](https://example.com/path/to/diagram.png "System Diagram")
+![Diagram](https://github.com/ZBW-P/MLOP-Med_Image_Pred/blob/main/System%20diagram.png)
 
 ### Summary of outside materials
 
