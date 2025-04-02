@@ -273,9 +273,14 @@ We would implement warm start mechanisms to pre-load models, ensuring minimal la
 
 
 ### Data pipeline
-
+-
 <!-- Make sure to clarify how you will satisfy the Unit 8 requirements,  and which 
 optional "difficulty" points you are attempting. -->
+#### Overview
+The data pipeline is designed to support both offline and online data processing for our hybrid ML system integrating a Vision Transformer (ViT) for disease classification and a Large Language Model (LLM) for interpretability. It includes infrastructure for persistent storage, ETL processing, simulated data streaming, and an optional interactive dashboard.
+
+---
+
 
 ### Continuous X
 
