@@ -254,6 +254,7 @@ Our Model Serving component supports both **real-time (online)** and **batch (of
 The model will be encapsulated within a RESTful API to facilitate real-time predictions.
 
 Online Inference: Low latency is essential for interactive, single-sample predictions.
+
 Batch Inference: High throughput is required to process large datasets efficiently.
 
 Lightweight models may be deployed on edge devices to minimize latency, while more complex models could be deployed in the cloud to achieve higher accuracy.
