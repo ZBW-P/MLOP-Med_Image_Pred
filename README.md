@@ -1,4 +1,4 @@
-## Title of project
+## ## Machine learning operation system based on image classificaiton and large language model
 
 Our group is devoted to developing a hybrid machine learning system that integrates a Vision Transformer (ViT) for disease classification with a Large Language Model (LLM) for interpretability and actionable insights. In many clinical settings today, diagnoses from medical images such as chest X-rays are performed manually by radiologists—a process that is time-consuming, subjective, and inconsistent.
 
