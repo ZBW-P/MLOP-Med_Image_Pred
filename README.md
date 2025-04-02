@@ -250,6 +250,25 @@ Distributed Training & Job Scheduling
 and which optional "difficulty" points you are attempting. -->
 Our Model Serving component supports both **real-time (online)** and **batch (offline)** inference modes for a hybrid ML system that combines a **Vision Transformer (ViT)** for disease classification with a **Large Language Model (LLM)** for diagnostic explanations.
 
+- **Serving Requirements:** 
+The model will be encapsulated within a RESTful API to facilitate real-time predictions.
+
+Online Inference: Low latency is essential for interactive, single-sample predictions.
+Batch Inference: High throughput is required to process large datasets efficiently.
+
+Lightweight models may be deployed on edge devices to minimize latency, while more complex models could be deployed in the cloud to achieve higher accuracy.
+
+- **Model-Level Optimizations:** 
+To optimize the model performance, we will use several strategies:
+
+For graph optimizations, we could convert the model to ONNX to enable operation fusion to reduce redundant computations.
+
+For dynamic quantization, only the weights are quantized in advance (stored as INT8), while the quantization parameters for activations are computed during inference.
+
+For static quantization, both weights and activations are quantized in advance. A calibration dataset is used to compute the quantization parameters for activations.
+
+- **System-Level Optimizations:**
+We would implement warm start mechanisms to pre-load models, ensuring minimal latency for the initial requests, and deploy multiple instances of the model to handle a high volume of concurrent requests.
 
 
 
