@@ -278,6 +278,106 @@ We would implement warm start mechanisms to pre-load models, ensuring minimal la
 optional "difficulty" points you are attempting. -->
 #### Overview
 The data pipeline is designed to support both offline and online data processing for our hybrid ML system integrating a Vision Transformer (ViT) for disease classification and a Large Language Model (LLM) for interpretability. It includes infrastructure for persistent storage, ETL processing, simulated data streaming, and an optional interactive dashboard.
+#### Persistent Storage
+We provision persistent storage on Chameleon Cloud, using:
+
+- **Docker Volumes** for intermediate storage.
+- **MinIO** (deployed via Docker Compose) for object storage of unstructured data (X-ray images, model artifacts).
+- **PostgreSQL** (self-hosted via Docker Compose) for structured data like labels, metadata, and logs.
+
+MLflow will be used for experiment tracking:
+- **Backend:** PostgreSQL (mlflowdb)
+- **Artifact Store:** MinIO (bucket: mlflow-artifacts)
+
+---
+
+#### Offline Data Management
+
+**Data Sources:**
+- COVID-QU-Ex dataset:
+  - 11,956 COVID-19 images
+  - 11,263 Non-COVID infections
+  - 10,701 Normal cases
+  - Lung_Opacity cases with metadata (age, gender, diagnosis)
+
+**Repository Structure:**
+- **Structured data:** PostgreSQL (labels, metadata)
+- **Unstructured data:** MinIO (X-ray images, models)
+
+**ETL Pipeline:**
+- **Extract:** Load raw images and metadata
+- **Transform:**
+  - Remove corrupted images
+  - Normalize brightness/contrast
+  - Augment data: rotation, flipping, etc.
+  - Convert categorical metadata
+- **Load:**
+  - Upload processed data to MinIO
+  - Store labels and metadata in PostgreSQL
+  - Log data and models in MLflow
+
+**Support for Re-training:**
+- Monitor MLflow logs and user feedback in PostgreSQL
+- Re-run ETL for flagged samples
+- Feed data back into training loop
+
+---
+
+#### Online Data Management
+
+**Streaming Pipeline:**
+- Handle real-time image uploads via a REST API
+- Process images and send them to:
+  - ViT for classification
+  - LLM for diagnosis explanation
+
+**ETL Pipeline for Online Data:**
+- **Extract:** Receive images and metadata from frontend/API
+- **Transform:** Resize, normalize, convert format (DICOM → PNG)
+- **Load:**
+  - Store results (label + explanation) in PostgreSQL
+  - Store cleaned images in MinIO
+  - Log run metadata in MLflow
+
+---
+
+#### Simulating Online Data
+
+Since real user data is not available:
+
+**Simulation Script (Python):**
+1. Randomly sample from offline datasets
+2. Mimic API uploads at set intervals
+3. Monitor results, store in PostgreSQL
+4. Raise alerts if model performance drops
+
+Characteristics:
+- Interval-based requests
+- Diverse image types (COVID, Pneumonia, etc.)
+- Metadata attached to simulate realistic submissions
+
+---
+
+#### Interactive Data Dashboard (Optional)
+
+**Purpose:**
+- Display insights: predictions, performance, retraining triggers
+
+**Technology Stack:**
+- **Backend:** FastAPI
+- **Visualization:** Grafana / Streamlit / Power BI
+- **Database:** PostgreSQL
+
+**Example Panels:**
+- Real-time predictions
+- Class distribution (pie chart)
+- Inference latency (line chart)
+- Model performance over time
+- Retraining events timeline
+
+**Grafana Integration:**
+- Query PostgreSQL for all metrics
+- Display live updates via dashboard panels
 
 ---
 
