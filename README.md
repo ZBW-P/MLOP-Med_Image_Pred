@@ -270,7 +270,20 @@ For static quantization, both weights and activations are quantized in advance. 
 - **System-Level Optimizations:**
 We would implement warm start mechanisms to pre-load models, ensuring minimal latency for the initial requests, and deploy multiple instances of the model to handle a high volume of concurrent requests.
 
+### Evaluation and Monitoring
+- **Offline Evaluation：**
+After model training, an automated offline evaluation pipeline will immediately run and log results to MLFlow. This evaluation will include:
+  1. **Standard and Domain-Specific Use Cases:** Testing on both general diagnostic scenarios and specialized medical contexts to ensure performance.
+  2. **Known Failure Mode Testing:** Running tests on predetermined failure cases to verify the model’s resilience in edge cases.
+  3. **Template-Based Unit Tests:** Automatically executing unit tests based on established templates to validate key functionalities.
+### Staging Load Testing
+Once the Continuous X pipeline deploys the service to a staging environment, a load test will be conducted. This test will simulate high-concurrency conditions to evaluate the system’s response time, throughput, and overall stability.
 
+### Canary Online Evaluation
+After passing staging tests, the service will be deployed to a canary environment. This phase will assess the system’s response times, stability, and diagnostic accuracy under conditions that mimic actual user interactions.
+
+### Business-Specific Evaluation
+Although the system is not yet fully deployed to production, a business-specific evaluation plan has been defined. Key business metrics—such as diagnostic accuracy, misdiagnosis rates, response times, and service availability—will be tracked via MLFlow and integrated monitoring platforms.
 
 ### Data pipeline
 
