@@ -248,6 +248,10 @@ Distributed Training & Job Scheduling
 
 <!-- Make sure to clarify how you will satisfy the Unit 6 and Unit 7 requirements, 
 and which optional "difficulty" points you are attempting. -->
+Our Model Serving component supports both **real-time (online)** and **batch (offline)** inference modes for a hybrid ML system that combines a **Vision Transformer (ViT)** for disease classification with a **Large Language Model (LLM)** for diagnostic explanations.
+
+
+
 
 ### Data pipeline
 
