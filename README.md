@@ -309,7 +309,7 @@ MLflow will be used for experiment tracking:
 
 #### Offline Data Management
 
-**Data Sources:**
+**Example Data Sources:**
 - COVID-QU-Ex dataset:
   - 11,956 COVID-19 images
   - 11,263 Non-COVID infections
