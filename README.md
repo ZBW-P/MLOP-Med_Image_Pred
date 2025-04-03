@@ -12,9 +12,8 @@ Our project develops a **hybrid machine learning system** that integrates a Visi
 - **Fast, Accessible Feedback:** Thanks to the model’s efficient design and quick update mechanism, users receive real-time preliminary assessments. Although the model may trade off some accuracy compared to professional-grade systems, its speed and ease-of-access allow patients to obtain useful insights promptly.
 
 #### 2. Reduction of Patient Revisits
-- **Initial Prediction:** Offers an early indication of whether findings are mild or severe, which can reduce the need for multiple doctor visits.
+- **Initial Prediction:** Offers an early indication of whether findings are mild or severe, which can reduce the need for multiple doctor visits(Money for visit).
 - **Feedback Loop:** Physician-confirmed feedback is incorporated to refine future predictions, ensuring that the system’s recommendations remain safe and reliable.
-- **Efficient Updates:** The online server-based update process allows for rapid integration of new data and feedback, further reducing unnecessary revisits by continuously improving the model’s performance.
 
 #### 3. Lightweight and Accessible Deployment
 - **Balanced Performance:** Our model is designed to be medium-sized, striking a balance between computational efficiency and performance. This enables easy deployment on websites and mobile applications without requiring extensive hardware resources.
