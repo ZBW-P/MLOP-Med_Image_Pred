@@ -312,6 +312,10 @@ After passing staging tests, the service will be deployed to a canary environmen
 
 Although the system is not yet fully deployed to production, a business-specific evaluation plan has been defined. Key business metrics—such as diagnostic accuracy, misdiagnosis rates, response times, and service availability—will be tracked via MLFlow and integrated monitoring platforms.
 
+**Data drift monitoring**
+
+We will determine and monitor whether data drift has occurred based on changes in the model’s accuracy and recall.
+
 ### Data pipeline
 
 #### Overview
