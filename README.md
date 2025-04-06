@@ -7,12 +7,12 @@ Our project develops a **hybrid machine learning system** that integrates a Visi
 ### Key Value Propositions
 
 #### 1. User Preview and Enhanced Communication
-- **Preliminary Results:** Provides users with an immediate preview of potential chest abnormalities from their X-ray images.
+- **Preliminary Results:** Provides users with an immediate preliminary assessments of potential chest abnormalities from their X-ray images.
 - **Improved Communication:** Helps patients articulate their symptoms more effectively during consultations, especially while in the waiting room.
 - **Fast, Accessible Feedback:** Thanks to the model’s efficient design and quick update mechanism, users receive real-time preliminary assessments. Although the model may trade off some accuracy compared to professional-grade systems, its speed and ease-of-access allow patients to obtain useful insights promptly.
 
 #### 2. Reduction of Patient Revisits
-- **Initial Prediction:** Offers an early indication of whether findings are mild or severe, which can reduce the need for multiple doctor visits(Money for visit).
+- **Initial Prediction:** Offers an early indication of whether findings are mild or severe, which can reduce the need for multiple doctor visits (reducing the cost per visit).
 - **Feedback Loop:** Physician-confirmed feedback is incorporated to refine future predictions, ensuring that the system’s recommendations remain safe and reliable.
 
 #### 3. Lightweight and Accessible Deployment
