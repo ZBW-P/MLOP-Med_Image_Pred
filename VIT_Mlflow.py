@@ -288,5 +288,6 @@ if __name__ == '__main__':
         best_model = LitViT.load_from_checkpoint(best_ckpt)
         torch.save(best_model.state_dict(), os.path.join(data_dir, "vit_model.pth"))
         log_test_metrics(trainer, best_model, test_loader)
-    else:
         mlflow.end_run()
+    else:
+        os._exit(0)
