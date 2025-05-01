@@ -22,17 +22,19 @@ services:
         cd merged_dataset
         # curl -L https://nyu.box.com/shared/static/vj63o013r3pep3fklidza32ijxuullc3.zip \
         # curl -L https://nyu.box.com/shared/static/vj63o013r3pep3fklidza32ijxuullc3.zip -o merged_dataset.zip
+        # curl -L https://nyu.box.com/shared/static/vj63o013r3pep3fklidza32ijxuullc3.zip \
         curl -L https://nyu.box.com/shared/static/vj63o013r3pep3fklidza32ijxuullc3.zip \
-        
+          -o merged_dataset.zip
+          
         echo "Unzipping..."
-        unzip -q merged_dataset.zip -d /data/merged_dataset
+        unzip -q merged_dataset.zip 
         rm -f merged_dataset.zip
 
         echo "Listing contents of /data after extract stage:"
-        ls -l /data/merged_dataset
+        ls -l /data
 
   load-data:
-    container_name: upload_merged_data
+    container_name: etl_load_data
     image: rclone/rclone:latest
     volumes:
       - mergeddata:/data
