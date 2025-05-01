@@ -20,8 +20,9 @@ services:
         rm -rf merged_dataset
         mkdir -p merged_dataset
         cd merged_dataset
-        curl -L https://nyu.box.com/shared/static/vj63o013r3pep3fklidza32ijxuullc3.zip \
-       
+        # curl -L https://nyu.box.com/shared/static/vj63o013r3pep3fklidza32ijxuullc3.zip \
+        curl -L https://nyu.box.com/shared/static/vj63o013r3pep3fklidza32ijxuullc3.zip -o merged_dataset.zip
+
         echo "Unzipping..."
         unzip -q merged_dataset.zip -d /data/merged_dataset
         rm -f merged_dataset.zip
