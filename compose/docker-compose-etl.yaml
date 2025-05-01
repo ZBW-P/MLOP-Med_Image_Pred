@@ -1,0 +1,61 @@
+name: upload-merged-dataset
+
+volumes:
+  mergeddata:
+
+services:
+  extract-data:
+    container_name: extract_merged_data
+    image: python:3.11
+    user: root
+    volumes:
+      - mergeddata:/data
+    working_dir: /data
+    command:
+      - bash
+      - -c
+      - |
+        set -e
+        echo "Creating target directory..."
+        rm -rf merged_dataset
+        mkdir -p merged_dataset
+        cd merged_dataset
+        # curl -L https://nyu.box.com/shared/static/vj63o013r3pep3fklidza32ijxuullc3.zip \
+        curl -L https://dl.boxcloud.com/d/1/b1!GxxEj51_sfMz1IiceuNDMf57P9a0TOkmatYgZYRm9H9wb6YY3uqoXyEqQ-Wnf0nerh6mHeHO1gVdw5jAvZhTuY_1c4CdJsSJd13rrUXOiXtWf4d_KZ-bmIqPZvuQ7jCjUAWqZs088TMLhKVw5U-6cX2dwGdUbzKdlj9d_1tUTiIJdXlU_3jIH0NBz10K1r0jvJKv_A7sV_-Nj64tNDB1VtgQo3Powegkwr_FuhYgoxAxiK1mGXowiVESI21rUGAElONDrBNcnc6dDg-RA44_R3U-_h0tTNh3M1_4fhFbx-KJ9ZRFUyratrb8yXLypPWcvnGS4h6HdkZyyQWp4be_bWVnXoV9dd9I6T7x2Oke_VX3zCtRZzDeVukDfp5SnU7mVznk0Op3ZUk_g_8j5nKHh-h1zkp1SQDjXGfPz1j33z2C02OupzbwKrvjAghONUDkua6XDd-mzGnfGvw3ARadRK51N6dqAgOJcmsTA-qiL9J6Cn0YsObaiZWuUsobHIAK-V8CvzUHb_XNSDX6vLHYhKKCaSI7qegblGYteRbLQnNGvy-wHZlZC6kV2ylvbK5Jud1e_SKj2d9mEPn4agG54eqSv4dToXIKLT8Dz-4X2Q1HnCS9mQAEB7zzzIR14cMXOhD3q9qqD248nTYUeLzmMBhDMB6vctF8NBvHnKA3bsy1jWk2V5FiE6kp_021506mZrtCtcKnX1thvQhM3LKUSOoludEDE_RB3pbM4NrfYMcnU5Qf1Sm49iuOGiiq6cT6jyM4SpH94CB5yCx9wZi8WZLkrqJBSmE6jYMBBq2Bum-vYypQC_u5ZAm_TCUZ6iQL6zsyR_A2xHqfZ5W0Fnsckkz3VUWOqV2zzHXbD3Bxs2RNKdGo75cRJHePw_iI7tLaOdYGPLIb-7fypXxj-OjEnvjf8hakLC25BPzFE3Lvw4U-TT-Uu9UG-vYHJTII5h-Yc5ydWd4gv7UVCBY95QG4DaZwTdvWEAKUApp1DLTMbsqipKVfsvspLvn7BfBLe5OcIC4Cbt-2twVXeqTU0MVbtlH43EykyKhA7Ls0FMxs40gCippvvyDeFMf47Q7yRDsC837I-m36bo-ZesTsHk7EmIcVBSOW77yBpw2TXwHcSf6AK-GZ90BPnSeEb7O4Nz2nm3wNMwsefhY_zRyZj0cdLUE4irV-AMtlUbvk_HnBWWgt34w0pUsWB1YmP_0cZg7t3fdTbS908Y118Jl8dcPfVcDUKyLWhSCrLZ3TmB4UEiTBXkDyjyaBi3k315mNSjk1Lgqy3pIGnNqZEQ8MY_YteX-nsZncEyIxQSPz-rWhlXw26MI-t5RStdigm_s_-Dc85TDBaWyLTkk4I5ziaAQmCBqkJi5dmgWBRIcXMXaNevLvhvePLA8jumzSiACLEw_t-QPB-mod1SI9AR-zQOQNBU6U3yGV4-jAC-beLXlpP6OFkjyODtbR9jJrCgHHSTedGH-d5KF-7aGdRtBC4U-pFDjcjpTI3sT9YRTA9npQxn7Hz6d76cfO/download \
+        echo "Downloading merged_dataset.zip from NYU Box..."
+       
+        echo "Unzipping..."
+        unzip -q merged_dataset.zip -d /data/merged_dataset
+        rm -f merged_dataset.zip
+
+        echo "Listing contents of /data after extract stage:"
+        ls -l /data/merged_dataset
+
+  load-data:
+    container_name: upload_merged_data
+    image: rclone/rclone:latest
+    volumes:
+      - mergeddata:/data
+      - ~/.config/rclone/rclone.conf:/root/.config/rclone/rclone.conf:ro
+    entrypoint: /bin/sh
+    command:
+      - -c
+      - |
+        if [ -z "$RCLONE_CONTAINER" ]; then
+          echo "ERROR: RCLONE_CONTAINER is not set"
+          exit 1
+        fi
+
+        echo "Cleaning up existing contents of object store..."
+        rclone delete chi_tacc:$RCLONE_CONTAINER --rmdirs || true
+
+        echo "Uploading /data/merged_dataset to object store..."
+        rclone copy /data/merged_dataset chi_tacc:$RCLONE_CONTAINER \
+          --progress \
+          --transfers=32 \
+          --checkers=16 \
+          --multi-thread-streams=4 \
+          --fast-list
+
+        echo "Upload complete. Listing contents:"
+        rclone lsd chi_tacc:$RCLONE_CONTAINER
