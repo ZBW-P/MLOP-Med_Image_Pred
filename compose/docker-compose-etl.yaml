@@ -32,8 +32,7 @@ services:
     image: rclone/rclone:latest
     volumes:
       - merged_medical:/data
-      # - ~/.config/rclone/rclone.conf:/root/.config/rclone/rclone.conf:ro
-      - ~/.config/rclone:/root/.config/rclone:ro
+      - ~/.config/rclone/rclone.conf:/root/.config/rclone/rclone.conf:ro
     entrypoint: /bin/sh
     command:
       - -c
