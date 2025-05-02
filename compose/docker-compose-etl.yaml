@@ -1,4 +1,4 @@
-name：merged_medical
+name:merged_medical
 
 volumes:
   merged_medical:
@@ -41,6 +41,17 @@ services:
           echo "ERROR: RCLONE_CONTAINER is not set"
           exit 1
         fi
+        
+        mkdir -p /root/.config/rclone
+        cat > /root/.config/rclone/rclone.conf << EOF
+        [chi_tacc]
+        type = swift
+        user_id = YOUR_USER_ID
+        application_credential_id = APP_CRED_ID
+        application_credential_secret = APP_CRED_SECRET
+        auth = https://chi.tacc.chameleoncloud.org:5000/v3
+        region = CHI@TACC
+        EOF
         
         echo "Cleaning up existing contents of container..."
         rclone delete chi_tacc:$RCLONE_CONTAINER --rmdirs || true
