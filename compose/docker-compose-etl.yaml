@@ -8,6 +8,7 @@ services:
     container_name: etl_merge_data
     image: python:3.11
     user: root
+    network_mode: host
     volumes:
       - merged_medical:/app/merged_dataset
       - ./datamerged2.py:/app/datamerged2.py:ro
