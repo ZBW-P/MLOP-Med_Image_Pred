@@ -1,4 +1,4 @@
-name:merged_medical
+name: merged_medical
 
 volumes:
   merged_medical:
