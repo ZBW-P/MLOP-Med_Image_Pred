@@ -26,55 +26,30 @@ services:
         python3 datamerged2.py
         echo "Merge completed. Listing contents of merged_dataset:"
         find /app/merged_dataset | head
-   load-data:
-      container_name: etl_load_data
-      image: rclone/rclone:latest
-      volumes:
-        - merged_medical:/data
-        - ~/.config/rclone/rclone.conf:/root/.config/rclone/rclone.conf:ro
-      entrypoint: /bin/sh
-      command:
-        - -c
-        - |
-          if [ -z "$RCLONE_CONTAINER" ]; then
-            echo "ERROR: RCLONE_CONTAINER is not set"
-            exit 1
-          fi
-          echo "Cleaning up existing contents of container..."
-          rclone delete chi_tacc:$RCLONE_CONTAINER --rmdirs || true
-  
-          rclone copy /data/merged_medical chi_tacc:$RCLONE_CONTAINER \
-          --progress \
-          --transfers=32 \
-          --checkers=16 \
-          --multi-thread-streams=4 \
-          --fast-list
-  
-          echo "Listing directories in container after load stage:"
-          rclone lsd chi_tacc:$RCLONE_CONTAINER
-  # load-data:
-  #   container_name: etl_load_data
-  #   image: rclone/rclone:latest
-  #   volumes:
-  #     - merged_medical:/data
-  #     # - ~/.config/rclone/rclone.conf:/root/.config/rclone/rclone.conf:ro
-  #     - ~/.config/rclone:/root/.config/rclone:ro
-  #   entrypoint: /bin/sh
-  #   command:
-  #     - -c
-  #     - |
-  #       if [ -z "$RCLONE_CONTAINER" ]; then
-  #         echo "ERROR: RCLONE_CONTAINER is not set"
-  #         exit 1
-  #       fi
-  #       echo "Deleting existing contents of the container..."
-  #       rclone delete chi_tacc:$RCLONE_CONTAINER --rmdirs || true
-  #       echo "Uploading merged dataset..."
-  #       rclone copy /data chi_tacc:$RCLONE_CONTAINER \
-  #       --progress \
-  #       --transfers=32 \
-  #       --checkers=16 \
-  #       --multi-thread-streams=4 \
-  #       --fast-list
-  #       echo "Upload completed. Listing directories in the container:"
-  #       rclone lsd chi_tacc:$RCLONE_CONTAINER
+
+  load-data:   
+    container_name: etl_load_data
+    image: rclone/rclone:latest
+    volumes:
+      - merged_medical:/data
+      - ~/.config/rclone/rclone.conf:/root/.config/rclone/rclone.conf:ro
+    entrypoint: /bin/sh
+    command:
+      - -c
+      - |
+        if [ -z "$RCLONE_CONTAINER" ]; then
+          echo "ERROR: RCLONE_CONTAINER is not set"
+          exit 1
+        fi
+        echo "Cleaning up existing contents of container..."
+        rclone delete chi_tacc:$RCLONE_CONTAINER --rmdirs || true
+
+        rclone copy /data/merged_medical chi_tacc:$RCLONE_CONTAINER \
+        --progress \
+        --transfers=32 \
+        --checkers=16 \
+        --multi-thread-streams=4 \
+        --fast-list
+
+        echo "Listing directories in container after load stage:"
+        rclone lsd chi_tacc:$RCLONE_CONTAINER
