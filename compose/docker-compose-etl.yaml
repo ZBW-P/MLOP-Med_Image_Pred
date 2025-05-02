@@ -30,6 +30,7 @@ services:
   load-data:   
     container_name: etl_load_data
     image: rclone/rclone:latest
+    network_mode: host
     volumes:
       - merged_medical:/data
       # - ~/.config/rclone/rclone.conf:/root/.config/rclone/rclone.conf:ro
