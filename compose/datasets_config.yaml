@@ -24,87 +24,87 @@ categories:
     sources:
       - dataset: COVID19_Radiography
         paths:
-          - COVID-19_Radiography_Dataset/Normal/images
+          - Normal/images
       - dataset: TB_Chest
         paths:
-          - TB_Chest_Radiography_Database/Normal
+          - Normal
 
   lung-covid:
     sources:
       - dataset: COVID19_Radiography
         paths:
-          - COVID-19_Radiography_Dataset/COVID/images
+          - COVID/images
 
   lung-opacity:
     sources:
       - dataset: COVID19_Radiography
         paths:
-          - COVID-19_Radiography_Dataset/Lung_Opacity/images
+          - Lung_Opacity/images
 
   lung-viral-pneumonia:
     sources:
       - dataset: COVID19_Radiography
         paths:
-          - COVID-19_Radiography_Dataset/Viral Pneumonia/images
+          - Viral Pneumonia/images
 
   lung-tuberculosis:
     sources:
       - dataset: TB_Chest
         paths:
-          - TB_Chest_Radiography_Database/Tuberculosis
+          - Tuberculosis
 
   brain-glioma:
     sources:
       - dataset: Brain_MRI
         paths:
-          - Brain_MRI/Training/glioma
-          - Brain_MRI/Testing/glioma
+          - Training/glioma
+          - Testing/glioma
 
   brain-meningioma:
     sources:
       - dataset: Brain_MRI
         paths:
-          - Brain_MRI/Training/meningioma
-          - Brain_MRI/Testing/meningioma
+          - Training/meningioma
+          - Testing/meningioma
 
   brain-notumor:
     sources:
       - dataset: Brain_MRI
         paths:
-          - Brain_MRI/Training/notumor
-          - Brain_MRI/Testing/notumor
+          - Training/notumor
+          - Testing/notumor
 
   brain-pituitary:
     sources:
       - dataset: Brain_MRI
         paths:
-          - Brain_MRI/Training/pituitary
-          - Brain_MRI/Testing/pituitary
+          - Training/pituitary
+          - Testing/pituitary
 
   lung-oct-cnv:
     oct: true
     sources:
       - dataset: OCT2017
         paths:
-          - OCT2017/CNV
+          - CNV
 
   lung-oct-dme:
     oct: true
     sources:
       - dataset: OCT2017
         paths:
-          - OCT2017/DME
+          - DME
 
   lung-oct-drusen:
     oct: true
     sources:
       - dataset: OCT2017
         paths:
-          - OCT2017/DRUSEN
+          - DRUSEN
 
   lung-oct-normal:
     oct: true
     sources:
       - dataset: OCT2017
         paths:
-          - OCT2017/NORMAL
+          - NORMAL
