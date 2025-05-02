@@ -17,7 +17,7 @@ datasets_info:
   Brain_MRI:
     url: https://www.kaggle.com/api/v1/datasets/download/masoudnickparvar/brain-tumor-mri-dataset
     archive_type: zip
-    extract_to: Brain_MRI
+    extract_to: .
 
 categories:
   lung-normal:
@@ -86,25 +86,29 @@ categories:
     sources:
       - dataset: OCT2017
         paths:
-          - CNV
+          - train/CNV
+          - test/CNV
 
   lung-oct-dme:
     oct: true
     sources:
       - dataset: OCT2017
         paths:
-          - DME
+          - train/DME
+          - test/DME
 
   lung-oct-drusen:
     oct: true
     sources:
       - dataset: OCT2017
         paths:
-          - DRUSEN
+          - train/DRUSEN
+          - test/DRUSEN
 
   lung-oct-normal:
     oct: true
     sources:
       - dataset: OCT2017
         paths:
-          - NORMAL
+          - train/NORMAL
+          - test/NORMAL
