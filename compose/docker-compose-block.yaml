@@ -78,10 +78,10 @@ services:
     # environment:
     #   - MLFLOW_TRACKING_URI=http://${HOST_IP}:8000/
     #   - FOOD11_DATA_DIR=/mnt/Food-11
+    
     environment:
       - MLFLOW_TRACKING_URI=http://${HOST_IP}:8000/
-      - MERGED_DATASET_DIR=/mnt/merged_dataset
-
+      - MEDICAL_DATA_DIR=/mnt/medical-data
     volumes:
       # - ~/data-persist-chi/workspace:/home/jovyan/work/
       # - type: bind
@@ -91,7 +91,7 @@ services:
       - ~/data-persist-chi/workspace:/home/jovyan/work/
       - type: bind
         source: /mnt/object/merged_dataset
-        target: /mnt/merged_dataset
+        target: /mnt/medical-data 
         read_only: true
       - type: bind
         source: /mnt/object
