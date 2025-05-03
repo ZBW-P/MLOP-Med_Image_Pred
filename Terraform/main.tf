@@ -7,7 +7,6 @@ resource "openstack_networking_subnet_v2" "private_subnet" {
   name       = "private-subnet-mlops-${var.suffix}"
   network_id = openstack_networking_network_v2.private_net.id
   cidr       = "192.168.1.0/24"
-  no_gateway = true
 }
 
 resource "openstack_networking_port_v2" "private_net_ports" {
