@@ -72,6 +72,7 @@ services:
   jupyter:
     image: quay.io/jupyter/pytorch-notebook:pytorch-2.5.1
     container_name: jupyter
+    restart: always #new
     ports:
       - "8888:8888"
     shm_size: 8g
