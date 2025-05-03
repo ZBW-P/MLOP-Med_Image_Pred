@@ -88,14 +88,14 @@ services:
       #   source: /mnt/object
       #   target: /mnt/Food-11
       #   read_only: true
-      - ~/data-persist-chi/workspace:/home/jovyan/work/
-      - type: bind
-        source: /mnt/object/merged_dataset
-        target: /mnt/medical-data 
-        read_only: true
+      - ~/MLOP-Med_Image_Pred/workspace:/home/jovyan/work/
       - type: bind
         source: /mnt/object
-        target: /mnt/Food-11
+        target: /mnt/medical-data 
         read_only: true
+      # - type: bind
+      #   source: /mnt/object
+      #   target: /mnt/medical-data
+      #   read_only: true
     command: >
       bash -c "python3 -m pip install mlflow && start-notebook.sh"
