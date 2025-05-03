@@ -20,7 +20,6 @@ services:
     command: server /data --console-address ":9001"
     volumes:
       - /mnt/block/minio_data:/data
-
   minio-create-bucket:
     image: minio/mc
     depends_on:
@@ -35,7 +34,6 @@ services:
       else
         echo 'Bucket mlflow-artifacts already exists';
       fi"
-
   postgres:
     image: postgres:latest
     container_name: postgres
@@ -45,10 +43,9 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: mlflowdb
     ports:
-      - "8080:5432"
+      - "5432:5432"
     volumes:
       - /mnt/block/postgres_data:/var/lib/postgresql/data
-
   mlflow:
     image: ghcr.io/mlflow/mlflow:v2.20.2
     container_name: mlflow
@@ -66,38 +63,22 @@ services:
       - "8000:8000"
     command: >
       /bin/sh -c "pip install psycopg2-binary boto3 &&
-      mlflow server --backend-store-uri postgresql://user:password@postgres:5432/mlflowdb --artifacts-destination s3://mlflow-artifacts/ --serve-artifacts --host 0.0.0.0 --port 8000"
-    networks:
-      - mlops-network
-
+      mlflow server --backend-store-uri postgresql://user:password@postgres/mlflowdb 
+      --artifacts-destination s3://mlflow-artifacts/ --serve-artifacts --host 0.0.0.0 --port 8000"
   jupyter:
     image: quay.io/jupyter/pytorch-notebook:pytorch-2.5.1
     container_name: jupyter
-    restart: always #new
     ports:
       - "8888:8888"
     shm_size: 8g
-    # environment:
-    #   - MLFLOW_TRACKING_URI=http://${HOST_IP}:8000/
-    #   - FOOD11_DATA_DIR=/mnt/Food-11
-    
     environment:
-      - MLFLOW_TRACKING_URI=http://${HOST_IP}:8000/
+      - MLFLOW_TRACKING_URI=http://mlflow:8000/
       - MEDICAL_DATA_DIR=/mnt/medical-data
     volumes:
-      # - ~/data-persist-chi/workspace:/home/jovyan/work/
-      # - type: bind
-      #   source: /mnt/object
-      #   target: /mnt/Food-11
-      #   read_only: true
       - ~/MLOP-Med_Image_Pred/workspace:/home/jovyan/work/
       - type: bind
         source: /mnt/object
-        target: /mnt/medical-data 
+        target: /mnt/medical-data
         read_only: true
-      # - type: bind
-      #   source: /mnt/object
-      #   target: /mnt/medical-data
-      #   read_only: true
     command: >
       bash -c "python3 -m pip install mlflow && start-notebook.sh"
