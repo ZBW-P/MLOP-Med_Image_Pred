@@ -50,25 +50,25 @@ services:
       - /mnt/block/postgres_data:/var/lib/postgresql/data
 
   mlflow:
-    image: ghcr.io/mlflow/mlflow:v2.20.2
-    container_name: mlflow
-    restart: always
-    depends_on:
-      - minio
-      - postgres
-      - minio-create-bucket
-    environment:
-      MLFLOW_TRACKING_URI: http://0.0.0.0:8000
-      MLFLOW_S3_ENDPOINT_URL: http://minio:9000
-      AWS_ACCESS_KEY_ID: "your-access-key"
-      AWS_SECRET_ACCESS_KEY: "your-secret-key"
-    ports:
-      - "8000:8000"
-    command: >
-      /bin/sh -c "pip install psycopg2-binary boto3 &&
-      # mlflow server --backend-store-uri postgresql://user:password@postgres/mlflowdb 
-      mlflow server --backend-store-uri postgresql://user:password@postgres:5432/mlflowdb 
-      --artifacts-destination s3://mlflow-artifacts/ --serve-artifacts --host 0.0.0.0 --port 8000"
+  image: ghcr.io/mlflow/mlflow:v2.20.2
+  container_name: mlflow
+  restart: always
+  depends_on:
+    - minio
+    - postgres
+    - minio-create-bucket
+  environment:
+    MLFLOW_TRACKING_URI: http://0.0.0.0:8000
+    MLFLOW_S3_ENDPOINT_URL: http://minio:9000
+    AWS_ACCESS_KEY_ID: "your-access-key"
+    AWS_SECRET_ACCESS_KEY: "your-secret-key"
+  ports:
+    - "8000:8000"
+  command: >
+    /bin/sh -c "pip install psycopg2-binary boto3 &&
+    mlflow server --backend-store-uri postgresql://user:password@postgres:5432/mlflowdb --artifacts-destination s3://mlflow-artifacts/ --serve-artifacts --host 0.0.0.0 --port 8000"
+  networks:
+    - mlops-network
 
   jupyter:
     image: quay.io/jupyter/pytorch-notebook:pytorch-2.5.1
