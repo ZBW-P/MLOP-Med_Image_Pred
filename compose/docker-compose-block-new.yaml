@@ -51,7 +51,7 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: mlflowdb
     ports:
-      - "8080:5432"
+      - "5432:5432"
     volumes:
       - /mnt/block/postgres_data:/var/lib/postgresql/data
     networks:
@@ -74,7 +74,7 @@ services:
       - "8000:8000"
     command: >
       /bin/sh -c "pip install psycopg2-binary boto3 &&
-      mlflow server --backend-store-uri postgresql://user:password@postgres:5432/mlflowdb 
+      mlflow server --backend-store-uri postgresql://user:password@postgres/mlflowdb 
       --artifacts-destination s3://mlflow-artifacts/ --serve-artifacts --host 0.0.0.0 --port 8000"
     networks:
       - mlops-network
@@ -82,7 +82,6 @@ services:
   jupyter:
     image: quay.io/jupyter/pytorch-notebook:pytorch-2.5.1
     container_name: jupyter
-    restart: always
     ports:
       - "8888:8888"
     shm_size: 8g
@@ -93,7 +92,7 @@ services:
       - ~/MLOP-Med_Image_Pred/workspace:/home/jovyan/work/
       - type: bind
         source: /mnt/object
-        target: /mnt/medical-data 
+        target: /mnt/medical-data
         read_only: true
     command: >
       bash -c "python3 -m pip install mlflow && start-notebook.sh"
