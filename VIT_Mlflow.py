@@ -205,7 +205,7 @@ def count_parameters(model):
     
 @rank_zero_only
 def setup_mlflow(hparams):
-    mlflow.set_tracking_uri("http://192.5.87.147:8000")
+    mlflow.set_tracking_uri("http://129.114.27.23:8000")
     mlflow.set_experiment("classifier")
     mlflow.pytorch.autolog()
     try:
@@ -232,7 +232,7 @@ def log_test_metrics(trainer, model, test_loader):
     
 if __name__ == '__main__':
     data_dir = "/home/jovyan/work/MLOP-Med_Image_Pred"
-    zip_file_path = "/mnt/object2/merged_dataset"
+    zip_file_path = "/mnt/object"
     batch_size = 32
     train_loader, val_loader, test_loader = get_dataloaders(data_dir, batch_size, zip_file_path)
     hparams = {
