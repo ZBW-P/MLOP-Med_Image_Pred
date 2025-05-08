@@ -6,16 +6,16 @@ from sklearn.model_selection import train_test_split
 
 # Define absolute paths
 train_dir = "/data/xray_dataset/images/train"
-output_base_dir = "/data/final_datasets"
+output_base_dir = "/data/final_datasets_png"
 csv_path = "/data/xray_dataset/train.csv"
 
-# Create output directory if it does not exist
+# Create the output root directory if it does not exist
 os.makedirs(output_base_dir, exist_ok=True)
 
-# Load CSV metadata
+# Load the CSV metadata
 df = pd.read_csv(csv_path)
 
-# Build a dictionary mapping image_id to class_name
+# Build a mapping from image_id to class_name
 id_to_class = dict(zip(df['image_id'], df['class_name']))
 
 # Build a list of all samples as (npy_path, class_name)
@@ -27,7 +27,7 @@ for filename in os.listdir(train_dir):
         class_name = id_to_class.get(image_id, 'Unknown')
         samples.append((npy_path, class_name))
 
-# Create DataFrame for easy manipulation
+# Convert to DataFrame for easier manipulation
 df_samples = pd.DataFrame(samples, columns=['path', 'class_name'])
 
 # Perform stratified split: 70% train, 30% temp
@@ -38,7 +38,7 @@ train_df, temp_df = train_test_split(
     random_state=42
 )
 
-# Split temp into 10% val, 20% test (to maintain 7:1:2 ratio)
+# Split temp into 10% val, 20% test (to maintain a 7:1:2 ratio)
 val_df, test_df = train_test_split(
     temp_df,
     test_size=2/3,
@@ -46,14 +46,14 @@ val_df, test_df = train_test_split(
     random_state=42
 )
 
-# Prepare dictionary for splits
+# Prepare dictionary for each split
 dataset_splits = {
     'train': train_df,
     'val': val_df,
     'test': test_df
 }
 
-# Process and save each image
+# Process and save each image as PNG
 for split_name, split_df in dataset_splits.items():
     print(f"Processing {split_name} set with {len(split_df)} samples...")
     for _, row in split_df.iterrows():
@@ -61,17 +61,23 @@ for split_name, split_df in dataset_splits.items():
         class_name = row['class_name']
         image_id = os.path.basename(npy_path).replace('.npy', '')
 
-        # Load the numpy array and convert to PIL Image
+        # Load the numpy array
         img_array = np.load(npy_path)
-        img_array = img_array.astype(np.uint8)
-        img = Image.fromarray(img_array).convert('L')
 
-        # Build output path
+        # Squeeze to remove extra singleton dimensions (e.g., (512, 512, 1) -> (512, 512))
+        img_array = np.squeeze(img_array)
+
+        # Normalize to 0-255 and convert to uint8
+        img_array = (img_array - np.min(img_array)) / (np.max(img_array) - np.min(img_array) + 1e-8)
+        img_array = (img_array * 255).astype(np.uint8)
+
+        # Build the output path
         class_dir = os.path.join(output_base_dir, split_name, class_name)
         os.makedirs(class_dir, exist_ok=True)
         png_path = os.path.join(class_dir, f"{image_id}.png")
 
         # Save as PNG
+        img = Image.fromarray(img_array)
         img.save(png_path)
 
-print("Data transformation and split completed successfully.")
+print("PNG conversion completed successfully.")
