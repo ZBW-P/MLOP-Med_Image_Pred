@@ -61,6 +61,9 @@ for split_name, split_df in dataset_splits.items():
         class_name = row['class_name']
         image_id = os.path.basename(npy_path).replace('.npy', '')
 
+        # Clean class name to avoid path issues (replace / with _)
+        class_name_clean = class_name.replace('/', '_')
+
         # Load the numpy array
         img_array = np.load(npy_path)
 
@@ -72,7 +75,7 @@ for split_name, split_df in dataset_splits.items():
         img_array = (img_array * 255).astype(np.uint8)
 
         # Build the output path
-        class_dir = os.path.join(output_base_dir, split_name, class_name)
+        class_dir = os.path.join(output_base_dir, split_name, class_name_clean)
         os.makedirs(class_dir, exist_ok=True)
         png_path = os.path.join(class_dir, f"{image_id}.png")
 
