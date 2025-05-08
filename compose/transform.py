@@ -4,10 +4,10 @@ import numpy as np
 from PIL import Image
 from sklearn.model_selection import train_test_split
 
-# Define paths
-train_dir = "archive/images/train"
+# Define absolute paths
+train_dir = "/data/xray_dataset/archive/images/train"
 output_base_dir = "/data/final_datasets"
-csv_path = "train.csv"
+csv_path = "/data/xray_dataset/train.csv"
 
 # Create output directory if it does not exist
 os.makedirs(output_base_dir, exist_ok=True)
