@@ -55,7 +55,7 @@ services:
         pip install pandas pillow numpy scikit-learn
 
         echo "Starting data transformation and split..."
-        python3 - << 'EOF'
+        python3 - <<EOF
 import os
 import pandas as pd
 import numpy as np
