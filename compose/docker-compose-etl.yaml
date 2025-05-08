@@ -1,44 +1,147 @@
-name: upload-merged-dataset
+name: xray-etl
 
 volumes:
-  mergeddata:
+  xraydata:
 
 services:
   extract-data:
-    container_name: extract_merged_data
+    container_name: etl_xray_extract
     image: python:3.11
     user: root
     volumes:
-      - mergeddata:/data
+      - xraydata:/data
     working_dir: /data
     command:
       - bash
       - -c
       - |
         set -e
-        echo "Creating target directory..."
-        rm -rf merged_dataset
-        mkdir -p merged_dataset
-        cd merged_dataset
-        # curl -L https://nyu.box.com/shared/static/vj63o013r3pep3fklidza32ijxuullc3.zip \
-        # curl -L https://nyu.box.com/shared/static/vj63o013r3pep3fklidza32ijxuullc3.zip -o merged_dataset.zip
-        # curl -L https://nyu.box.com/shared/static/vj63o013r3pep3fklidza32ijxuullc3.zip \
 
-        curl -L https://dl.boxcloud.com/d/1/b1!7sw-Gwm5BZFZo-xLhUGjs96ISryGldiLz1iTcKSMX_AiXBVHQJd1GExW6S9z50AOmBsOHuk9R1Me2gEw98UqA1UPKnHbbrREUxi4dDzDnGUtClcjLGgbUSM0Vp0t_SIX_MX1wfe6R-BogtE5ZqZUNh9aTiefC2gz6lXDH3vOakz9v9QubTAQ26i9QuwPUP5Km3baEDalhkzd8LHTp7gfoEexG3dBGYIoAaTKy9H6UA-FSQmbjRE7gkUvE_2VCuEsBOBRWN5lqt12lj6_ZnGLNjcX9bGMSjtj7pEwWjcA6sR0CfiFbhJMW_y0ML4V6U9eAOHsMOgAAeIXniMLnA4Ihp9ibl-EcvDXNR42UTRH0FoSwPclyiNS8qupVN6SDTcYnrjBt9fAgeF0Uz1Bvk0KdDd4Ubpakc69Su3oAhqvKZjVI1OuT7P3stNDe4dyfaY4VcpKE_uL3bRzO43fpJNT9ntW1G65_oNeOv7S1yEis0TNBbm32wDu_S44nEqfkidzTrlpYj0DYHy9uVrfo8aQAnPFGO9jv7LjA4siePflPT0pDMR5kMTEPaWCPpWRGFKblX_gFbAozuz7Yg_rQ5wFiPOTjhtVlaIDfk3w_wUXFQxazsiZwemk4vbmRqwE1kf26qEMZHdk6uEi9IK3GYwSkNkCbAW1VK1Kd0NJYkraKgiY_mm-q5ZxxtjlbLQ46x0nsdEvDgi-4F32jB4YH68hjR8fclR21GyLf6gM9RoqsP2Zm0Qdutl6ikKu5mkuY4z1cQlZLhokWpM79pNcbEZbVjy2gIzA427ik5T9wCB_rqaG1X2ooqchpdd09Ih1FD4f0yr96A8d5Xizrp5Pk-1kxTaCFRnyW8og9NcS2PxpVkG-PU3r5jkeMQaSYdkLnzMipC2DS4AFrnnJ-rKJyC7ihlFAAJk9VtYaQ6Oy6sDqgqwjJltWQtGJFZZb-MzDKjXNUHAVB2obT0DwoHnmKhyqOnj5rQ1bX1LYjvJY7KVkALOEnR3oJiXks8ALCjyW0g0y-RB4iAYSTvuU0M50lnu09vXwzdHHrVO3rLvYGEfgN8HIzf0hIu1OTjeZVtfUQY66GXLR39yFPDnR7xJ0hemuwRA7ss1SFlLz8-QmmRNVEz_DmHzRCb8xr9W_5aToGrdg6TCX0yTyoewfbWbujGZIXH4AP4PUOMmhi2akHcaVGU3otAMZelOiG2hdVaXdNIvcfi3YOtAicf_gL2KnjSDvacQQLXnPz12w29zVZKArbIPLbi_qrlqVjC6SW_hBFdJ5K2xaiHMuUoVXf9H-lLs6xgmqLCbBV0_s8GxjDVULx_B8vi9LHMpLjmIGmIUbmuShdCfUyNmJ8GUzbj1xYKEUw1LRFnLVMPKY-tgnZnuHgmCmZk-UAkod0JeLL5AULF8zXUt-lKLdf8s-p4QD4NalI2TwsolZ-u42lPyW4WcPiJhPZVnJH9nIk_uj065FAdQ1K0vy-7Mb3b6j0f_oSyI7psYfnlToReVZR904e3vUk97M2ZUa2BU./download.zip \
-          -o merged_dataset.zip
-          
-        echo "Unzipping..."
-        unzip -q merged_dataset.zip 
-        rm -f merged_dataset.zip
+        echo "Resetting dataset directory..."
+        rm -rf xray_dataset
+        mkdir -p xray_dataset
+        cd xray_dataset
+
+        echo "Downloading X-ray dataset zip..."
+        curl -L -o xraynumpy.zip https://www.kaggle.com/api/v1/datasets/download/bibhash123/xraynumpy
+
+        echo "Unzipping X-ray dataset..."
+        unzip -q xraynumpy.zip
+        rm -f xraynumpy.zip
+
+        echo "Downloading CSV metadata..."
+        curl -L -o train.csv.zip "https://storage.googleapis.com/kaggle-data-sets/1042002/1794153/compressed/train.csv.zip?GoogleAccessId=web-data@kaggle-161607.iam.gserviceaccount.com&Expires=1746941105&Signature=kgpzZ9QZD5dD5gG5gbEqCznf%2B6qK%2Bh5lPx59s0BVQ1qjNUZ0QJlMbQKkwBvJAiYmz6HFA8apXjqD2dxz1cTJCTmQrMpGgpco8caxE86Wnamh0Mp5emZEc5eFYv3oYUHFqjJHGywTquOQfAFu3UPJOTjA%2BlG47pq0eafR8FoDmTbFcPcN841pMKyrUtXwCPQ8NnwM7C6bNv6oLnNHsHa8KCu4ov9asF7CseRRiSl%2FKUDxAE2grpYjanb%2BS6bxA8ZJOA0%2FA2c6JZ%2BGEzPEc4t4ScI3xxiDxZhleYw%2FJXi4FIOBkTRA39yOSxeU%2Bl9JuM%2F0ue0U6eoqJrQ0tQRorUkDEg%3D%3D&response-content-disposition=attachment%3B+filename%3Dtrain.csv.zip"
+
+        echo "Unzipping CSV metadata..."
+        unzip -q train.csv.zip
+        rm -f train.csv.zip
 
         echo "Listing contents of /data after extract stage:"
-        ls -l /data
+        ls -l /data/xray_dataset
+
+  transform-data:
+    container_name: etl_xray_transform
+    image: python:3.11
+    volumes:
+      - xraydata:/data
+    working_dir: /data/xray_dataset
+    command:
+      - bash
+      - -c
+      - |
+        set -e
+
+        echo "Installing Python dependencies..."
+        pip install pandas pillow numpy scikit-learn
+
+        echo "Starting data transformation and split..."
+        python3 - << 'EOF'
+import os
+import pandas as pd
+import numpy as np
+from PIL import Image
+from sklearn.model_selection import train_test_split
+
+# Define paths
+train_dir = "archive/images/train"
+output_base_dir = "/data/final_datasets"
+csv_path = "train.csv"
+
+# Create output directory if it does not exist
+os.makedirs(output_base_dir, exist_ok=True)
+
+# Load CSV metadata
+df = pd.read_csv(csv_path)
+
+# Build a dictionary mapping image_id to class_name
+id_to_class = dict(zip(df['image_id'], df['class_name']))
+
+# Build a list of all samples as (npy_path, class_name)
+samples = []
+for filename in os.listdir(train_dir):
+    if filename.endswith('.npy'):
+        image_id = filename.replace('.npy', '')
+        npy_path = os.path.join(train_dir, filename)
+        class_name = id_to_class.get(image_id, 'Unknown')
+        samples.append((npy_path, class_name))
+
+# Create DataFrame for easy manipulation
+df_samples = pd.DataFrame(samples, columns=['path', 'class_name'])
+
+# Perform stratified split: 70% train, 30% temp
+train_df, temp_df = train_test_split(
+    df_samples,
+    test_size=0.3,
+    stratify=df_samples['class_name'],
+    random_state=42
+)
+
+# Split temp into 10% val, 20% test (to maintain 7:1:2 ratio)
+val_df, test_df = train_test_split(
+    temp_df,
+    test_size=2/3,
+    stratify=temp_df['class_name'],
+    random_state=42
+)
+
+# Prepare dictionary for splits
+dataset_splits = {
+    'train': train_df,
+    'val': val_df,
+    'test': test_df
+}
+
+# Process and save each image
+for split_name, split_df in dataset_splits.items():
+    print(f"Processing {split_name} set with {len(split_df)} samples...")
+    for _, row in split_df.iterrows():
+        npy_path = row['path']
+        class_name = row['class_name']
+        image_id = os.path.basename(npy_path).replace('.npy', '')
+
+        # Load the numpy array and convert to PIL Image
+        img_array = np.load(npy_path)
+        img = Image.fromarray(img_array).convert('L')
+
+        # Build output path
+        class_dir = os.path.join(output_base_dir, split_name, class_name)
+        os.makedirs(class_dir, exist_ok=True)
+        png_path = os.path.join(class_dir, f"{image_id}.png")
+
+        # Save as PNG
+        img.save(png_path)
+
+print("Data transformation and split completed successfully.")
+EOF
+
+        echo "Listing contents of /data/final_datasets after transform stage:"
+        find /data/final_datasets -type f | head -n 10
 
   load-data:
-    container_name: etl_load_data
+    container_name: etl_xray_load
     image: rclone/rclone:latest
     volumes:
-      - mergeddata:/data
+      - xraydata:/data
       - ~/.config/rclone/rclone.conf:/root/.config/rclone/rclone.conf:ro
     entrypoint: /bin/sh
     command:
@@ -48,17 +151,16 @@ services:
           echo "ERROR: RCLONE_CONTAINER is not set"
           exit 1
         fi
-
-        echo "Cleaning up existing contents of object store..."
+        echo "Cleaning up existing contents in the remote container..."
         rclone delete chi_tacc:$RCLONE_CONTAINER --rmdirs || true
 
-        echo "Uploading /data/merged_dataset to object store..."
-        rclone copy /data/merged_dataset chi_tacc:$RCLONE_CONTAINER \
-          --progress \
-          --transfers=32 \
-          --checkers=16 \
-          --multi-thread-streams=4 \
-          --fast-list
+        echo "Uploading dataset to remote container..."
+        rclone copy /data chi_tacc:$RCLONE_CONTAINER \
+        --progress \
+        --transfers=32 \
+        --checkers=16 \
+        --multi-thread-streams=4 \
+        --fast-list
 
-        echo "Upload complete. Listing contents:"
+        echo "Listing directories in the remote container after upload:"
         rclone lsd chi_tacc:$RCLONE_CONTAINER
