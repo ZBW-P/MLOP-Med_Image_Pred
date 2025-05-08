@@ -63,6 +63,7 @@ for split_name, split_df in dataset_splits.items():
 
         # Load the numpy array and convert to PIL Image
         img_array = np.load(npy_path)
+        img_array = img_array.astype(np.uint8)
         img = Image.fromarray(img_array).convert('L')
 
         # Build output path
