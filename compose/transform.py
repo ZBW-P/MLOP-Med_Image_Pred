@@ -5,7 +5,7 @@ from PIL import Image
 from sklearn.model_selection import train_test_split
 
 # Define absolute paths
-train_dir = "/data/xray_dataset/archive/images/train"
+train_dir = "/data/xray_dataset/images/train"
 output_base_dir = "/data/final_datasets"
 csv_path = "/data/xray_dataset/train.csv"
 
