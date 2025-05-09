@@ -11,4 +11,4 @@ COPY . .
 RUN pip install --no-cache-dir torch torchvision pillow requests
 
 # Set the default command to run the simulation script
-CMD ["python3", "simulate_requests.py"]
+CMD ["python3", "simulate_requests_2.py"]
