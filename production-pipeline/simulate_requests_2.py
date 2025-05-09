@@ -28,7 +28,7 @@ preprocess = transforms.Compose([
 ])
 
 # Production data output directory
-production_dir = "/mnt/object/production_data/unlabeled"
+production_dir = "/mnt/data/production_data/unlabeled"
 os.makedirs(production_dir, exist_ok=True)
 
 # Limit to the first 50 images
