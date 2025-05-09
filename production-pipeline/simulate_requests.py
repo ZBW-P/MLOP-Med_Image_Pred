@@ -15,7 +15,7 @@ image_paths = [sample[0] for sample in dataset.samples]
 random.shuffle(image_paths)
 
 # Set the inference server URL
-FASTAPI_URL = "http://localhost:8265/predict/"
+FASTAPI_URL = "http://129.114.27.23:8265/predict/"
 
 # Define the preprocessing pipeline
 preprocess = transforms.Compose([
