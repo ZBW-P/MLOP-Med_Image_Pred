@@ -1,0 +1,9 @@
+python-multipart
+fastapi
+uvicorn[standard]
+torch
+torchvision
+pillow
+einops
+pytorch-lightning
+prometheus-fastapi-instrumentator
