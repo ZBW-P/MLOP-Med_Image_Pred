@@ -1,1 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Medical Image Classification Demo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f0f0f0;
+      font-family: 'Roboto', sans-serif;
+      color: #333;
+    }
+    .container {
+      width: 80%;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1 {
+      color: #003366;
+      text-align: center;
+      font-size: 2.5em;
+    }
+    .instructions {
+      text-align: center;
+      font-size: 1.2em;
+      color: #555;
+      margin-bottom: 20px;
+    }
+    .file-upload {
+      text-align: center;
+      margin: 20px 0;
+    }
+    .file-label {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #003366;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .file-label:hover {
+      background-color: #005599;
+    }
+    #file-name {
+      display: block;
+      margin-top: 10px;
+      color: #666;
+    }
+    #preview-container {
+      text-align: center;
+      margin: 20px 0;
+      display: none;
+    }
+    #preview {
+      max-width: 200px;
+      max-height: 200px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      background-color: #003366;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #005599;
+    }
+    #result {
+      text-align: center;
+      font-size: 1.3em;
+      font-weight: bold;
+      color: #003366;
+      margin-top: 20px;
+    }
+    #chart-container {
+      position: relative;
+      margin: 30px auto;
+      width: 100%;
+      max-width: 700px;
+      background: white;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Upload Medical Image for Classification</h1>
+    <p class="instructions">Please upload a medical image to classify its type using our ViT model.</p>
+
+    <div class="file-upload">
+      <label for="imgInput" class="file-label">Choose File</label>
+      <span id="file-name">No file chosen</span>
+    </div>
+    <input type="file" id="imgInput" accept="image/*" style="display: none;">
+
+    <div id="preview-container">
+      <img id="preview" src="" alt="Image preview">
+    </div>
+
+    <button onclick="send()">Predict</button>
+    <div id="result">Waiting for upload…</div>
+
+    <div id="chart-container">
+      <canvas id="probChart"></canvas>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    document.getElementById('imgInput').addEventListener('change', function() {
+      const file = this.files[0];
+      const fileNameSpan = document.getElementById('file-name');
+      if (file) {
+        fileNameSpan.innerText = file.name;
+        const url = URL.createObjectURL(file);
+        const previewImg = document.getElementById('preview');
+        previewImg.src = url;
+        document.getElementById('preview-container').style.display = 'block';
+      } else {
+        fileNameSpan.innerText = 'No file chosen';
+        document.getElementById('preview-container').style.display = 'none';
+      }
+      document.getElementById('chart-container').style.display = 'none';
+      document.getElementById('result').innerText = 'Waiting for upload…';
+    });
+
+    let myChart = null;
+
+    async function send() {
+      const inp = document.getElementById('imgInput');
+      if (!inp.files.length) {
+        alert('Please select an image first.');
+        return;
+      }
+      document.getElementById('result').innerText = 'Predicting…';
+      document.getElementById('chart-container').style.display = 'none';
+
+      const formData = new FormData();
+      formData.append('file', inp.files[0]);
+
+      const response = await fetch('/predict/', {
+        method: 'POST',
+        body: formData
+      });
+      if (!response.ok) {
+        document.getElementById('result').innerText = 
+          `Request failed: ${response.status}`;
+        return;
+      }
+      const data = await response.json();
+      document.getElementById('result').innerText =
+        `Predicted: ${data.pred_class} (index ${data.pred_idx})`;
+
+      const labels = Object.keys(data.probabilities);
+      const probs  = labels.map(l => data.probabilities[l]);
+      const ctx = document.getElementById('probChart').getContext('2d');
+
+      if (myChart) myChart.destroy();
+      myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Probability',
+            data: probs,
+            backgroundColor: 'rgba(0,51,102,0.6)',
+            borderColor:   'rgba(0,51,102,1)',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          animation: false,
+          scales: {
+            y: { beginAtZero: true, max: 1 }
+          },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: ctx => `${(ctx.parsed.y * 100).toFixed(1)}%`
+              }
+            }
+          }
+        }
+      });
+
+      document.getElementById('chart-container').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
 
