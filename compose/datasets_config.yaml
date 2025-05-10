@@ -14,10 +14,6 @@ datasets_info:
     archive_type: zip
     extract_to: TB_Chest_Radiography_Database
 
-  Brain_MRI:
-    url: https://www.kaggle.com/api/v1/datasets/download/masoudnickparvar/brain-tumor-mri-dataset
-    archive_type: zip
-    extract_to: .
 
 categories:
   lung-normal:
@@ -52,34 +48,6 @@ categories:
       - dataset: TB_Chest
         paths:
           - Tuberculosis
-
-  brain-glioma:
-    sources:
-      - dataset: Brain_MRI
-        paths:
-          - Training/glioma
-          - Testing/glioma
-
-  brain-meningioma:
-    sources:
-      - dataset: Brain_MRI
-        paths:
-          - Training/meningioma
-          - Testing/meningioma
-
-  brain-notumor:
-    sources:
-      - dataset: Brain_MRI
-        paths:
-          - Training/notumor
-          - Testing/notumor
-
-  brain-pituitary:
-    sources:
-      - dataset: Brain_MRI
-        paths:
-          - Training/pituitary
-          - Testing/pituitary
 
   lung-oct-cnv:
     oct: true
