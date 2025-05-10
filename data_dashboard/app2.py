@@ -70,4 +70,4 @@ for subset in subsets:
                         tmp_file.write(content)
                         tmp_file.flush()
                         with cols[i]:
-                            st.image(tmp_file.name, caption=os.path.basename(swift_path), use_column_width=True)
+                            st.image(tmp_file.name, caption=os.path.basename(swift_path), use_container_width=True)
