@@ -5,5 +5,8 @@ services:
     build: .
     ports:
       - "9002:9002"
+    environment:
+      - OS_TOKEN=gAAAAABoH5upOwzLpatN7uZvmkeecm4Tm__TKO5AaIZ4NQSXkru3Bo2YnG4-9KZvKRiVt-uHTRBcmo-rXiSl4f0qzVGVjRLJcd-ka4HgvsWojsbhWvOQEAI0QPaWeghRaoem8Uktv3x19t0DzxQ9hUPZF7IK1sPfCdaKCKU4ZXohcwP9LnLcri7IzSsq02RFAglPQtuMjczkpr2M9MV2qfMAT0UyHeBjkifPFvTjgdvun51gReXd2Tgv71pNa3s68LDOrBaGjFT5
+      - STORAGE_URL=https://chi.uc.chameleoncloud.org:7480/swift/v1/AUTH_7c0a7a1952e44c94aa75cae1ff5dc9b4
     volumes:
       - .:/app
