@@ -17,13 +17,13 @@ categories = config["categories"]
 
 # Config
 TARGET_ROOT = Path("merged_dataset")
-DOWNLOAD_ROOT = Path("/mnt/object")  # 👈 Online: set your dataset mount path
+DOWNLOAD_ROOT = Path("/mnt/object")  
 
 RANDOM_SEED = 42
 IMG_EXTS = {".jpg", ".jpeg", ".png"}
 random.seed(RANDOM_SEED)
 
-print(f"📂 Using DOWNLOAD_ROOT: {DOWNLOAD_ROOT.resolve()}")
+print(f" Using DOWNLOAD_ROOT: {DOWNLOAD_ROOT.resolve()}")
 
 # If needed online, uncomment to enable auto download/extract
 # for dataset, info in datasets_info.items():
