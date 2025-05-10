@@ -10,14 +10,14 @@ from PIL import Image
 import tempfile
 
 st.set_page_config(page_title="Medical Image Dataset Dashboard", layout="wide")
-st.title("📦 Medical Image Dashboard (via Swift API)")
+st.title(" Medical Image Dashboard (via Swift API)")
 
 # ==== Auth Setup with Token ====
 token = os.environ.get("OS_TOKEN")
 storage_url = os.environ.get("STORAGE_URL")
 
 if not token or not storage_url:
-    st.error("❌ Missing OS_TOKEN or STORAGE_URL environment variables. Please check your docker-compose configuration.")
+    st.error(" Missing OS_TOKEN or STORAGE_URL environment variables. Please check your docker-compose configuration.")
     st.stop()
 
 swift_conn = Connection(preauthurl=storage_url,
@@ -51,15 +51,15 @@ for subset in subsets:
     subset_total = sum(data_info[subset][cls]['count'] for cls in data_info[subset])
     st.subheader(f"{subset.capitalize()} - {subset_total} images")
     total += subset_total
-st.write(f"✅ Total images: **{total}**")
+st.write(f" Total images: **{total}**")
 
 # ==== Detailed Section ====
 for subset in subsets:
     if data_info[subset]:
-        st.header(f"📂 {subset.capitalize()} Set")
+        st.header(f" {subset.capitalize()} Set")
         for cls in data_info[subset]:
             cls_info = data_info[subset][cls]
-            st.subheader(f"📁 {cls} - {cls_info['count']} images")
+            st.subheader(f" {cls} - {cls_info['count']} images")
 
             if cls_info['paths']:
                 samples = random.sample(cls_info['paths'], min(3, len(cls_info['paths'])))
