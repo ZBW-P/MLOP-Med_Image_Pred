@@ -47,7 +47,7 @@ services:
           rclone delete chi_tacc:$RCLONE_CONTAINER --rmdirs || true
 
           echo "Uploading /data to object store..."
-          rclone copy /data/. chi_tacc:$RCLONE_CONTAINER \
+          rclone copy /data/merged_dataset/. chi_tacc:$RCLONE_CONTAINER \
             --progress \
             --transfers=32 \
             --checkers=16 \
