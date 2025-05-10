@@ -1,4 +1,4 @@
-# Streamlit app to read object storage directly using Swift API (Chameleon-compatible via env vars)
+# Streamlit app to read object storage directly using Swift API (anonymous access)
 
 import streamlit as st
 import pandas as pd
@@ -10,14 +10,12 @@ from PIL import Image
 import tempfile
 
 st.set_page_config(page_title="Medical Image Dataset Dashboard", layout="wide")
-st.title("Medical Image Dashboard (via Swift API)")
+st.title("📦 Medical Image Dashboard (via Swift API)")
 
-# ==== Auth Setup via ENV ====
-token = os.environ["OS_TOKEN"]
-storage_url = os.environ["STORAGE_URL"]
-
+# ==== Anonymous Auth Setup ====
+storage_url = "https://chi.uc.chameleoncloud.org:7480/swift/v1/AUTH_7c0a7a1952e44c94aa75cae1ff5dc9b4"
 swift_conn = Connection(preauthurl=storage_url,
-                        preauthtoken=token,
+                        preauthtoken='',
                         retries=5)
 
 # ==== Configuration ====
@@ -47,7 +45,7 @@ for subset in subsets:
     subset_total = sum(data_info[subset][cls]['count'] for cls in data_info[subset])
     st.subheader(f"{subset.capitalize()} - {subset_total} images")
     total += subset_total
-st.write(f"Total images: **{total}**")
+st.write(f"✅ Total images: **{total}**")
 
 # ==== Detailed Section ====
 for subset in subsets:
