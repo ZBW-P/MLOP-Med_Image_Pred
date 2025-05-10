@@ -25,7 +25,7 @@ swift_conn = Connection(preauthurl=storage_url,
                         retries=5)
 
 # ==== Configuration ====
-container_name = "object-persist-project42-1"
+container_name = "object-persist-project42"
 subsets = ['train', 'val', 'test', 'final_eval']
 image_exts = ('.jpg', '.jpeg', '.png')
 
