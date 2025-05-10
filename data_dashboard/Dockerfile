@@ -16,13 +16,10 @@ WORKDIR /app
 COPY . .
 
 RUN pip install --no-cache-dir \
-    streamlit \
-    pandas \
-    pillow \
-    python-swiftclient \
-    chameleon-lib
+    streamlit pandas pillow python-swiftclient
 
 EXPOSE 9002
 
-CMD ["streamlit", "run", "app.py", "--server.address=0.0.0.0", "--server.port=9002"]
+CMD ["streamlit", "run", "app2.py", "--server.address=0.0.0.0", "--server.port=9002"]
+
 
