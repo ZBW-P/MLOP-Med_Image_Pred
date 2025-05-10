@@ -10,7 +10,7 @@ services:
     volumes:
       - merged_medical:/app/merged_dataset
       - ./downloads:/app/downloads 
-      - ./datamerged2.py:/app/datamerged3.py:ro
+      - ./datamerged3.py:/app/datamerged3.py:ro
       - ./datasets_config.yaml:/app/datasets_config.yaml:ro
     working_dir: /app
     command:
@@ -21,7 +21,7 @@ services:
         echo "Installing dependencies..."
         pip install --no-cache-dir requests pyyaml scikit-learn
         echo "Running data merge pipeline..."
-        python3 datamerged2.py
+        python3 datamerged3.py
         echo "Merge completed. Listing contents of merged_dataset:"
         find /app/merged_dataset | head
 
