@@ -20,7 +20,7 @@ import subprocess
 from pytorch_lightning import Trainer
 from pytorch_lightning.strategies import FSDPStrategy
 from torch.distributed.fsdp import ShardingStrategy
-
+import random
 def pair(t):
     return t if isinstance(t, tuple) else (t, t)
 
@@ -182,7 +182,7 @@ class LitViT(L.LightningModule):
     def configure_optimizers(self):
         return optim.Adam(self.model.parameters(), lr=self.hparams.lr)
 
-def get_dataloaders(data_dir, batch_size, file_path, num_workers=16):
+def get_dataloaders(batch_size, file_path, num_workers=16):
     transform_medical = transforms.Compose([
         transforms.Resize((64, 64)),
         transforms.Grayscale(num_output_channels=1),
@@ -221,12 +221,70 @@ def setup_mlflow(hparams):
         mlflow.log_text(info, "gpu-info.txt")
     except:
         pass
+    
+def add(train_loader, val_loader, test_loader, batch_size, file_path, num_workers: int =16, ratio: float=0.1 ,seed: int = 42):
+    
+    file = input("Enter file name you want to add the list is [lung-covid   lung-oct-cnv  lung-oct-drusen  lung-opacity lung-viral-pneumonia lung-normal  lung-oct-dme  lung-oct-normal  lung-tuberculosis] ").strip()
+    offset = int(input("Enter number of times iteration for select object [0-9]: "))
+    
+    transform_medical = transforms.Compose([
+        transforms.Resize((64, 64)),
+        transforms.Grayscale(num_output_channels=1),
+        transforms.ToTensor(),
+        transforms.Normalize(mean=[0.5], std=[0.5]),
+    ])
+    New_path = os.path.join(file_path, 'final_eval', file)
+    new_dataset = datasets.ImageFolder(root=New_path, transform=transform_medical)
+    
+    class_size=int(ratio*len(new_dataset))
+    start_idx =offset*class_size
+    if offset == 9:
+        end_idx=len(new_dataset)
+    else:
+        end_idx = start_idx +class_size
+    
+    if end_idx > len(new_dataset):
+        raise ValueError(
+            f"would exceed dataset size {end_idx}"
+        )
+        
+    indices = list(range(start_idx,end_idx))
+        
+    rnd = random.Random(seed + offset)
+    rnd.shuffle(indices)
+    
+    n_train = int(0.7 * class_size)
+    n_val   = int(0.2 * class_size)
+    
+    train_idx = indices[:n_train]
+    val_idx = indices[n_train:n_train + n_val]
+    test_idx  = indices[n_train + n_val:]
+    
+    new_train = torch.utils.data.Subset(new_dataset, train_idx)
+    new_val = torch.utils.data.Subset(new_dataset, val_idx)
+    new_test  = torch.utils.data.Subset(new_dataset, test_idx)
+    
+    updated_train = torch.utils.data.ConcatDataset([train_loader.dataset, new_train])
+    updated_val = torch.utils.data.ConcatDataset([val_loader.dataset, new_val])
+    updated_test = torch.utils.data.ConcatDataset([test_loader.dataset, new_test])
+    
+    train_loader = DataLoader(updated_train, batch_size=batch_size, shuffle=True, num_workers=num_workers)
+    val_loader = DataLoader(updated_val, batch_size=batch_size, shuffle=False, num_workers=num_workers)
+    test_loader = DataLoader(updated_test, batch_size=batch_size, shuffle=False, num_workers=num_workers)
+    
+    return train_loader, val_loader, test_loader
 
 if __name__ == '__main__':
+    add_if=False
     data_dir = "/home/jovyan/work/MLOP-Med_Image_Pred"
     zip_file_path = "/mnt/object"
     batch_size = 32
-    train_loader, val_loader, test_loader = get_dataloaders(data_dir, batch_size, zip_file_path)
+    train_loader, val_loader, test_loader = get_dataloaders(batch_size, zip_file_path)
+    
+    if add_if:
+        train_loader, val_loader, test_loader=add(train_loader, val_loader, test_loader,batch_size, zip_file_path)
+        
+    
     hparams = {
         "image_size": 64,
         "patch_size": 16,
@@ -240,13 +298,6 @@ if __name__ == '__main__':
         "emb_dropout": 0.0,
         "lr": 0.0001,
     }
-    
-    # fsdp_strategy = FSDPStrategy(
-    #     sharding_strategy=ShardingStrategy.FULL_SHARD,
-    #     auto_wrap_policy=None,
-    #     cpu_offload=False,
-    # )
-    
 
     lit_vit = LitViT(hparams)
 
@@ -259,7 +310,7 @@ if __name__ == '__main__':
     )
 
     trainer = Trainer(
-        devices=2,
+        devices=1,
         accelerator="gpu",
         strategy=DDPStrategy(find_unused_parameters=True),
         # strategy=fsdp_strategy,
