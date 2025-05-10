@@ -17,7 +17,7 @@ categories = config["categories"]
 
 # Config
 TARGET_ROOT = Path("merged_dataset")
-DOWNLOAD_ROOT = Path("/mnt/object")  
+DOWNLOAD_ROOT = Path("downloads") 
 
 RANDOM_SEED = 42
 IMG_EXTS = {".jpg", ".jpeg", ".png"}
