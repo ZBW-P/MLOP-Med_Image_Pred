@@ -32,26 +32,26 @@ print(f" Using DOWNLOAD_ROOT: {DOWNLOAD_ROOT.resolve()}")
 #     extract_to = DOWNLOAD_ROOT / info["extract_to"]
 #     archive_path = DOWNLOAD_ROOT / f"{dataset}.{archive_type.replace('.', '')}"
 #
-#     extract_to.parent.mkdir(parents=True, exist_ok=True)
-#     if not archive_path.exists():
-#         print(f"Downloading {dataset}...")
-#         with requests.get(url, stream=True) as r:
-#             with open(archive_path, "wb") as f:
-#                 for chunk in r.iter_content(chunk_size=8192):
-#                     f.write(chunk)
-#     else:
-#         print(f"{dataset} already downloaded.")
-#
-#     if not extract_to.exists():
-#         print(f"Extracting {dataset}...")
-#         if archive_type == "zip":
-#             with zipfile.ZipFile(archive_path, 'r') as zip_ref:
-#                 zip_ref.extractall(DOWNLOAD_ROOT)
-#         elif archive_type == "tar.gz":
-#             with tarfile.open(archive_path, 'r:gz') as tar_ref:
-#                 tar_ref.extractall(DOWNLOAD_ROOT)
-#     else:
-#         print(f"{dataset} already extracted.")
+    extract_to.parent.mkdir(parents=True, exist_ok=True)
+    if not archive_path.exists():
+        print(f"Downloading {dataset}...")
+        with requests.get(url, stream=True) as r:
+            with open(archive_path, "wb") as f:
+                for chunk in r.iter_content(chunk_size=8192):
+                    f.write(chunk)
+    else:
+        print(f"{dataset} already downloaded.")
+
+    if not extract_to.exists():
+        print(f"Extracting {dataset}...")
+        if archive_type == "zip":
+            with zipfile.ZipFile(archive_path, 'r') as zip_ref:
+                zip_ref.extractall(DOWNLOAD_ROOT)
+        elif archive_type == "tar.gz":
+            with tarfile.open(archive_path, 'r:gz') as tar_ref:
+                tar_ref.extractall(DOWNLOAD_ROOT)
+    else:
+        print(f"{dataset} already extracted.")
 
 # Collect image files
 all_data = defaultdict(list)
@@ -177,5 +177,5 @@ for category, files in all_data.items():
             shutil.copyfile(src_path, dest)
         print(f"{split}: {len(items)} images saved.")
 
-print("\n✅ Dataset processing completed. Merged dataset saved to:", TARGET_ROOT.resolve())
+print("\n Dataset processing completed. Merged dataset saved to:", TARGET_ROOT.resolve())
 
