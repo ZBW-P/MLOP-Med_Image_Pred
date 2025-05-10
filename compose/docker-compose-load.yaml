@@ -9,7 +9,7 @@ services:
     image: python:3.11
     user: root
     volumes:
-      - mergeddata:/data
+      - mergeddata:/data/merged_dataset
     working_dir: /data
     command:
       - bash
@@ -22,7 +22,7 @@ services:
           echo "Downloading merged_dataset.zip from NYU Box..."
           curl -L 'https://dl.boxcloud.com/d/1/b1!m6BF4CNRHKaOxIzjcyiy7L7cIlDp93iuEly1jTjWCQ4SGP1lt0a0Gpu3b0DxI2WgI5Wtc_454aRvcFGe7BaXZ4TEF087eozxxx_yNT5TaVQJ11iinHWX_iHYEOiXhMT1jxjhQtsn-pDxVLSz1DvD7Wm7uMJRqLRPptb12QQ4j1iUbBhcT9EET-Q152ikRGSzF3gueLrJUjMYwV4NBNCl0WykhQhz5sVq4OrZHdaRnniI4rJVaAFwHxan2T1UTiOxdWhsdA9DHIax7c1UoI454GWNeUSE-xaeYjUieU6dCBzmgm8j12j4DVYna80Yjlggi18fsEwY1S9ScoPLUiwtjHfyDELpaFXIo4Q_Hq8ZaPybdyMSyPJMjUQLpysS7YfGOjoeGqMfA6ekPPhssTLKPhgEgfXl9wEgUPZo973KITqyrSeTsmUPMlzzPghJqAptaK6y6qV268uvYT2-tQn856UBAffH1VXj0E0pi8m1GNcwqmZ4m9Fmd_vbHQbshts9oT4krToRcypH3dp3s3DQinx-ebMjvoEHImohzKHsa-3DlC2uuxZJyKKH8c0zmwbGK0KSI32fl-3eamBqCO5yH15V8PsmpTXwD_QyNlTRdWynSaC9YiSx6-vELlYw9DoOffoYKu6abz6VkYWWvlbBkH_569cvQ37yarXaQ3mH_6rphttiO4-5cuZxJ5KsQZ1Wwe7iEAr0tC-UfSAUmHK_cuPaWhybAfRvXmRDgYKNWGCwn5mkSFxvhZ2TCR_SxAct36QhNA322S-WebwBRwOheBMvjE0xSSQ875Dy5axu4D4EaDxTX-Tlw0GcDrlZRbPFHSo9cv28cXZodgLuajqqD72emQ9rYrqIenaXphoP3W4QypMlPNQw_uJ4I8uV5-eYYPPZ3fypivlW6Rno3QfZMapIgFYfAd6TKc8_vpnFVU0RQLIMn8o2X_dZFEhsjDvpgsrkym6HlbcNZGT_vDAZunG9qv0GVmf6d8weB55zFX6HHb2PFhJGkhwUAFlfjyd92LGcEUZONLop8KLIrvqp8V51a4Mo0gtzyu7tWuTMgSrNLvMnXmaA6f8ZPet9JhU7q76iwxkM0LwI2XDPDF5DCUg9SHbrPwlW2caYMUkdo3b5IQoqd4BW26hMDn39TxDhu_Junf7Oca2ZZX_B2AuuXI_VBey4h2iLFisWufSgB1v9E-F-IsMAquC-OP2C-u4VcP5qYGD_2pvDtBCTs_FvUYYinbWmY5L1hd5C_TxObZ5BCGCj1L1dHPWouGpaHufoIG-jTS3uniloFyZbFrDVBcCP1wAPZIF3ra6hCOIcRHRM-lZmhhMuWUTo2ZUTjfqULjBvmr4om_KF0WB8Oz3WsYdZD7YCKRQEeDk9sHr_O-4lQCHaDJ9yngZKjHFOq4gTWW-vOnC5gMNPowkpOfSekKJZFV13VpTm0jNla3iayFwvu9ktEBbQjJGCLcufcImTj0wR3I9oe7P7YLypjWxq52oschYeWGNWpbf9rKOWpLAt2Mvm8OAv0A../download' -o merged_dataset.zip
           echo "Unzipping..."
-          unzip -q merged_dataset.zip -d /data
+          unzip -q merged_dataset.zip -d /data/merged_dataset
           rm -f merged_dataset.zip
           
           echo "Listing contents of /data after extract stage:"
