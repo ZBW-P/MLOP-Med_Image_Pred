@@ -10,7 +10,7 @@ services:
     volumes:
       - merged_medical:/app/merged_dataset
       - ./downloads:/app/downloads 
-      - ./datamerged2.py:/app/datamerged2.py:ro
+      - ./datamerged2.py:/app/datamerged3.py:ro
       - ./datasets_config.yaml:/app/datasets_config.yaml:ro
     working_dir: /app
     command:
