@@ -25,7 +25,6 @@ random.seed(RANDOM_SEED)
 
 print(f" Using DOWNLOAD_ROOT: {DOWNLOAD_ROOT.resolve()}")
 
-If needed online, uncomment to enable auto download/extract
 for dataset, info in datasets_info.items():
     url = info["url"]
     archive_type = info["archive_type"]
