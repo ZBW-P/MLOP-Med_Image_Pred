@@ -13,8 +13,12 @@ st.set_page_config(page_title="Medical Image Dataset Dashboard", layout="wide")
 st.title("📦 Medical Image Dashboard (via Swift API)")
 
 # ==== Auth Setup with Token ====
-token = os.environ["OS_TOKEN"]
-storage_url = os.environ["STORAGE_URL"]
+token = os.environ.get("OS_TOKEN")
+storage_url = os.environ.get("STORAGE_URL")
+
+if not token or not storage_url:
+    st.error("❌ Missing OS_TOKEN or STORAGE_URL environment variables. Please check your docker-compose configuration.")
+    st.stop()
 
 swift_conn = Connection(preauthurl=storage_url,
                         preauthtoken=token,
