@@ -22,8 +22,7 @@ services:
         cd merged_dataset
 
         echo "Downloading merged_dataset.zip from NYU Box..."
-        curl -L 'https://nyu.box.com/shared/static/vj63o013r3pep3fklidza32ijxuullc3.zip \
-          -o merged_dataset.zip
+        curl -L 'https://dl.boxcloud.com/shared/static/vj63o013r3pep3fklidza32ijxuullc3' -o merged_dataset.zip
         echo "Unzipping..."
         unzip -q merged_dataset.zip
         rm -f merged_dataset.zip
