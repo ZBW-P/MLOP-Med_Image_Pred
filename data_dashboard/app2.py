@@ -1,4 +1,4 @@
-# Streamlit app to read object storage directly using Swift API (anonymous access)
+# Streamlit app to read object storage directly using Swift API (token-based access)
 
 import streamlit as st
 import pandas as pd
@@ -12,10 +12,12 @@ import tempfile
 st.set_page_config(page_title="Medical Image Dataset Dashboard", layout="wide")
 st.title("📦 Medical Image Dashboard (via Swift API)")
 
-# ==== Anonymous Auth Setup ====
-storage_url = "https://chi.uc.chameleoncloud.org:7480/swift/v1/AUTH_7c0a7a1952e44c94aa75cae1ff5dc9b4"
+# ==== Auth Setup with Token ====
+token = os.environ["OS_TOKEN"]
+storage_url = os.environ["STORAGE_URL"]
+
 swift_conn = Connection(preauthurl=storage_url,
-                        preauthtoken='',
+                        preauthtoken=token,
                         retries=5)
 
 # ==== Configuration ====
