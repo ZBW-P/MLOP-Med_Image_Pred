@@ -25,13 +25,13 @@ random.seed(RANDOM_SEED)
 
 print(f" Using DOWNLOAD_ROOT: {DOWNLOAD_ROOT.resolve()}")
 
-# If needed online, uncomment to enable auto download/extract
-# for dataset, info in datasets_info.items():
-#     url = info["url"]
-#     archive_type = info["archive_type"]
-#     extract_to = DOWNLOAD_ROOT / info["extract_to"]
-#     archive_path = DOWNLOAD_ROOT / f"{dataset}.{archive_type.replace('.', '')}"
-#
+If needed online, uncomment to enable auto download/extract
+for dataset, info in datasets_info.items():
+    url = info["url"]
+    archive_type = info["archive_type"]
+    extract_to = DOWNLOAD_ROOT / info["extract_to"]
+    archive_path = DOWNLOAD_ROOT / f"{dataset}.{archive_type.replace('.', '')}"
+
     extract_to.parent.mkdir(parents=True, exist_ok=True)
     if not archive_path.exists():
         print(f"Downloading {dataset}...")
