@@ -6,7 +6,7 @@ services:
     ports:
       - "9002:9002"
     environment:
-      - OS_TOKEN=gAAAAABoH5upOwzLpatN7uZvmkeecm4Tm__TKO5AaIZ4NQSXkru3Bo2YnG4-9KZvKRiVt-uHTRBcmo-rXiSl4f0qzVGVjRLJcd-ka4HgvsWojsbhWvOQEAI0QPaWeghRaoem8Uktv3x19t0DzxQ9hUPZF7IK1sPfCdaKCKU4ZXohcwP9LnLcri7IzSsq02RFAglPQtuMjczkpr2M9MV2qfMAT0UyHeBjkifPFvTjgdvun51gReXd2Tgv71pNa3s68LDOrBaGjFT5
-      - STORAGE_URL=https://chi.uc.chameleoncloud.org:7480/swift/v1/AUTH_7c0a7a1952e44c94aa75cae1ff5dc9b4
+      - OS_TOKEN=gAAAAABoH58U6_IgNefhz_bBuXL3bTLzyQ8U3Ilrr7SSTVtqNZ_Hgw9tr740I-aIYzx8wiXbmTDw-6L7iXmjY4VSoqO35wP840Sky7qpnQsj1V1Uh1wQYkFx60_EpetxEv59d0BH4lD6mpKr7o6UH_aI1N54av5QG-mK7DPezFii2z-UaIXN-2BA-0voqq7Hrid403f8yB4qKOrRg3OU6tKslAuwXm3T87eizTCXGeCxxJHsbX3zalINOiujv-WQRyqAnmHzNA7z
+      - STORAGE_URL=https://chi.tacc.chameleoncloud.org:7480/swift/v1/AUTH_d3c6e101843a4ba79e665ebf59b521a2
     volumes:
       - .:/app
