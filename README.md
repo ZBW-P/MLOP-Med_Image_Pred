@@ -55,11 +55,36 @@ All services were launched using `docker run` or `docker-compose` from within Ju
 
 ## Unit 8 (Offline): Persistent Storage and Data Pipeline
 
-**Persistent Storage**  
-List and describe each bucket/volume:  
-- `minio/production/raw-data/`: raw input files  
-- `minio/production/processed/`: normalized and split datasets  
-Include disk usage if possible.
+### Persistent Storage
+
+We use two persistent storage layers in our system:
+
+#### 1. Block Storage (Ceph-HDD)
+
+Provisioned on **Chameleon Cloud** and mounted on `node1-mlops-project42-1` at `/dev/vdb`.
+
+- **Volume Name**: `block-persist-project42-1`
+- **Size**: 30 GiB
+- **Type**: `ceph-hdd`
+- **Attached To**: `node1-mlops-project42-1` (`/dev/vdb`)
+- **Used For**:
+  - MinIO data (`/mnt/block/minio_data`)
+  - PostgreSQL storage (`/mnt/block/postgres_data`)
+
+#### 2. Object Storage (TACC Swift)
+
+Used for storing all dataset splits for model training and evaluation.
+
+- **Bucket**: `object-persist-project42`
+- **Size**: 7.70 GB
+- **Object Count**: ~125,100
+- **Structure**:  
+  - `train/`  
+  - `val/`  
+  - `test/`  
+  - `final_eval/`
+
+This object store is read-only mounted into the Jupyter container at `/mnt/medical-data` for training and inference.
 
 **Offline Dataset**  
 - Datasets used: Chest X-ray, OCT, etc.  
