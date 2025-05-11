@@ -622,7 +622,7 @@ The Ray head and workers working status is shown in Figure below:
 
 **User-selected Dataset Augmentation:**
 
-To further test model robustness, we introduced an interactive dataset augmentation mechanism. Users specify the class (e.g., `lung-viral-pneumonia`) and select a 10% subset of unused images, which are integrated into the training, validation, and test datasets.
+To further test model robustness, we introduced an interactive dataset augmentation mechanism. Users specify the class (e.g., `lung-viral-pneumonia`) and select a 10% subset of unused images, which are integrated into the training, validation, and test datasets as example.
 
 ```python
 def add(train_loader, val_loader, test_loader, batch_size, file_path, num_workers: int =16, ratio: float=0.1 ,seed: int = 42):
