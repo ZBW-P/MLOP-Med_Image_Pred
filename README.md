@@ -20,12 +20,13 @@ Example: “Our system allows quick diagnosis of X-ray images with visual explan
 ## Unit 2/3: Cloud-Native Infrastructure
 
 **Architecture Diagram**  
-![infrastructure](https://github.com/user-attachments/assets/1b30abd6-74c2-4c73-8b6a-ab322f033f0a)
+
 
 
 We provisioned resources on **Chameleon Cloud (KVM@TACC)** using the **OpenStack CLI**, and configured services via the **Jupyter interface** by running [`infrastructure_provision/provision_cli.ipynb`](infrastructure_provision/provision_cli.ipynb).
 
 ### Provisioning Summary
+![infrastructure](https://github.com/user-attachments/assets/1b30abd6-74c2-4c73-8b6a-ab322f033f0a)
 
 - **Private Network**: `private-net-project42`
 - **Nodes**:
