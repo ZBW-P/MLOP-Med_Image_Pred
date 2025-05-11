@@ -232,7 +232,7 @@ region = CHI@TACC
 rclone lsd chi_tacc:
 ```
 
-![Directory structure](./Training_part/Image_Saved/rclone.png)
+![Reclone](./Training_part/Image_Saved/reclone.png)
 
 - **Mount the bucket:**
 
