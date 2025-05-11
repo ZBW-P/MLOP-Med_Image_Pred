@@ -56,6 +56,7 @@ services:
     shm_size: '12g'
     volumes:
       - ray_tmp:/tmp/ray
+      - /mnt/object:/mnt/object:ro
     environment:
       - RAY_GRAFANA_HOST=http://grafana:3000
       - RAY_GRAFANA_IFRAME_HOST=http://${HOST_IP}:3000
@@ -84,6 +85,7 @@ services:
     volumes:
       - grafana_storage:/var/lib/grafana
       - ray_tmp:/tmp/ray:ro
+      - /mnt/object:/mnt/object:ro
     environment:
       - GF_INSTALL_PLUGINS=grafana-piechart-panel
       - GF_PATHS_PROVISIONING=/tmp/ray/session_latest/metrics/grafana/provisioning
@@ -115,7 +117,7 @@ services:
       - AWS_ENDPOINT_URL=http://minio:9000
     shm_size: '12g'
     volumes:
-      - food11:/mnt
+      - /mnt/object:/mnt/object:ro
     depends_on:
       - ray-head
 
@@ -136,7 +138,7 @@ services:
       - AWS_ENDPOINT_URL=http://minio:9000
     shm_size: '12g'
     volumes:
-      - food11:/mnt
+      - /mnt/object:/mnt/object:ro
     depends_on:
       - ray-head
 
@@ -144,5 +146,5 @@ volumes:
   grafana_storage:
   ray_tmp:
   minio_data:
-  food11:
-    external: true  # Uses externally created volume
+  # food11:
+  #   external: true  # Uses externally created volume
