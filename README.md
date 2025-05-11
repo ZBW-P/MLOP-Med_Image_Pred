@@ -52,7 +52,7 @@ We provisioned resources on **Chameleon Cloud (KVM@TACC)** using the **OpenStack
 | Grafana       | 3000 | `grafana`                | `allow-3000`   |
 | ViT API       | 8265 | `vit-container`          | `allow-8265`   |
 | Streamlit Dashboard | 9002 | `practical_knuth` | `allow-9002`   |
-| Jupyter       | 8888 | `jupyter`                | `allow-8888-2nd`, `Allow HTTP 8888` |
+| Jupyter       | 8888 | `jupyter`                |  `Allow HTTP 8888` |
 
 All services were launched using `docker run` or `docker-compose` from within Jupyter on `node1`.
 
