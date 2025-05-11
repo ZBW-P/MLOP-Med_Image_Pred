@@ -89,9 +89,9 @@ The table below shows an example, it is not a recommendation. -->
 
 | Requirement     | How many/when                                     | Justification |
 |-----------------|---------------------------------------------------|---------------|
-| `m1.large` VMs | 4 for entire project duration                    | Each team member requires a dedicated VM to execute assignments, ensuring consistent and reliable development environments throughout the project.           |
-| `gpu_a100`     | 4 GPUs for model training (using DDP/FSDP) and 2 GPUs for model evaluation/monitoring; 6-hour blocks twice a week   |The ViT model's training on a large dataset with significant parameters benefits from parallel GPU processing (4 GPUs) to efficiently handle computations, while evaluation and monitoring are supported with 2 GPUs. This setup balances training performance with resource availability.              |
-| Floating IPs    | 1 for the entire project duration and 1 for sporadic use | One persistent IP ensures continuous connectivity to services throughout the project, while an additional floating IP offers flexibility for temporary or ad-hoc connection needs.                |
+| `m1.xlarge` VMs | 3 for entire project duration, 1 for model training                   |           |
+| `gpu_m100`     | 2 GPUs for model training (using DDP/FSDP)   |The ViT model's training on a large dataset with significant parameters benefits from parallel GPU processing (2 GPUs) to efficiently handle computations|
+| Floating IPs    | 1 for the entire project duration and 1 for training use | One persistent IP ensures continuous connectivity to services throughout the project, while an additional floating IP offers flexibility for Ray train and model training needs.                |
 | Outside memory / storage            | 100 g storage during all project duration                                           | Large update medical image data need to be saved and used to update for server and user interacter.               |
 
 ### Detailed design plan
