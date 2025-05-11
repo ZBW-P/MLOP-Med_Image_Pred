@@ -64,7 +64,7 @@ We use two persistent storage layers in our system:
 Provisioned on **Chameleon Cloud** and mounted on `node1-mlops-project42-1` at `/dev/vdb`.
 
 - **Volume Name**: `block-persist-project42-1`
-- **Size**: 30 GiB
+- **Size**: 30 GB
 - **Type**: `ceph-hdd`
 - **Attached To**: `node1-mlops-project42-1` (`/dev/vdb`)
 - **Used For**:
