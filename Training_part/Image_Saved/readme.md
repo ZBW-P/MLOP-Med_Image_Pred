@@ -1,17 +1,17 @@
-### Model Training & Training Platforms
+## Model Training & Training Platforms
 
-#### Problem Setup & Model Motivation
+### Problem Setup & Model Motivation
 
 This project addresses the challenge of classifying nine distinct lung disease categories (e.g., lung-covid, lung-oct-cnv, lung-oct-drusen, lung-opacity, lung-viral-pneumonia, etc.) from chest X-ray and OCT images. Early and accurate detection of these conditions is critical for patient care, but traditional convolutional neural networks can struggle to capture small, localized lesions and to model global lung anatomy.
 
-#### Why Vision Transformers?
+### Why Vision Transformers?
 
 - **Global Self-Attention.** Each patch can attend to every other patch, enabling the model to learn long-range dependencies (e.g., linking an opacity in the lower lobe to pleural changes elsewhere).  
 - **Adaptive Feature Weighting.** Transformer layers dynamically re-weight contributions from different regions, which helps when disease signs vary in size, shape, and location.  
 - **Scalability.** ViT scales efficiently with data and model size: fine-tuning on our 5 GB training set often yields richer representations than fixed-receptive-field CNNs.  
 - **Medical Imaging State-of-the-Art.** Properly pre-trained and fine-tuned ViTs match or exceed CNN performance on chest X-ray tasks.
 
-#### Our Custom ViT Architecture
+### Our Custom ViT Architecture
 
 - **Convolutional Stem.**  
   - Three 3×3 Conv → BN → ReLU blocks, followed by two stride-2 convs, downsampling the input by 4× in each spatial dimension.  
@@ -28,7 +28,7 @@ This project addresses the challenge of classifying nine distinct lung disease c
 - **Model Footprint.**  
   - ~5 M parameters, ~50 MB `.pth` file.
 
-#### Training Strategy & Experiment Tracking
+### Training Strategy & Experiment Tracking
 
 - **Data Splits.** 5 GB train / 2 GB val / 1 GB test.  
 - **Distributed Data-Parallel (DDP).**  
@@ -162,9 +162,9 @@ Dataset structure:
 
 ![Directory structure](Storage.png)
 
-### Training Code Explanation
+## Training Code Explanation
 
-#### Core Model and Training Logic
+### Core Model and Training Logic
 
 - **Imports and Hyperparameters**: PyTorch, einops, PyTorch Lightning.
 - **Model Definition**:
@@ -181,7 +181,7 @@ Dataset structure:
 Trainer(devices=2, accelerator="gpu", strategy=DDPStrategy, max_epochs=12, precision="bf16-mixed")
 ```
 
-#### MLflow Tracking
+### MLflow Tracking
 
 ```python
 mlflow.set_tracking_uri("http://129.114.27.23:8000")
@@ -202,7 +202,7 @@ if trainer.global_rank == 0:
   mlflow.end_run()
 ```
 
-#### Ray Distributed Training
+### Ray Distributed Training
 
 **Lightning with Ray DDP:**
 
@@ -248,4 +248,171 @@ TorchTrainer(
   scaling_config=scaling_config,
   run_config=run_config
 ).fit()
+
+---
+
+## Training Work UI
+
+### MLflow Setup
+
+This subsection describes how to launch a Jupyter container with MLflow UI, start the MLflow backend, and run the ViT training script with MLflow tracking.
+
+1. **Check Datasets:**
+
+```bash
+cd work
+ls /mnt/object
+# → final_eval  merged_dataset  test  train  val
+```
+
+2. **Start MLflow backend:**
+
+```bash
+docker-compose -f docker-compose-mlflow.yaml up -d
+```
+
+This brings up the MLflow tracking server (with its database and UI) in detached mode.
+
+3. **Launch Jupyter with MLflow UI:**
+
+```bash
+docker run -d --rm \
+  -p 8888:8888 \
+  --gpus all \
+  --shm-size 16G \
+  -v ~/MLOP-Med_Image_Pred/Training_part:/home/jovyan/work/ \
+  -v /mnt/object:/mnt/object \
+  -e MLFLOW_TRACKING_URI=http://129.114.27.23:8000/ \
+  --name jupyter \
+  jupyter-mlflow
+```
+
+**Navigate to:**
+
+```http
+http://<your_float_ip>:8888/lab?token=<generated_token>
+```
+
+4. **Prepare code and run training:**
+
+```bash
+git clone https://github.com/ZBW-P/MLOP-Med_Image_Pred.git
+cd MLOP-Med_Image_Pred
+git switch -c mlflow
+
+pip install einops
+
+git config --global user.email "qh2262@nyu.edu"
+git config --global user.name  "Qin Huai"
+git add VIT_Mlflow.py
+git commit -m "Apply MLflow tracking"
+git log -n 2
+
+python3 VIT_Mlflow.py
+```
+
+5. **Download trained checkpoint:**
+
+```bash
+mlflow artifacts download \
+  --artifact-uri "runs:/<RUN_ID>/checkpoint.pth" \
+  --dst-path ./model_ckpt
+
+import torch
+model = torch.load("model_ckpt/checkpoint.pth")
+```
+
+### Ray Cluster Configuration
+
+This subsection explains how to build and launch a ROCm-enabled Ray cluster, set up a Jupyter client container, and submit distributed training jobs.
+
+1. **Build and launch the ROCm Ray cluster:**
+
+```bash
+rocm-smi
+docker build -t ray-rocm:2.42.1 \
+  -f MLOP-Med_Image_Pred/Training_part/Dockerfile.ray-rocm .
+
+docker-compose -f MLOP-Med_Image_Pred/Training_part/docker-compose-ray-rocm.yaml up -d
+docker ps
+docker exec ray-worker-0 rocm-smi
+docker exec ray-worker-1 rocm-smi
+```
+
+2. **Build and run Jupyter client for Ray:**
+
+```bash
+docker build -t jupyter-ray \
+  -f MLOP-Med_Image_Pred/Training_part/Dockerfile.jupyter-ray .
+
+docker run -d --rm \
+  -p 8888:8888 \
+  -v ~/MLOP-Med_Image_Pred/Training_part:/home/jovyan/work \
+  -v /mnt/object:/mnt/object \
+  -e DATA_PATH=/mnt/object \
+  -e RAY_ADDRESS="http://${HOST_IP}:8265" \
+  --mount type=bind,source=/mnt/object,target=/mnt/object,readonly \
+  --name jupyter \
+  jupyter-ray
+```
+
+**Access Jupyter at:**
+
+```http
+http://<your_float_ip>:8888/lab?token=<token>
+```
+
+3. **Prepare runtime environment:**
+
+- **requirements.txt:**
+
+```bash
+torchvision
+einops
+lightning
+torch
+```
+
+- **runtime.json:**
+
+```json
+{
+  "pip": "requirements.txt",
+  "env_vars": {
+    "DATA_PATH": "/mnt/object"
+  }
+}
+```
+
+Clone and switch to the Ray branch:
+
+```bash
+git clone https://github.com/ZBW-P/MLOP-Med_Image_Pred.git
+cd MLOP-Med_Image-Pred
+git switch -c ray
+git rm train.py
+git commit -m "Remove train.py—use VIT.py as entrypoint"
+cp VIT_Ray.py gourmetgram-train/
+cd gourmetgram-train
+git add VIT_Ray.py
+git commit -m "Ensure VIT.py uses DATA_PATH"
+```
+
+4. **Submit distributed training job:**
+
+```bash
+ray job submit \
+  --runtime-env runtime.json \
+  --working-dir . \
+  -- python MLOP-Med_Image_Pred/train.py
+```
+
+The Ray UI is shown below:
+
+![Ray UI](Ray_UI.png)
+
+
+---
+
+
 
