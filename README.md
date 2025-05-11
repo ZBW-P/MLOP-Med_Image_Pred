@@ -665,13 +665,16 @@ The Normal train Mlflow UI training success is shown in Figure below:
 
 The experimental comparisons highlight the performance, efficiency, and resource utilization across single-GPU training (Normal), Distributed Data Parallel (DDP), and Ray distributed training approaches.
 
-- Figure XX: Comparison of accuracy and loss metrics.
-- Figure XX: Comparison of training times across methods.
-- Figure XX: GPU utilization and memory usage comparison.
+The Comparsion with logs matrics is shown in Figure below:
+![compare 1](./Training_part/Image_Saved/Comparison.png)
+
+The Comparsion with parameters setting is shown in Figure below:
+![compare 2](./Training_part/Image_Saved/Comparison_2.png)
+
 
 | Strategy           | Accuracy (%) | Loss  | Training Time (12 epochs) |
 |--------------------|--------------|-------|----------------------------|
-| **Ray Train**      | 87.0         | 0.390 | ~20 min                    |
+| **Ray Train**      | 87.0         | 0.390 | 28.15 min                    |
 | **Retrain DDP**    | 86.7         | 0.388 | 21.4 min                   |
 | **Normal**         | 86.4         | 0.433 | 30.8 min                   |
 | **Baseline DDP**   | 84.8         | 0.445 | 19.5 min                   |
@@ -691,7 +694,7 @@ The experimental comparisons highlight the performance, efficiency, and resource
 
 **Strategy Comparisons:**
 
-- Ray Train achieved the highest accuracy but requires infrastructure overhead.
+- Ray Train DDP achieved the highest accuracy but requires infrastructure overhead and the training period is the highest.
 - DDP (Retrain) offered the best balance between training efficiency, accuracy, and simplicity.
 - Normal single-GPU training is viable but notably slower and slightly less accurate, reflecting limitations in batch sizes and computational throughput.
 
