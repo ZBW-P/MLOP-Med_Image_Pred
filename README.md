@@ -587,15 +587,15 @@ The Ray UI is shown below:
 
 ### Mlflow DDP Outcome
 
-The Mlflow Training is shown in Figure 6 below:
+The Mlflow Training is shown in Figure below:
 
 ![Mlflow Training](./Training_part/Image_Saved/Mlflow_training.png)
 
-The graph of the Mlflow training completion is shown in Figure 7 below:
+The graph of the Mlflow training completion is shown in Figure below:
 
 ![UI for Mlflow training completed](./Training_part/Image_Saved/Mlflow_complete.png)
 
-The Mlflow training GPU usage is shown in Figure 8 below:
+The Mlflow training GPU usage is shown in Figure below:
 
 ![Training Resource usage](./Training_part/Image_Saved/Mlflow_resource_usage.png)
 
@@ -603,15 +603,15 @@ The Mlflow training GPU usage is shown in Figure 8 below:
 
 ### Ray Train Outcome
 
-The Ray train job trained successfully as shown in Figure 9 below:
+The Ray train job trained successfully as shown in Figure below:
 
 ![Ray Train Job complete](./Training_part/Image_Saved/Ray_Train_Job.png)
 
-The Ray train job resource usage is shown in Figure 10 below:
+The Ray train job resource usage is shown in Figure below:
 
 ![Ray Train Resources usage](./Training_part/Image_Saved/Ray_Train_Resources.png)
 
-The Ray head and workers working status is shown in Figure 11 below:
+The Ray head and workers working status is shown in Figure below:
 
 ![Ray cluster](./Training_part/Image_Saved/Ray_cluster.png)
 
@@ -623,9 +623,14 @@ The Ray head and workers working status is shown in Figure 11 below:
 
 To further test model robustness, we introduced an interactive dataset augmentation mechanism. Users specify the class (e.g., `lung-viral-pneumonia`) and select a 10% subset of unused images, which are integrated into the training, validation, and test datasets.
 
-- Figure XX: User input for class and subset selection.
-- Figure XX: MLflow UI for retrain training curves.
-- Figure XX: GPU utilization during retrain experiment.
+The Ray head and workers working status is shown in Figure below:
+![Ray Train Resources usage](./Training_part/Image_Saved/Ray_Train_Resources.png)
+
+The Ray head and workers working status is shown in Figure below:
+![Ray Train Resources usage](./Training_part/Image_Saved/Ray_Train_Resources.png)
+
+The Ray head and workers working status is shown in Figure below:
+![Ray Train Resources usage](./Training_part/Image_Saved/Ray_Train_Resources.png)
 
 **Performance Summary (Retrain vs. Baseline):**
 
@@ -643,9 +648,14 @@ To further test model robustness, we introduced an interactive dataset augmentat
 
 The normal (single-GPU) training scenario took 30.8 minutes for 12 epochs and achieved an accuracy of approximately 86%. The training exhibited stable but slower convergence compared to distributed approaches.
 
-- Figure XX: Training accuracy and loss curves.
-- Figure XX: GPU resource usage matrix.
-- Figure XX: MLflow logged metrics overview.
+The Ray head and workers working status is shown in Figure below:
+![Ray Train Resources usage](./Training_part/Image_Saved/Ray_Train_Resources.png)
+
+The Ray head and workers working status is shown in Figure below:
+![Ray Train Resources usage](./Training_part/Image_Saved/Ray_Train_Resources.png)
+
+The Ray head and workers working status is shown in Figure below:
+![Ray Train Resources usage](./Training_part/Image_Saved/Ray_Train_Resources.png)
 
 ---
 
@@ -684,13 +694,6 @@ The experimental comparisons highlight the performance, efficiency, and resource
 - Ray Train achieved the highest accuracy but requires infrastructure overhead.
 - DDP (Retrain) offered the best balance between training efficiency, accuracy, and simplicity.
 - Normal single-GPU training is viable but notably slower and slightly less accurate, reflecting limitations in batch sizes and computational throughput.
-
-
-
-
-
-
-
 
 
 
