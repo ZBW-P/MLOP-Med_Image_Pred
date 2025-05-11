@@ -84,27 +84,7 @@ Include disk usage if possible.
 
 ## Unit 4 & 5: Modeling, Training, and Experiment Tracking
 
-**Modeling Problem Setup**  
-- Inputs: e.g. 256x256 grayscale images  
-- Outputs: e.g. multi-label vector  
-- Model: Vision Transformer (ViT) with customized encoder  
-- Why this model: suitability to limited-labeled medical data
-
-**Training Process**  
-- Script: [`train.py`](link)  
-- Re-training: [`scripts/retrain.py`](link)
-
-**Experiment Tracking**  
-- Tool: MLflow  
-- Dashboard: [Link to MLflow](http://your-server:5000)  
-- Comparison of runs: screenshot or link
-
-**Training Scheduler / CI Integration**  
-- Example YAML: [`ci/train_trigger.yaml`](link)
-
-**(Optional) Advanced Training**  
-- DDP / FSDP / Deepspeed usage: details and benchmark improvements  
-- Ray Tune: link to relevant configs/code
+[See the full README](./Training_part/Image_Saved/readme.md)
 
 ---
 
