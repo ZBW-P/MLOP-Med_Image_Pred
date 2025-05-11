@@ -147,6 +147,14 @@ auth = https://chi.tacc.chameleoncloud.org:5000/v3
 region = CHI@TACC
 ```
 
+- **List the Storage:**
+  
+```bash
+rclone lsd chi_tacc:
+```
+
+![Directory structure](rclone.png)
+
 - **Mount the bucket:**
 
 ```bash
@@ -156,6 +164,7 @@ rclone mount chi_tacc:object-persist-project42 \
       --allow-other \
       --daemon
 ```
+
 
 Dataset structure:
 
