@@ -142,8 +142,7 @@ sudo chown cc:cc /mnt/object
 type = swift
 user_id = f7aec218002617a11e8e21ff0ec3fe24c34a924443364a5d1c089c3048160669
 application_credential_id = 9f60f8d9cfe144bc87dae88ebdb80a53
-application_credential_secret = F4ASJEIbRKzLvhI_amIDYD6fStxhS7ABjAhzlgwTCGpv0AXx3qwbcvpD \
-LoKd11sL7OiaalMb7aotsYebBGoHcQ
+application_credential_secret = F4ASJEIbRKzLvhI_amIDYD6fStxhS7ABjAhzlgwTCGpv0AXx3qwbcvpDLoKd11sL7OiaalMb7aotsYebBGoHcQ
 auth = https://chi.tacc.chameleoncloud.org:5000/v3 
 region = CHI@TACC
 ```
