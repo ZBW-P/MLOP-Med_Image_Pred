@@ -282,7 +282,7 @@ docker-compose -f docker-compose-mlflow.yaml up -d
 This brings up the MLflow tracking server (with its database and UI) in detached mode.
 
 3. **Launch Jupyter with MLflow UI:**
-
+In NVIDIA:
 ```bash
 docker run -d --rm \
   -p 8888:8888 \
@@ -294,7 +294,21 @@ docker run -d --rm \
   --name jupyter \
   jupyter-mlflow
 ```
-
+or in AMD:
+```bash
+docker run -d --rm \
+  -p 8888:8888 \
+  --device=/dev/kfd
+  --device=/dev/dri
+  --group-add video
+  --group-add $(getent group render | cut -d: -f3)
+  --shm-size 16G \
+  -v ~/MLOP-Med_Image_Pred/Training_part:/home/jovyan/work/ \
+  -v /mnt/object:/mnt/object \
+  -e MLFLOW_TRACKING_URI=http://129.114.27.23:8000/ \
+  --name jupyter \
+  jupyter-mlflow
+```
 **Navigate to:**
 
 ```http
