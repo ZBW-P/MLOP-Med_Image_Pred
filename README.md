@@ -585,7 +585,7 @@ The Ray UI is shown below:
 
 ## Experimental Results
 
-### Mlflow Outcome
+### Mlflow DDP Outcome
 
 The Mlflow Training is shown in Figure 6 below:
 
@@ -598,6 +598,8 @@ The graph of the Mlflow training completion is shown in Figure 7 below:
 The Mlflow training GPU usage is shown in Figure 8 below:
 
 ![Training Resource usage](./Training_part/Image_Saved/Mlflow_resource_usage.png)
+
+---
 
 ### Ray Train Outcome
 
@@ -613,29 +615,79 @@ The Ray head and workers working status is shown in Figure 11 below:
 
 ![Ray cluster](./Training_part/Image_Saved/Ray_cluster.png)
 
+---
+
 ### Retrain Outcome
 
-### Discussion: Mlflow & Ray Train
+**User-selected Dataset Augmentation:**
 
-The MLflow–logged training and validation curves over 12 epochs. The training loss decreases sharply from initial position to epoch 3, then briefly plateaus between epochs 3 and 4 before dropping again until epoch 6. A minor rebound in training loss appears at epoch 7, but thereafter it resumes a steady decline through epoch 12. Validation loss, in contrast, exhibits an uninterrupted downward trend, reaching a minimum of 0.44 at the final epoch.
+To further test model robustness, we introduced an interactive dataset augmentation mechanism. Users specify the class (e.g., `lung-viral-pneumonia`) and select a 10% subset of unused images, which are integrated into the training, validation, and test datasets.
 
-Training accuracy rises rapidly during the first five epochs, achieving roughly 80% by epoch 5. Small fluctuations in accuracy occur around epochs 8. By epoch 12, the model attains a final accuracy of 85%.
+- Figure XX: User input for class and subset selection.
+- Figure XX: MLflow UI for retrain training curves.
+- Figure XX: GPU utilization during retrain experiment.
 
-Hardware utilization metrics in Figure 8 indicate that GPU 0 was driven to near-maximum utilization immediately at the start of each epoch and remained saturated throughout training.
+**Performance Summary (Retrain vs. Baseline):**
 
-The graph showing accuracy and loss during Mlflow Training is shown in Figure 13 below:
+| Metric             | Retrain (10% add) | DDP Baseline | Normal (Single-GPU) |
+|--------------------|-------------------|--------------|---------------------|
+| **Accuracy (%)**   | 86.7              | 84.8         | 86.4                |
+| **Loss**           | 0.388             | 0.445        | 0.433               |
+| **Training Time**  | 21.4 min          | 19.5 min     | 30.8 min            |
 
-![Training loss and accuracy over epochs](./Training_part/Image_Saved/Mlflow_outcome.png)
+---
 
-The Ray Train terminal output for the same 12-epoch experiment. When scaled out to our Ray cluster, the model converged to a higher final accuracy of 87% and a lower test loss of 0.39. We attribute this improvement to Ray’s distributed data loading and parallel execution, which enabled larger effective batch sizes and more frequent gradient updates.
+### Normal Outcome
 
-The Ray train job test accuracy is shown in Figure 12 below:
+**Single-GPU Training:**
 
-![Ray Train complete in Terminal](./Training_part/Image_Saved/Ray_train_terminal.png)
+The normal (single-GPU) training scenario took 30.8 minutes for 12 epochs and achieved an accuracy of approximately 86%. The training exhibited stable but slower convergence compared to distributed approaches.
+
+- Figure XX: Training accuracy and loss curves.
+- Figure XX: GPU resource usage matrix.
+- Figure XX: MLflow logged metrics overview.
+
+---
 
 ### Compare Normal & DDP-Strategy & Ray Train
 
-### Discussion: Retrain
+**Comparative Analysis Across Strategies:**
+
+The experimental comparisons highlight the performance, efficiency, and resource utilization across single-GPU training (Normal), Distributed Data Parallel (DDP), and Ray distributed training approaches.
+
+- Figure XX: Comparison of accuracy and loss metrics.
+- Figure XX: Comparison of training times across methods.
+- Figure XX: GPU utilization and memory usage comparison.
+
+| Strategy           | Accuracy (%) | Loss  | Training Time (12 epochs) |
+|--------------------|--------------|-------|----------------------------|
+| **Ray Train**      | 87.0         | 0.390 | ~20 min                    |
+| **Retrain DDP**    | 86.7         | 0.388 | 21.4 min                   |
+| **Normal**         | 86.4         | 0.433 | 30.8 min                   |
+| **Baseline DDP**   | 84.8         | 0.445 | 19.5 min                   |
+
+---
+
+### Discussion
+
+**Mlflow & Ray Train:**
+
+- The Mlflow DDP training exhibited rapid initial convergence, followed by gradual stabilization, achieving final accuracy of 85% and minimum validation loss of 0.44 by epoch 12.
+- Ray Train surpassed this with higher accuracy (87%) and lower loss (0.39), benefiting from its distributed data handling and efficient parallel execution capabilities.
+
+**Retrain Experiment:**
+
+- Integrating an additional 10% of targeted class data improved both accuracy and loss metrics. This demonstrates the model's ability to leverage targeted dataset expansions effectively.
+
+**Strategy Comparisons:**
+
+- Ray Train achieved the highest accuracy but requires infrastructure overhead.
+- DDP (Retrain) offered the best balance between training efficiency, accuracy, and simplicity.
+- Normal single-GPU training is viable but notably slower and slightly less accurate, reflecting limitations in batch sizes and computational throughput.
+
+
+
+
 
 
 
