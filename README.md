@@ -96,11 +96,10 @@ This object store is read-only mounted into the Jupyter container at `/mnt/medic
 - Splitting strategy: train/val/test/final_eval (mention person ID integrity if applicable)  
 - Data cleaning steps (resizing, normalization, etc.)
 
-**(Optional) Data Dashboard**  
-- Location: [`dashboards/data_dashboard.ipynb`](link)  
-- Insight example: class imbalance, missing fields
+**Data Dashboard**
 
----
+![image](https://github.com/user-attachments/assets/6619c926-3e7d-4f4a-8c8c-859dba869f26)
+
 
 ## Unit 4 & 5: Modeling, Training, and Experiment Tracking
 
