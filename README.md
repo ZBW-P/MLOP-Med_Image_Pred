@@ -159,24 +159,4 @@ Include disk usage if possible.
 - Script: [`ci/continuous_train.yml`](link)  
 - End-to-end: Data → Retrain → Deploy → Monitor
 
----
-
-## Team & Responsibilities
-
-| Name     | Role              | Units                        |
-|----------|-------------------|------------------------------|
-| Alice    | Data Lead         | Unit 8 offline/online        |
-| Bob      | Modeling Lead     | Units 4, 5                   |
-| Charlie  | Serving & Eval    | Units 6, 7                   |
-
----
-
-## How to Run on Chameleon
-
-1. Clone repository: `git clone [repo]`
-2. SSH into Chameleon instance
-3. Launch infrastructure:
-   ```bash
-   cd infra/
-   docker-compose up -d
 
