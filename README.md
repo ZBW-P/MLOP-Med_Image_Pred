@@ -98,34 +98,32 @@ This object store is read-only mounted into the Jupyter container at `/mnt/medic
 
 **Data Dashboard**
 # Medical Image Dashboard (Swift API via Streamlit)
-
 This is a lightweight Streamlit dashboard for visualizing medical image datasets stored in OpenStack Swift object storage.
 
 ![dashboard preview](https://github.com/user-attachments/assets/6619c926-3e7d-4f4a-8c8c-859dba869f26)
 
 ## Features
-
 - Connects to a Swift container using token-based authentication
 - Shows image counts for train, val, test, and final_eval folders
 - Displays sample images (randomly selected) per class
 - Runs as a web application on port 9002 using Docker
 
-## Project Structure
 ## How to run it
-Get Your Token and Storage URL to access the object storage
-Run the following in a Chameleon Jupyter Notebook:
+Use the following Python script in your Chameleon Jupyter environment to authenticate and retrieve the necessary credentials for accessing OpenStack Swift object storage.
 
-# run in Chameleon Jupyter environment
+```python
 from chi import server, context
 import chi, os, time, datetime
 
-# run in Chameleon Jupyter environment
+# Select your project and site
 context.choose_project()
 context.choose_site(default="CHI@TACC")
-```python
+
+# Establish a connection to the OpenStack environment
 from chi import clients
 conn = clients.connection()
 
+# Print authentication token and object storage endpoint
 print("OS_TOKEN =", conn.authorize())
 print("STORAGE_URL =", conn.object_store.get_endpoint())
 
@@ -143,7 +141,6 @@ docker run -p 9002:9002 \
   -e STORAGE_URL="your_storage_url_here" \
   -v $(pwd):/app \
   swift-dashboard
-![image](https://github.com/user-attachments/assets/6619c926-3e7d-4f4a-8c8c-859dba869f26)
 Access the Dashboard
 In your browser:
 http://129.114.27.23/:9002
