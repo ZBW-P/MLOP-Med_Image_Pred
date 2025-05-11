@@ -24,12 +24,40 @@ Insert infrastructure diagram here (linked or embedded).
 Example:  
 `![Architecture](link/to/diagram.png)`
 
-**Infrastructure-as-Code**  
-- Setup scripts: [`infra/setup.sh`](link)  
-- Compose file: [`infra/docker-compose.yml`](link)  
-- Kubernetes: [`k8s/`](link)
+We provisioned resources on **Chameleon Cloud (KVM@TACC)** using the **OpenStack CLI**, and configured services via the **Jupyter interface** by running [`infrastructure_provision/provision_cli.ipynb`](infrastructure_provision/provision_cli.ipynb).
 
----
+### Provisioning Summary
+
+- **Private Network**: `private-net-project42`
+- **Nodes**:
+  - `node1-mlops-project42-1` (192.168.1.11 / public: 129.114.27.23)
+  - `node2-mlops-project42-1` (192.168.1.12)
+  - `node3-mlops-project42-1` (192.168.1.13)
+- **Flavor**: `m1.xlarge` (8 vCPUs, 16GB RAM, 40GB disk)
+- **Image**: `CC-Ubuntu24.04`
+- **Volume attached**: `block-persist-project42-1` on `/dev/vdb`
+
+### Instance Configuration & Setup
+
+- Infrastructure is initialized via `config-hosts.yaml`
+- All nodes were launched using `openstack server create --port --user-data ...`
+
+### Services Running on node1
+
+| Service       | Port | Container                | Security Group |
+|---------------|------|--------------------------|----------------|
+| MinIO         | 9000/9001 | `minio`             | `allow-9000`, `allow-9001` |
+| MLflow        | 8000 | `mlflow`                 | `allow-8000`   |
+| PostgreSQL    | 5432 | `postgres`               | (default access) |
+| Prometheus    | 9090 | `prometheus`             | `allow-9090`   |
+| Grafana       | 3000 | `grafana`                | `allow-3000`   |
+| ViT API       | 8265 | `vit-container`          | `allow-8265`   |
+| Streamlit Dashboard | 9002 | `practical_knuth` | `allow-9002`   |
+| Jupyter       | 8888 | `jupyter`                | `allow-8888-2nd`, `Allow HTTP 8888` |
+
+All services were launched using `docker run` or `docker-compose` from within Jupyter on `node1`.
+
+
 
 ## Unit 8 (Offline): Persistent Storage and Data Pipeline
 
