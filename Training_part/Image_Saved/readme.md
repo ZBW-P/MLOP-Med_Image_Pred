@@ -414,5 +414,60 @@ The Ray UI is shown below:
 
 ---
 
+## Experimental Results
+
+### Mlflow Outcome
+
+The Mlflow Training is shown in Figure 6 below:
+
+![Mlflow Training](Mlflow_training.png)
+
+The graph of the Mlflow training completion is shown in Figure 7 below:
+
+![UI for Mlflow training completed](Mlflow_complete.png)
+
+The Mlflow training GPU usage is shown in Figure 8 below:
+
+![Training Resource usage](Mlflow_resource_usage.png)
+
+### Ray Train Outcome
+
+The Ray train job trained successfully as shown in Figure 9 below:
+
+![Ray Train Job complete](Ray_Train_Job.png)
+
+The Ray train job resource usage is shown in Figure 10 below:
+
+![Ray Train Resources usage](Ray_Train_Resources.png)
+
+The Ray head and workers working status is shown in Figure 11 below:
+
+![Ray cluster](Ray_cluster.png)
+
+### Retrain Outcome
+
+### Discussion: Mlflow & Ray Train
+
+The MLflow–logged training and validation curves over 12 epochs. The training loss decreases sharply from initial position to epoch 3, then briefly plateaus between epochs 3 and 4 before dropping again until epoch 6. A minor rebound in training loss appears at epoch 7, but thereafter it resumes a steady decline through epoch 12. Validation loss, in contrast, exhibits an uninterrupted downward trend, reaching a minimum of 0.44 at the final epoch.
+
+Training accuracy rises rapidly during the first five epochs, achieving roughly 80% by epoch 5. Small fluctuations in accuracy occur around epochs 8. By epoch 12, the model attains a final accuracy of 85%.
+
+Hardware utilization metrics in Figure 8 indicate that GPU 0 was driven to near-maximum utilization immediately at the start of each epoch and remained saturated throughout training.
+
+The graph showing accuracy and loss during Mlflow Training is shown in Figure 13 below:
+
+![Training loss and accuracy over epochs](Mlflow_outcome.png)
+
+The Ray Train terminal output for the same 12-epoch experiment. When scaled out to our Ray cluster, the model converged to a higher final accuracy of 87% and a lower test loss of 0.39. We attribute this improvement to Ray’s distributed data loading and parallel execution, which enabled larger effective batch sizes and more frequent gradient updates.
+
+The Ray train job test accuracy is shown in Figure 12 below:
+
+![Ray Train complete in Terminal](Ray_train_terminal.png)
+
+### Compare Normal & DDP-Strategy & Ray Train
+
+### Discussion: Retrain
+
+
 
 
