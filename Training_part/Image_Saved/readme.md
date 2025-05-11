@@ -343,6 +343,9 @@ mlflow artifacts download \
 import torch
 model = torch.load("model_ckpt/checkpoint.pth")
 ```
+The Mlflow UI is shown below:
+
+![Mlflow UI](./Training_part/Image_Saved/Mlflow_UI.png)
 
 ### Ray Cluster Configuration
 
