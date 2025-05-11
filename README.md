@@ -41,7 +41,7 @@ We provisioned resources on **Chameleon Cloud (KVM@TACC)** using the **OpenStack
 - Infrastructure is initialized via `config-hosts.yaml`
 - All nodes were launched using `openstack server create --port --user-data ...`
 
-### Services Running on node1
+### Security Group for Services 
 
 | Service       | Port | Container                | Security Group |
 |---------------|------|--------------------------|----------------|
