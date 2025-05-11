@@ -59,7 +59,7 @@ All services were launched using `docker run` or `docker-compose` from within Ju
 
 We use two persistent storage layers in our system:
 
-#### 1. Block Storage (Ceph-HDD)
+#### 1. Block Storage (Chameleon KVM@TACC)
 
 Provisioned on **Chameleon Cloud** and mounted on `node1-mlops-project42-1` at `/dev/vdb`.
 
@@ -71,7 +71,7 @@ Provisioned on **Chameleon Cloud** and mounted on `node1-mlops-project42-1` at `
   - MinIO data (`/mnt/block/minio_data`)
   - PostgreSQL storage (`/mnt/block/postgres_data`)
 
-#### 2. Object Storage (TACC Swift)
+#### 2. Object Storage (Chameleon CHI@TACC)
 
 Used for storing all dataset splits for model training and evaluation.
 
