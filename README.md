@@ -401,6 +401,7 @@ TorchTrainer(
   run_config=run_config
 ).fit()
 
+```
 ---
 
 ## Training Work UI
@@ -623,6 +624,48 @@ The Ray head and workers working status is shown in Figure below:
 
 To further test model robustness, we introduced an interactive dataset augmentation mechanism. Users specify the class (e.g., `lung-viral-pneumonia`) and select a 10% subset of unused images, which are integrated into the training, validation, and test datasets.
 
+```python
+def add(train_loader, val_loader, test_loader, batch_size, file_path, num_workers: int =16, ratio: float=0.1 ,seed: int = 42):
+  # Combine original dataloader and dataloader of select classes
+...
+    New_path = os.path.join(file_path, 'final_eval', file)
+    new_dataset = datasets.ImageFolder(root=New_path, transform=transform_medical)
+  # Path to load the whole target dataset floder
+    class_size=int(ratio*len(new_dataset))
+    start_idx =offset*class_size
+    if offset == 9:
+        end_idx=len(new_dataset)
+    else:
+        end_idx = start_idx +class_size
+    
+    if end_idx > len(new_dataset):
+        raise ValueError(
+            f"would exceed dataset size {end_idx}"
+        )
+  # Select the range datasets from 10% to 100%, each time we can add 10% ratio
+...
+    rnd = random.Random(seed + offset)
+    rnd.shuffle(indices)
+    
+    n_train = int(0.7 * class_size)
+    n_val   = int(0.2 * class_size)
+    
+    train_idx = indices[:n_train]
+    val_idx = indices[n_train:n_train + n_val]
+    test_idx  = indices[n_train + n_val:]
+    
+    new_train = torch.utils.data.Subset(new_dataset, train_idx)
+    new_val = torch.utils.data.Subset(new_dataset, val_idx)
+    new_test  = torch.utils.data.Subset(new_dataset, test_idx)
+  # Random give 70% 20% and 10% to train, valid and test
+...
+    updated_train = torch.utils.data.ConcatDataset([train_loader.dataset, new_train])
+    updated_val = torch.utils.data.ConcatDataset([val_loader.dataset, new_val])
+    updated_test = torch.utils.data.ConcatDataset([test_loader.dataset, new_test])
+  # Generate new dataloader with new train, new val and new test
+
+```
+
 The Retrain terminal operation of adding lung-viral-pneumonia(10% of eval dataset) is shown in Figure below:
 ![Retrain 1](./Training_part/Image_Saved/Retrain_lung-viral-pneumonia.png)
 
@@ -642,7 +685,7 @@ The Retrain Mlflow UI training success is shown in Figure below:
 
 ---
 
-### Normal Outcome
+### Normal training Outcome
 
 **Single-GPU Training:**
 
