@@ -623,14 +623,14 @@ The Ray head and workers working status is shown in Figure below:
 
 To further test model robustness, we introduced an interactive dataset augmentation mechanism. Users specify the class (e.g., `lung-viral-pneumonia`) and select a 10% subset of unused images, which are integrated into the training, validation, and test datasets.
 
-The Ray head and workers working status is shown in Figure below:
-![Ray Train Resources usage](./Training_part/Image_Saved/Ray_Train_Resources.png)
+The Retrain terminal operation of adding lung-viral-pneumonia(10% of eval dataset) is shown in Figure below:
+![Retrain 1](./Training_part/Image_Saved/Retrain_lung-viral-pneumonia10%add.png)
 
-The Ray head and workers working status is shown in Figure below:
-![Ray Train Resources usage](./Training_part/Image_Saved/Ray_Train_Resources.png)
+The Retrain Mlflow record resources is shown in Figure below:
+![Retrain 2](./Training_part/Image_Saved/Retrain_lung-viral-pneumonia10%add_GPU.png)
 
-The Ray head and workers working status is shown in Figure below:
-![Ray Train Resources usage](./Training_part/Image_Saved/Ray_Train_Resources.png)
+The Retrain Mlflow UI training success is shown in Figure below:
+![Retrain 3](./Training_part/Image_Saved/Retrain_mlflow_ui.png)
 
 **Performance Summary (Retrain vs. Baseline):**
 
@@ -648,14 +648,14 @@ The Ray head and workers working status is shown in Figure below:
 
 The normal (single-GPU) training scenario took 30.8 minutes for 12 epochs and achieved an accuracy of approximately 86%. The training exhibited stable but slower convergence compared to distributed approaches.
 
-The Ray head and workers working status is shown in Figure below:
-![Ray Train Resources usage](./Training_part/Image_Saved/Ray_Train_Resources.png)
+The Normal train with 1036 batch is shown in Figure below:
+![Normal 1](./Training_part/Image_Saved/Normal.png)
 
-The Ray head and workers working status is shown in Figure below:
-![Ray Train Resources usage](./Training_part/Image_Saved/Ray_Train_Resources.png)
+The Normal train Mlflow record resources is shown in Figure below:
+![Normal 2](./Training_part/Image_Saved/Normal_GPU_matrix.png)
 
-The Ray head and workers working status is shown in Figure below:
-![Ray Train Resources usage](./Training_part/Image_Saved/Ray_Train_Resources.png)
+The Normal train Mlflow UI training success is shown in Figure below:
+![Normal 3](./Training_part/Image_Saved/Normal_finished_overview.png)
 
 ---
 
