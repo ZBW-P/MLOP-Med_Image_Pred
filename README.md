@@ -626,44 +626,30 @@ To further test model robustness, we introduced an interactive dataset augmentat
 
 ```python
 def add(train_loader, val_loader, test_loader, batch_size, file_path, num_workers: int =16, ratio: float=0.1 ,seed: int = 42):
-  # Combine original dataloader and dataloader of select classes
-...
-    New_path = os.path.join(file_path, 'final_eval', file)
-    new_dataset = datasets.ImageFolder(root=New_path, transform=transform_medical)
-  # Path to load the whole target dataset floder
-    class_size=int(ratio*len(new_dataset))
-    start_idx =offset*class_size
-    if offset == 9:
-        end_idx=len(new_dataset)
-    else:
-        end_idx = start_idx +class_size
-    
-    if end_idx > len(new_dataset):
-        raise ValueError(
-            f"would exceed dataset size {end_idx}"
-        )
-  # Select the range datasets from 10% to 100%, each time we can add 10% ratio
-...
-    rnd = random.Random(seed + offset)
-    rnd.shuffle(indices)
-    
-    n_train = int(0.7 * class_size)
-    n_val   = int(0.2 * class_size)
-    
-    train_idx = indices[:n_train]
-    val_idx = indices[n_train:n_train + n_val]
-    test_idx  = indices[n_train + n_val:]
-    
-    new_train = torch.utils.data.Subset(new_dataset, train_idx)
-    new_val = torch.utils.data.Subset(new_dataset, val_idx)
-    new_test  = torch.utils.data.Subset(new_dataset, test_idx)
-  # Random give 70% 20% and 10% to train, valid and test
-...
-    updated_train = torch.utils.data.ConcatDataset([train_loader.dataset, new_train])
-    updated_val = torch.utils.data.ConcatDataset([val_loader.dataset, new_val])
-    updated_test = torch.utils.data.ConcatDataset([test_loader.dataset, new_test])
-  # Generate new dataloader with new train, new val and new test
+ """
+    Augment existing DataLoaders with a new slice of images from disk.
 
+    For a given `ratio` of the dataset in `file_path/final_eval`, this function:
+      1. Loads the full ImageFolder dataset from `file_path/final_eval`.
+      2. Picks a contiguous slice of size `ratio * dataset_size`, based on an implicit `offset` of 0–9.
+      3. Shuffles that slice with `seed + offset`.
+      4. Splits it into train/val/test subsets (70/20/10%).
+      5. Concatenates those subsets onto the original `train_loader.dataset`, `val_loader.dataset`, and `test_loader.dataset`.
+      6. Returns three new DataLoaders built with `batch_size` and `num_workers`.
+
+    Args:
+        train_loader (DataLoader): Original training DataLoader.
+        val_loader (DataLoader):   Original validation DataLoader.
+        test_loader (DataLoader):  Original test DataLoader.
+        batch_size (int):          Batch size for the returned loaders.
+        file_path (str):           Base path to your datasets.
+        num_workers (int):         Number of workers for the new loaders.
+        ratio (float):             Fraction (0–1) of the new dataset to add each call.
+        seed (int):                Random seed base for reproducible shuffling.
+
+    Returns:
+        tuple: (new_train_loader, new_val_loader, new_test_loader)
+    """
 ```
 
 The Retrain terminal operation of adding lung-viral-pneumonia(10% of eval dataset) is shown in Figure below:
@@ -674,14 +660,6 @@ The Retrain Mlflow record resources is shown in Figure below:
 
 The Retrain Mlflow UI training success is shown in Figure below:
 ![Retrain 3](./Training_part/Image_Saved/Retrain_mlflow_ui.png)
-
-**Performance Summary (Retrain vs. Baseline):**
-
-| Metric             | Retrain (10% add) | DDP Baseline | Normal (Single-GPU) |
-|--------------------|-------------------|--------------|---------------------|
-| **Accuracy (%)**   | 86.7              | 84.8         | 86.4                |
-| **Loss**           | 0.388             | 0.445        | 0.433               |
-| **Training Time**  | 21.4 min          | 19.5 min     | 30.8 min            |
 
 ---
 
