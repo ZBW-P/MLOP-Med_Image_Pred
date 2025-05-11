@@ -126,25 +126,22 @@ conn = clients.connection()
 # Print authentication token and object storage endpoint
 print("OS_TOKEN =", conn.authorize())
 print("STORAGE_URL =", conn.object_store.get_endpoint())
-
+```
 Build the Docker Image
-From the directory containing the Dockerfile:
-
 ```bash
 docker build -t swift-dashboard .
+```
 Run the Dashboard
 Replace the variables with your actual token and Swift storage URL:
-```
 ```bash
 docker run -p 9002:9002 \
   -e OS_TOKEN="your_token_here" \
   -e STORAGE_URL="your_storage_url_here" \
   -v $(pwd):/app \
   swift-dashboard
-Access the Dashboard
-In your browser:
-http://129.114.27.23/:9002
 ```
+Access the Dashboard on http://129.114.27.23/:9002
+
 ## Unit 4 & 5: Modeling, Training, and Experiment Tracking
 
 ### Problem Setup & Model Motivation
