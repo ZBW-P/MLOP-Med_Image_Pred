@@ -40,7 +40,7 @@ link to their contributions in all repos here. -->
 
 | Name                            | Responsible for | Link to their commits in this repo |
 |---------------------------------|-----------------|------------------------------------|
-| All team members                |Build a web server using the model to serve customers.                  |                                    |
+| All team members                |                 |                                    |
 | Qin Huai               |Model training and training platforms                 | https://github.com/ZBW-P/MLOP-Med_Image_Pred?tab=readme-ov-file#model-training-and-training-platforms                                  |
 | Zhaochen Yang                  |Model Serving, Evaluation and Monitoring                |https://github.com/ZBW-P/MLOP-Med_Image_Pred/blob/main/README.md#model-serving-and-monitoring-platforms                                    |
 | Junjie Mai                   |Data Pipeline                 |https://github.com/ZBW-P/MLOP-Med_Image_Pred/blob/main/README.md#data-pipeline                                    |
@@ -64,7 +64,7 @@ conditions under which it may be used. -->
 Our overall approach is to leverage the dataset detailed in the table below as the foundation for our ML operations system. Our pipeline integrates persistent storage, device-based processing, and Docker orchestration to streamline training, evaluation, and validation. Specifically, we plan to:
 
 - **Centralize Data Storage:**  
-  Store the collected chest X-ray images in a clear and organized library on persistent storage. The data will be segmented into three zipped folders (`train`, `test`, and `val`), ensuring that all training, evaluation, and testing sets are easily accessible to our system.
+  Store the collected chest X-ray and OCT images in a clear and organized library on persistent storage. The data will be segmented into three zipped folders (`train`, `test`, and `val`), ensuring that all training, evaluation, and testing sets are easily accessible to our system.
   
 - **Model training and evaluation:**
   We will train a custom Vision Transformer (ViT) model on chest X-ray images for accurate medical image classification. A LitGPT-derived LLM will be employed to generate diagnostic derivations and actionable recommendations based on the outputs of the ViT model. Our training pipeline will support continuous training, evaluation, and re-training on new or updated data to ensure that both models remain current and adapt to evolving clinical requirements.
