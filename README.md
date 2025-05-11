@@ -77,7 +77,7 @@ Used for storing all dataset splits for model training and evaluation.
 
 - **Bucket**: `object-persist-project42`
 - **Size**: 7.70 GB
-- **Object Count**: ~125,100
+- **Object Count**: 125,100
 - **Structure**:  
   - `train/`  
   - `val/`  
