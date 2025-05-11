@@ -68,7 +68,7 @@ l.show()
 
 The VM instance detail is shown in Figure 1 below:
 
-![VM](VM.png)
+![VM](./Training_part/Image_Saved/VM.png)
 
 - **Create and launch the VM:**
 
@@ -117,7 +117,7 @@ ssh -i ~/.ssh/key cc@<FLOATING_IP>
 
 SSH login is shown in Figure 2 below:
 
-![SSH Log in VM](SSH.png)
+![SSH Log in VM](./Training_part/Image_Saved/SSH.png)
 
 ### Data Preparation
 
@@ -153,7 +153,7 @@ region = CHI@TACC
 rclone lsd chi_tacc:
 ```
 
-![Directory structure](rclone.png)
+![Directory structure](./Training_part/Image_Saved/rclone.png)
 
 - **Mount the bucket:**
 
@@ -168,7 +168,7 @@ rclone mount chi_tacc:object-persist-project42 \
 
 Dataset structure:
 
-![Directory structure](Storage.png)
+![Directory structure](./Training_part/Image_Saved/Storage.png)
 
 ## Training Code Explanation
 
@@ -431,7 +431,7 @@ ray job submit \
 
 The Ray UI is shown below:
 
-![Ray UI](Ray_UI.png)
+![Ray UI](./Training_part/Image_Saved/Ray_UI.png)
 
 
 ---
@@ -442,29 +442,29 @@ The Ray UI is shown below:
 
 The Mlflow Training is shown in Figure 6 below:
 
-![Mlflow Training](Mlflow_training.png)
+![Mlflow Training](./Training_part/Image_Saved/Mlflow_training.png)
 
 The graph of the Mlflow training completion is shown in Figure 7 below:
 
-![UI for Mlflow training completed](Mlflow_complete.png)
+![UI for Mlflow training completed](./Training_part/Image_Saved/Mlflow_complete.png)
 
 The Mlflow training GPU usage is shown in Figure 8 below:
 
-![Training Resource usage](Mlflow_resource_usage.png)
+![Training Resource usage](./Training_part/Image_Saved/Mlflow_resource_usage.png)
 
 ### Ray Train Outcome
 
 The Ray train job trained successfully as shown in Figure 9 below:
 
-![Ray Train Job complete](Ray_Train_Job.png)
+![Ray Train Job complete](./Training_part/Image_Saved/Ray_Train_Job.png)
 
 The Ray train job resource usage is shown in Figure 10 below:
 
-![Ray Train Resources usage](Ray_Train_Resources.png)
+![Ray Train Resources usage](./Training_part/Image_Saved/Ray_Train_Resources.png)
 
 The Ray head and workers working status is shown in Figure 11 below:
 
-![Ray cluster](Ray_cluster.png)
+![Ray cluster](./Training_part/Image_Saved/Ray_cluster.png)
 
 ### Retrain Outcome
 
@@ -478,13 +478,13 @@ Hardware utilization metrics in Figure 8 indicate that GPU 0 was driven to near-
 
 The graph showing accuracy and loss during Mlflow Training is shown in Figure 13 below:
 
-![Training loss and accuracy over epochs](Mlflow_outcome.png)
+![Training loss and accuracy over epochs](./Training_part/Image_Saved/Mlflow_outcome.png)
 
 The Ray Train terminal output for the same 12-epoch experiment. When scaled out to our Ray cluster, the model converged to a higher final accuracy of 87% and a lower test loss of 0.39. We attribute this improvement to Ray’s distributed data loading and parallel execution, which enabled larger effective batch sizes and more frequent gradient updates.
 
 The Ray train job test accuracy is shown in Figure 12 below:
 
-![Ray Train complete in Terminal](Ray_train_terminal.png)
+![Ray Train complete in Terminal](./Training_part/Image_Saved/Ray_train_terminal.png)
 
 ### Compare Normal & DDP-Strategy & Ray Train
 
