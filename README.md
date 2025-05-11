@@ -489,7 +489,7 @@ model = torch.load("model_ckpt/checkpoint.pth")
 ```
 The Mlflow UI is shown below:
 
-![Mlflow UI](./Training_part/Image_Saved/Mlflow_UI.png)
+![Mlflow UI](./Training_part/Image_Saved/MLflow_UI_complete.png)
 
 ### Ray Cluster Configuration
 
@@ -624,10 +624,10 @@ The Ray head and workers working status is shown in Figure below:
 To further test model robustness, we introduced an interactive dataset augmentation mechanism. Users specify the class (e.g., `lung-viral-pneumonia`) and select a 10% subset of unused images, which are integrated into the training, validation, and test datasets.
 
 The Retrain terminal operation of adding lung-viral-pneumonia(10% of eval dataset) is shown in Figure below:
-![Retrain 1](./Training_part/Image_Saved/Retrain_lung-viral-pneumonia10%add.png)
+![Retrain 1](./Training_part/Image_Saved/Retrain_lung-viral-pneumonia.png)
 
 The Retrain Mlflow record resources is shown in Figure below:
-![Retrain 2](./Training_part/Image_Saved/Retrain_lung-viral-pneumonia10%add_GPU.png)
+![Retrain 2](./Training_part/Image_Saved/Retrain_lung-viral-pneumoniaGPU.png)
 
 The Retrain Mlflow UI training success is shown in Figure below:
 ![Retrain 3](./Training_part/Image_Saved/Retrain_mlflow_ui.png)
