@@ -36,11 +36,6 @@ We provisioned resources on **Chameleon Cloud (KVM@TACC)** using the **OpenStack
 - **Image**: `CC-Ubuntu24.04`
 - **Volume attached**: `block-persist-project42-1` on `/dev/vdb`
 
-### Instance Configuration & Setup
-
-- Infrastructure is initialized via `config-hosts.yaml`
-- All nodes were launched using `openstack server create --port --user-data ...`
-
 ### Security Group for Services 
 
 | Service       | Port | Container                | Security Group |
@@ -55,7 +50,6 @@ We provisioned resources on **Chameleon Cloud (KVM@TACC)** using the **OpenStack
 | Jupyter       | 8888 | `jupyter`                |  `Allow HTTP 8888` |
 
 All services were launched using `docker run` or `docker-compose` from within Jupyter on `node1`.
-
 
 
 ## Unit 8 (Offline): Persistent Storage and Data Pipeline
