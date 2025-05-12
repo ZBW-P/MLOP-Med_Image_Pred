@@ -149,20 +149,13 @@ For dataset sources and class mappings, refer to the [Summary of Outside Materia
 
 #### Data Lineage and Samples
 
-- Raw datasets are downloaded from official URLs and extracted using standard formats (`.zip`, `.tar.gz`).
-- Each image is renamed as `{dataset}-{category}-{original_filename}`.
-- OCT datasets include patient ID in filenames and are split by patient. This ensures that images from the same individual only appear in one of the splits (`train`, `val`, `test`, or `final_eval`), preventing data leakage between training and evaluation.
-
+- Raw datasets are downloaded from official URLs and extracted using standard formats (.zip, .tar.gz).
+- Each image is renamed as `{dataset}-{category}-{original_filename}` for traceability.
+- OCT datasets include patient ID in filenames and are split by **patient ID**. This guarantees that **images from the same individual only appear in one of the splits** (train, val, test, or final_eval), **preventing data leakage** across sets.
+- Within each assigned split (e.g., train), all of that person's images are included and **further redistributed across classes**, ensuring per-class balance within patient constraints.
 - COVID-19 and TB datasets are stratified randomly by class.
-- A portion of data (`final_eval`) is created by sampling 50% from the union of `val` and `test`, excluding `train`.
+- The split ratio is **7:2:1** for train, val, and test respectively, and an additional **final_eval** set is sampled from val + test (50%), excluding train.
 
-Examples:
-- `OCT2017-lung-oct-dme-DME-2567-3.jpeg`: belongs to OCT patient 2567.
-- `COVID19_Radiography-lung-normal-NORMAL2-IM-1427.jpeg`: normal CXR sample.
-- `TB_Chest-lung-tuberculosis-Belarus0002.jpeg`: TB image from Belarus dataset.
-
-
----
 
 ### Data Pipeline
 
