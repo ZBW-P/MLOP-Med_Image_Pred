@@ -883,6 +883,7 @@ $ docker ps
 3400f6caef8e   vit-service    "uvicorn app:app --h…"   Up 1h   0.0.0.0:8265->8265/tcp
 c2dfb949dd7e   prom/prometheus        Up 4d   0.0.0.0:9090->9090/tcp
 9c6b1707eee6   grafana/grafana        Up 4d   0.0.0.0:3000->3000/tcp
+```
 ---
 
 ## Unit 2/3: Staged Deployment
