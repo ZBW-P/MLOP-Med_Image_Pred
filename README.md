@@ -161,7 +161,6 @@ Examples:
 - `COVID19_Radiography-lung-normal-NORMAL2-IM-1427.jpeg`: normal CXR sample.
 - `TB_Chest-lung-tuberculosis-Belarus0002.jpeg`: TB image from Belarus dataset.
 
-Each sample corresponds to a simulated "customer" or patient. For OCT data, labels are available at acquisition time. For CXR data, labels are pre-assigned, and other metadata (e.g., lung masks) may arrive later.
 
 ---
 
