@@ -5,13 +5,11 @@
 ### 1. Scale
 - **Data (Medium-scale):**  
   - **Internal Lung X-ray & OCT**: ~15 000 chest X-rays + ~5 000 lung OCT scans, each labeled independently by two radiologists.  
-  - **VinDr-CXR**: 18 000 chest X-rays with dual-radiologist annotations (VinBigData, 2021).  
+  - **VinDr-CXR**: 18 000 chest X-rays with Five-radiologist annotations (VinBigData, 2021).[Original](https://vindr.ai/datasets/cxr) 
   - **Total**: ~38 000 de-identified images, all consent-approved and split into train/val/test.
 
 - **Model (Medium-scale system of smaller models):**  
-  - **U-Net segmentation (~10 M parameters):** isolates lung fields.  
   - **Custom ViT classifier (~5 M parameters):** predicts pulmonary conditions on segmented inputs.  
-  - **Combined footprint:** ~15 M parameters, deployed as two microservices.
 
 - **Deployment (Medium-scale):**  
   - **Compute:** 3 × `m1.xlarge` VMs (Docker + Kubernetes); 2 × `gpu_m100` GPUs for training.  
