@@ -109,7 +109,7 @@ We provisioned resources on **Chameleon Cloud (KVM@TACC)** using the **OpenStack
 All services were launched using `docker run` or `docker-compose` from within Jupyter on `node1`.
 
 
-## Unit 8 (Offline): Persistent Storage and Data Pipeline
+## Persistent Storage and Data Pipeline
 
 ### Persistent Storage
 
