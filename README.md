@@ -195,18 +195,6 @@ The full data pipeline is executed via Docker Compose with two services:
      └── final_eval/
    ```
 
-5. **Upload to MinIO**
-   - `load-data` uses `rclone` to copy `merged_medical` volume contents to:
-     ```
-     minio/
-     └── production/
-         └── processed/
-             ├── train/
-             ├── val/
-             ├── test/
-             └── final_eval/
-     ```
-
 #### Running the Pipeline
 
 ```bash
