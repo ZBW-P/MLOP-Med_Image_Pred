@@ -4,8 +4,10 @@
 
 ### 1. Value Proposition
 - **Status quo:** Every lung scan (X-ray or OCT) is independently read by two physicians, creating delays, uneven workloads, and additional cost.  
-- **Our system:** We deploy a medium size Vision Transformer (ViT) model as an automated “second reader” to assist the first physician in real time:  
-  - **If model and physician agree:** the scan is cleared without needing a second human read → **reduces** turnaround time and reviewer workload.  
+- **Our system:** We deploy a medium-sized Vision Transformer (ViT) model as an automated “second reader” to assist the first physician in real time:  
+  - **Dataset scale:** 7 GB of lung images across 9 classes (RSNA CXR, NIAID TB, OCT – [Dataset Page](https://data.mendeley.com/datasets/rscbjbr9sj/2)), split into 5 GB for training, 2 GB for validation, and 1 GB for testing.  
+  - **Model scale:** ~5 million parameters (final `.pth` checkpoint ≈ 50 MB).  
+  - **If model and physician agree:** the scan is cleared without a second human read → **reduces** turnaround time and reviewer workload.  
   - **If model and physician disagree:** the scan is flagged for review by a second physician → **maintains** diagnostic safety.  
 - **How it works in practice:**  
   1. Physician A interprets the scan and records a preliminary diagnosis.  
