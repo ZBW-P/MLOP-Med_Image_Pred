@@ -874,9 +874,8 @@ The Comparsion with parameters setting is shown in Figure below:
       "pred_idx": 2,  
       "pred_class": "glioma",  
       "probabilities": {
-        "glioma": 0.75,
-        "meningioma": 0.15,
-        "pituitary": 0.10,
+        "lung-covid": 0.701,
+        "lung-normal": 0.294,
         // …other classes
       }
     }
