@@ -1,4 +1,4 @@
-# Project Title: [Your Project Name]
+# Project Title: Medical Image Predictions
 
 ## Unit 1: Value Propositions & Proposal
 
