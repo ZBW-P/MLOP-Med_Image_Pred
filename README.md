@@ -2,12 +2,31 @@
 
 ## Unit 1: Value Propositions & Proposal
 
-### Key Value Propositions
+### 1. Scale
+- **Data (Medium-scale):**  
+  - **Internal Lung X-ray & OCT**: ~15 000 chest X-rays + ~5 000 lung OCT scans, each labeled independently by two radiologists.  
+  - **VinDr-CXR**: 18 000 chest X-rays with dual-radiologist annotations (VinBigData, 2021).  
+  - **Total**: ~38 000 de-identified images, all consent-approved and split into train/val/test.
 
-#### Disclaimer
+- **Model (Medium-scale system of smaller models):**  
+  - **U-Net segmentation (~10 M parameters):** isolates lung fields.  
+  - **Custom ViT classifier (~5 M parameters):** predicts pulmonary conditions on segmented inputs.  
+  - **Combined footprint:** ~15 M parameters, deployed as two microservices.
 
-**Important Notice for Patients:**  
-Our model is medium-sized and designed for easy deployment on websites and mobile apps. However, its accuracy is not guaranteed. The outputs provided by this system are for preliminary review only and should not replace professional medical advice. **Always consult a licensed physician before relying on these results.**
+- **Deployment (Medium-scale):**  
+  - **Compute:** 3 × `m1.xlarge` VMs (Docker + Kubernetes); 2 × `gpu_m100` GPUs for training.  
+  - **Networking:** 2 floating IPs for API endpoints & training cluster.  
+  - **Storage:** ≥ 100 GB persistent volume for images, checkpoints, and logs.
+
+### 2. Value Proposition
+- **Status quo:** Every lung scan (X-ray or OCT) requires two independent physician reads, causing delays, variable workload, and extra cost.  
+- **Our system:** Acts as a “second reader” alongside the first physician:  
+  - **Agree →** bypass second read → **reduces** workload & turnaround.  
+  - **Disagree →** triggers second physician review → **maintains** diagnostic safety.  
+- **Business metrics:**  
+  1. **Second-review reduction rate**.  
+  2. **Time saved per study** .  
+  3. **Cost savings per scan** .
 
 #### Contributors
 
