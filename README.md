@@ -133,6 +133,97 @@ Used for storing all dataset splits for model training and evaluation.
   - `final_eval/`
 
 This object store is read-only mounted into the Jupyter container at `/mnt/medical-data` for training and inference.
+### Offline Data
+
+This project uses a combined dataset consisting of OCT scans and chest X-ray images for disease classification tasks. The data is processed offline through a containerized ETL pipeline to produce training, validation, test, and production evaluation sets.
+
+- **ETL Script**: [`compose/datamerge3.py`](compose/datamerge3.py)
+- **Configuration File**: [`compose/datasets_config.yaml`](compose/datasets_config.yaml)
+- **Docker Compose File**: [`compose/docker-compose-etl.yaml`](compose/docker-compose-etl.yaml)
+- **Volume Name**: `merged_medical`
+- **Output Directory**: `/app/merged_dataset`
+
+#### Datasets
+
+For dataset sources and class mappings, refer to the [Summary of Outside Materials](https://github.com/ZBW-P/MLOP-Med_Image_Pred/blob/main/README.md#summary-of-outside-materials).
+
+#### Data Lineage and Samples
+
+- Raw datasets are downloaded from official URLs and extracted using standard formats (`.zip`, `.tar.gz`).
+- Each image is renamed as `{dataset}-{category}-{original_filename}`.
+- OCT datasets include patient ID in filenames and are split by patient to prevent leakage.
+- COVID-19 and TB datasets are stratified randomly by class.
+- A portion of data (`final_eval`) is created by sampling 50% from the union of `val` and `test`, excluding `train`.
+
+Examples:
+- `OCT2017-lung-oct-dme-DME-2567-3.jpeg`: belongs to OCT patient 2567.
+- `COVID19_Radiography-lung-normal-NORMAL2-IM-1427.jpeg`: normal CXR sample.
+- `TB_Chest-lung-tuberculosis-Belarus0002.jpeg`: TB image from Belarus dataset.
+
+Each sample corresponds to a simulated "customer" or patient. For OCT data, labels are available at acquisition time. For CXR data, labels are pre-assigned, and other metadata (e.g., lung masks) may arrive later.
+
+---
+
+### Data Pipeline
+
+The full data pipeline is executed via Docker Compose with two services:
+
+- `merge-data`: performs offline ETL
+- `load-data`: uploads results to object storage
+
+#### Processing Steps
+
+1. **Download & Extract**
+   - Defined in `datasets_config.yaml` and executed in `datamerge3.py`
+   - Stored in `/app/downloads/` after extraction
+
+2. **Mapping & Preprocessing**
+   - Class mappings configured in YAML
+   - Renaming ensures dataset traceability
+
+3. **Splitting**
+   - OCT: patient-aware split into `train`, `val`, `test`, `final_eval`
+   - Others: stratified sampling
+   - `final_eval` is sampled from `val` + `test` (50%), no overlap with `train`
+
+4. **Output Structure**
+   ```
+   merged_dataset/
+     ├── train/
+     ├── val/
+     ├── test/
+     └── final_eval/
+   ```
+
+5. **Upload to MinIO**
+   - `load-data` uses `rclone` to copy `merged_medical` volume contents to:
+     ```
+     minio/
+     └── production/
+         └── processed/
+             ├── train/
+             ├── val/
+             ├── test/
+             └── final_eval/
+     ```
+
+#### Running the Pipeline
+
+```bash
+docker compose -f compose/docker-compose-etl.yaml up merge-data
+docker compose -f compose/docker-compose-etl.yaml up load-data
+```
+
+Ensure the following:
+- `RCLONE_CONTAINER` is defined
+- `rclone.conf` is mounted at `/root/.config/rclone`
+
+---
+
+This pipeline guarantees:
+- No data leakage across splits
+- Clean and reproducible preprocessing
+- Cloud-accessible data for training and inference
 
 ### Offline Dataset
 
