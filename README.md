@@ -150,9 +150,7 @@ This project uses a combined dataset consisting of OCT scans and chest X-ray ima
 
 
 ### Data Pipeline
-Below are key materials we use:
-
-### 🔧 Key Components
+### Key Components
 
 - **ETL Script**: [`compose/datamerge3.py`](compose/datamerge3.py)  
   Main script for downloading, extracting, renaming, and splitting medical images into train/val/test/final_eval sets. Ensures OCT images are split by patient and maintains class balance.
