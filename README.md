@@ -151,7 +151,7 @@ For dataset sources and class mappings, refer to the [Summary of Outside Materia
 
 - Raw datasets are downloaded from official URLs and extracted using standard formats (.zip, .tar.gz).
 - Each image is renamed as `{dataset}-{category}-{original_filename}` for traceability.
-- OCT datasets include patient ID in filenames and are split by **patient ID**. This guarantees that **images from the same individual only appear in one of the splits** (train, val, test, or final_eval), **preventing data leakage** across sets.
+- OCT datasets include patient ID in filenames and are split by **patient ID**. This guarantees that **images from the same individual only appear in one of the splits** (train, val, test), **preventing data leakage** across sets.
 - Within each assigned split (e.g., train), all of that person's images are included and **further redistributed across classes**, ensuring per-class balance within patient constraints.
 - COVID-19 and TB datasets are stratified randomly by class.
 - The split ratio is **7:2:1** for train, val, and test respectively, and an additional **final_eval** set is sampled from val + test (50%), excluding train.
@@ -166,20 +166,20 @@ The full data pipeline is executed via Docker Compose with two services:
 
 #### Processing Steps
 
-1. **Download & Extract**
+ **Download & Extract**
    - Defined in `datasets_config.yaml` and executed in `datamerge3.py`
    - Stored in `/app/downloads/` after extraction
 
-2. **Mapping & Preprocessing**
+ **Mapping & Preprocessing**
    - Class mappings configured in YAML
    - Renaming ensures dataset traceability
 
-3. **Splitting**
+ **Splitting**
    - OCT: patient-aware split into `train`, `val`, `test`, `final_eval`
    - Others: stratified sampling
    - `final_eval` is sampled from `val` + `test` (50%), no overlap with `train`
 
-4. **Output Structure**
+**Output Structure**
    ```
    merged_dataset/
      ├── train/
@@ -187,6 +187,14 @@ The full data pipeline is executed via Docker Compose with two services:
      ├── test/
      └── final_eval/
    ```
+To enable scalable model serving and reproducible ML operations, we implement an online pipeline based on containerized services and persistent block storage.
+
+The pipeline uses the following block volume:
+
+    Volume Name: persist-block-project42
+    Mount Path: /mnt/block
+
+For full configuration, see:[compose/docker-compose-block.yaml](compose/docker-compose-block.yaml)
 
 #### Running the Pipeline
 
@@ -200,8 +208,11 @@ Ensure the following:
 - `rclone.conf` is mounted at `/root/.config/rclone`
 
 ---
-
+To launch the online pipeline services (MinIO, PostgreSQL, MLflow, etc.), run:
 This pipeline guarantees:
+- `HOST_IP=$(curl --silent http://169.254.169.254/latest/meta-data/public-ipv4)
+- `docker compose -f ~/MLOP-Med_Image_Pred/compose/docker-compose-block.yaml up -d
+
 - No data leakage across splits
 - Clean and reproducible preprocessing
 - Cloud-accessible data for training and inference
