@@ -11,7 +11,7 @@
 **Important Notice for Patients:**  
 Our model is a medium-sized model designed for easy deployment on websites and mobile apps. However, its accuracy is not guaranteed. The outputs provided by the system serve as a preliminary preview and should not replace professional medical advice. **Always consult with a professional doctor before relying on these results.**
 
-### Contributors
+#### Contributors
 
 <!-- Table of contributors and their roles. 
 First row: define responsibilities that are shared by the team. 
@@ -29,12 +29,12 @@ link to their contributions in all repos here. -->
 
 
 
-### System diagram
+#### System diagram
 
 
 ![Diagram](https://github.com/ZBW-P/MLOP-Med_Image_Pred/blob/main/System.png)
 
-### Summary of outside materials
+#### Summary of outside materials
 
 <!-- In a table, a row for each dataset, foundation model. 
 Name of data/model, conditions under which it was created (ideally with links/references), 
@@ -61,7 +61,7 @@ The table below summarizes the datasets we plan to use, including details on how
 | **Tuberculosis (TB) Chest X-ray Database** | Developed by a collaborative research team from Qatar University, University of Dhaka, Malaysia, and affiliated medical institutions, this database comprises chest X-ray images for TB-positive cases and Normal images. The current release includes 700 publicly accessible TB images, 2800 additional TB images available via a data-sharing agreement through the NIAID TB portal, and 3500 Normal images. The dataset is compiled from multiple sources (including the NLM, Belarus, NIAID TB, and RSNA CXR datasets) and was used in the study “Reliable Tuberculosis Detection using Chest X-ray with Deep Learning, Segmentation and Visualization” published in IEEE Access. For further details, refer to the [Kaggle Dataset Page](https://www.kaggle.com/datasets/tawsifurrahman/tuberculosis-tb-chest-xray-dataset). | Licensed for academic and non-commercial research use. Users must provide proper citation to the original publication: Tawsifur Rahman, Amith Khandakar, Muhammad A. Kadir, Khandaker R. Islam, Khandaker F. Islam, Zaid B. Mahbub, Mohamed Arselene Ayari, Muhammad E. H. Chowdhury. (2020) “Reliable Tuberculosis Detection using Chest X-ray with Deep Learning, Segmentation and Visualization”. IEEE Access, Vol. 8, pp 191586–191601 (DOI: 10.1109/ACCESS.2020.3031384), and adhere to the dataset usage guidelines. |
 | **Vision Transformer (ViT) Demo Model**        | Defined in PyTorch in Prof. Hegde’s `visual_transformers.ipynb` (dl-demos repository). It implements: patch embedding (16×16), positional embeddings, multi-head self-attention, transformer encoder layers, and an MLP head. The notebook provides a full training loop (DataLoader, Adam optimizer, cross-entropy loss, scheduler) for experimentation on standard image datasets. | For academic/course use only, per the deep-learning course guidelines; not for commercial distribution.|
 
-### Summary of infrastructure requirements
+#### Summary of infrastructure requirements
 
 <!-- Itemize all your anticipated requirements: What (`m1.medium` VM, `gpu_mi100`), 
 how much/when, justification. Include compute, floating IPs, persistent storage. 
