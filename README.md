@@ -981,6 +981,15 @@ This module simulates real-time inference by sending images from the `final_eval
 #### Key Features
 ![image](https://github.com/user-attachments/assets/452eaea8-62e4-495f-a238-b33a6a514ffd)
 
+In [`ci/deploy_pipeline.yml`](production-pipeline/simulate_requests_3.py), we define the complete simulation pipeline for online inference and feedback logging. This script performs the following steps:
+
+- Loads up to 100 images from the `final_eval` dataset in object storage (`/mnt/object/final_eval`)
+- Applies preprocessing (resize, grayscale, normalization) using `torchvision.transforms`
+- Reverses normalization and saves a local copy of the image under `/mnt/data/production_data/unlabeled` using a timestamped filename
+- Sends each image to the FastAPI prediction endpoint (`http://129.114.27.23:8265/predict/`) and parses the model's predicted class
+- After all requests, uploads the saved images to the MinIO `production` bucket using `rclone`, enabling downstream retraining or review
+
+This script effectively simulates real-time user input and closes the feedback loop by persisting prediction data to block storage.
 
 - Reads up to 100 images from the `final_eval` subset stored in object storage (`/mnt/object/final_eval`)
 - Sends images one by one to the FastAPI endpoint (`http://129.114.27.23:8265/predict/`) with 30-second intervals
