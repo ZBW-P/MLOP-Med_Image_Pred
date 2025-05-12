@@ -67,10 +67,6 @@ Our pipeline integrates chest X-ray and OCT datasets with persistent storage, de
 
 ## Unit 2/3: Cloud-Native Infrastructure
 
-**Architecture Diagram**  
-
-
-
 ### Provisioning Summary
 
 ![infrastructure](https://github.com/user-attachments/assets/1b30abd6-74c2-4c73-8b6a-ab322f033f0a)
