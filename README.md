@@ -973,11 +973,9 @@ c2dfb949dd7e   prom/prometheus        Up 4d   0.0.0.0:9090->9090/tcp
 - Script/CI: [`ci/deploy_pipeline.yml`](link)
 
 ---
-
-## Unit 8 (Online): Real-Time Data and Feedback
 ## Unit 8 (Online): Real-Time Data and Feedback
 
-### 📡 Production Data Pipeline
+###  Production Data Pipeline
 
 This module simulates real-time inference by sending images from the `final_eval` dataset to a deployed FastAPI prediction service. It mimics production behavior where new data points are continuously sent to the model and predictions are stored for later review.
 
