@@ -152,10 +152,26 @@ This project uses a combined dataset consisting of OCT scans and chest X-ray ima
 ### Data Pipeline
 Below are key materials we use:
 
-- **ETL Script**: [`compose/datamerge3.py`](compose/datamerge3.py)
-- **Configuration File**: [`compose/datasets_config.yaml`](compose/datasets_config.yaml)
-- **ETL Compose File**: [`compose/docker-compose-etl.yaml`](compose/docker-compose-etl.yaml)
-- **Block Compose File**: [`compose/docker-compose-block.yaml`](compose/docker-compose-block.yaml)
+### 🔧 Key Components
+
+- **ETL Script**: [`compose/datamerge3.py`](compose/datamerge3.py)  
+  Main script for downloading, extracting, renaming, and splitting medical images into train/val/test/final_eval sets. Ensures OCT images are split by patient and maintains class balance.
+
+- **Configuration File**: [`compose/datasets_config.yaml`](compose/datasets_config.yaml)  
+  Defines dataset download links, archive types, extraction paths, and class mappings. Used as input for the ETL script.
+
+- **ETL Compose File**: [`compose/docker-compose-etl.yaml`](compose/docker-compose-etl.yaml)  
+  Docker Compose setup for running offline data processing:
+  - `merge-data`: runs the ETL script inside a container
+  - `load-data`: uploads the processed data to object storage using rclone
+
+- **Block Compose File**: [`compose/docker-compose-block.yaml`](compose/docker-compose-block.yaml)  
+  Launches online infrastructure services:
+  - `minio`: object storage for model artifacts and datasets
+  - `postgres`: backend database for MLflow
+  - `mlflow`: experiment tracking UI
+  - `jupyter`: interactive notebook environment with data access
+
 
 #### Offline Data Pipeline Processing Steps
 
