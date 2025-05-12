@@ -76,4 +76,4 @@ for idx, image_path in enumerate(selected_images, 1):
         print(f"[{idx}/{max_images}] Error processing {os.path.basename(image_path)}: {e}", flush=True)
 
     if idx < max_images:
-        time.sleep(30)
+        time.sleep(1)
