@@ -165,7 +165,16 @@ This is a lightweight Streamlit dashboard for visualizing medical image datasets
 - Shows image counts for train, val, test, and final_eval folders
 - Displays sample images (randomly selected) per class
 - Runs as a web application on port 9002 using Docker
+In the file `app.py`, we implement a Streamlit-based dashboard to visualize medical image datasets stored in OpenStack Swift object storage.
 
+- We begin by reading the `OS_TOKEN` and `STORAGE_URL` environment variables to authenticate with the Swift API.
+- We then establish a connection to the Swift container using `python-swiftclient` with retry support.
+- In the same file, we define a list of dataset subsets (`train`, `val`, `test`, `final_eval`) and acceptable image file extensions.
+- We retrieve all object names from the target Swift container (`object-persist-project42`) and organize them by subset and class.
+- For each class in each subset, we count the number of images and randomly sample up to 3 images for preview.
+- We download image content via Swift, temporarily store it using `tempfile`, and display it using Streamlit's `st.image()`.
+
+This dashboard is useful for monitoring data distributions and visually inspecting data quality across different dataset splits, especially in MLOps workflows that rely on object storage as the dataset backend.
 ## How to run it
 Use the following Python script in your Chameleon Jupyter environment to authenticate and retrieve the necessary credentials for accessing OpenStack Swift object storage.
 
