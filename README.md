@@ -979,6 +979,8 @@ c2dfb949dd7e   prom/prometheus        Up 4d   0.0.0.0:9090->9090/tcp
 This module simulates real-time inference by sending images from the `final_eval` dataset to a deployed FastAPI prediction service. It mimics production behavior where new data points are continuously sent to the model and predictions are stored for later review.
 
 #### Key Features
+![image](https://github.com/user-attachments/assets/452eaea8-62e4-495f-a238-b33a6a514ffd)
+
 
 - Reads up to 100 images from the `final_eval` subset stored in object storage (`/mnt/object/final_eval`)
 - Sends images one by one to the FastAPI endpoint (`http://129.114.27.23:8265/predict/`) with 30-second intervals
