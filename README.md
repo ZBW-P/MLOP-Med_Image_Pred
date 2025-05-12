@@ -143,18 +143,9 @@ This is a lightweight Streamlit dashboard for visualizing medical image datasets
 
 
 ## Features
-- Connects to a Swift container using token-based authentication
-- Shows image counts for train, val, test, and final_eval folders
-- Displays sample images (randomly selected) per class
-- Runs as a web application on port 9002 using Docker
-In the file `app.py`, we implement a Streamlit-based dashboard to visualize medical image datasets stored in OpenStack Swift object storage.
 
-- We begin by reading the `OS_TOKEN` and `STORAGE_URL` environment variables to authenticate with the Swift API.
-- We then establish a connection to the Swift container using `python-swiftclient` with retry support.
-- In the same file, we define a list of dataset subsets (`train`, `val`, `test`, `final_eval`) and acceptable image file extensions.
-- We retrieve all object names from the target Swift container (`object-persist-project42`) and organize them by subset and class.
-- For each class in each subset, we count the number of images and randomly sample up to 3 images for preview.
-- We download image content via Swift, temporarily store it using `tempfile`, and display it using Streamlit's `st.image()`.
+The file data_dashboard/app2.py is a Streamlit app that helps us view medical image datasets stored in OpenStack Swift object storage. It uses OS_TOKEN and STORAGE_URL from CHI@TACC Jupyter to connect securely to the object storage. It connects to the container object-persist-project42, where images are organized into folders like train, val, test, and final_eval, and each of these folders contains subfolders for different classes.
+When app2.py runs, it lists all the files in the container and groups them by subset and class. It then shows how many images are in each group and displays up to three random images per class. The container runs on port 9002 using Docker, and it’s useful for checking how our dataset is organized and quickly seeing sample images in each group, especially for medical imaging experts to understand the data distribution and image quality.
 
 This dashboard is useful for monitoring data distributions and visually inspecting data quality across different dataset splits, especially in MLOps workflows that rely on object storage as the dataset backend.
 ## How to run it
