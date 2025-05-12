@@ -797,6 +797,8 @@ The Comparsion with parameters setting is shown in Figure below:
     { "status": "evaluation started for <name>" }
     ```
   - Metrics (`model_overall_accuracy` and `model_accuracy_per_class`) are updated in Prometheus when evaluation completes.
+  - <img width="1476" alt="image" src="https://github.com/user-attachments/assets/babd960d-1561-4f3f-a1a9-ab71eb676ddc" />
+
 - **Health Check**  
   - `GET /health`  
   - Returns:
@@ -809,6 +811,7 @@ The Comparsion with parameters setting is shown in Figure below:
     - `model_overall_accuracy{dataset="<name>"}`
     - `model_accuracy_per_class{dataset="<name>",class_name="<class>"}`
   - Also includes default HTTP‑request metrics from `prometheus_fastapi_instrumentator`.
+  - <img width="1489" alt="image" src="https://github.com/user-attachments/assets/73d59806-5c7c-41f6-812a-c35f689564eb" />
 ### Model Optimizations
 
 - **Framework**:  
