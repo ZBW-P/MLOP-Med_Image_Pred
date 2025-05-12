@@ -23,7 +23,7 @@
 | Name              | Role                                      | Link to Commits                                                                                                                 |
 |-------------------|-------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------|
 | All team members  | Overall project development               | N/A                                                                                                                             |
-| Qin Huai          | Model training & training platform setup  | [Part4&5](https://github.com/ZBW-P/MLOP-Med_Image_Pred?tab=readme-ov-file#unit-4--5-modeling-training-and-experiment-tracking)                 |
+| Qin Huai          | Model training & training platform setup  | [Part4&5](https://github.com/ZBW-P/MLOP-Med_Image_Pred/blob/main/README.md#unit-4--5-modeling-training-and-experiment-tracking)                 |
 | Zhaochen Yang     | Model serving, evaluation & monitoring    | [Part6&7](https://github.com/ZBW-P/MLOP-Med_Image_Pred/blob/main/README.md#unit-6--7-model-serving-and-evaluation)              |
 | Junjie Mai        | Data pipeline development                 | [Part8-1](https://github.com/ZBW-P/MLOP-Med_Image_Pred/blob/main/README.md#data-pipeline) [Part8-2](https://github.com/ZBW-P/MLOP-Med_Image_Pred/blob/main/README.md#data-pipeline)                                                            |
 | Hongshang Fan     | Continuous integration & deployment (CI/CD)| [Commits](https://github.com/ZBW-P/MLOP-Med_Image_Pred/blob/main/README.md#continuous-x)                                        |
