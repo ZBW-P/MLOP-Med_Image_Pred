@@ -150,7 +150,7 @@ This project uses a combined dataset consisting of OCT scans and chest X-ray ima
 
 
 ### Data Pipeline
-Below is the key material we use:
+Below are key materials we use:
 
 - **ETL Script**: [`compose/datamerge3.py`](compose/datamerge3.py)
 - **Configuration File**: [`compose/datasets_config.yaml`](compose/datasets_config.yaml)
