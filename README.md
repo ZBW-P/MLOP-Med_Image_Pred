@@ -3,14 +3,18 @@
 ## Unit 1: Value Propositions & Proposal
 
 ### 1. Value Proposition
-- **Status quo:** Every lung scan (X-ray or OCT) requires two independent physician reads, causing delays, variable workload, and extra cost.  
-- **Our system:** Acts as a “second reader” alongside the first physician:  
-  - **Agree →** bypass second read → **reduces** workload & turnaround.  
-  - **Disagree →** triggers second physician review → **maintains** diagnostic safety.  
+- **Status quo:** Every lung scan (X-ray or OCT) is independently read by two physicians, creating delays, uneven workloads, and additional cost.  
+- **Our system:** We deploy a lightweight Vision Transformer (ViT) model as an automated “second reader” to assist the first physician in real time:  
+  - **If model and physician agree:** the scan is cleared without needing a second human read → **reduces** turnaround time and reviewer workload.  
+  - **If model and physician disagree:** the scan is flagged for review by a second physician → **maintains** diagnostic safety.  
+- **How it works in practice:**  
+  1. Physician A interprets the scan and records a preliminary diagnosis.  
+  2. The ViT model processes the same image and produces its prediction.  
+  3. If the two diagnoses match, the study is finalized; if not, Physician B is prompted for a second opinion.  
 - **Business metrics:**  
-  1. **Second-review reduction rate**.  
-  2. **Time saved per study** .  
-  3. **Cost savings per scan** .
+  1. **Second-review reduction rate** (percentage of cases finalized without Physician B).  
+  2. **Time saved per study** (minutes saved on average when bypassing the second read).  
+  3. **Cost savings per scan** (dollars saved by eliminating unnecessary second reviews).  
 
 #### Contributors
 
