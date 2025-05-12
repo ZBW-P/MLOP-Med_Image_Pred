@@ -133,7 +133,7 @@ Used for storing all dataset splits for model training and evaluation.
   - `final_eval/`
 
 This object store is read-only mounted into the Jupyter container at `/mnt/medical-data` for training and inference.
-### Offline Data
+## Offline Data
 
 This project uses a combined dataset consisting of OCT scans and chest X-ray images for disease classification tasks. The data is processed offline through a containerized ETL pipeline to produce training, validation, test, and production evaluation sets.
 
@@ -151,7 +151,8 @@ For dataset sources and class mappings, refer to the [Summary of Outside Materia
 
 - Raw datasets are downloaded from official URLs and extracted using standard formats (`.zip`, `.tar.gz`).
 - Each image is renamed as `{dataset}-{category}-{original_filename}`.
-- OCT datasets include patient ID in filenames and are split by patient to prevent leakage.
+- OCT datasets include patient ID in filenames and are split by patient. This ensures that images from the same individual only appear in one of the splits (`train`, `val`, `test`, or `final_eval`), preventing data leakage between training and evaluation.
+
 - COVID-19 and TB datasets are stratified randomly by class.
 - A portion of data (`final_eval`) is created by sampling 50% from the union of `val` and `test`, excluding `train`.
 
