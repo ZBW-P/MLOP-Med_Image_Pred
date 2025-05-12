@@ -144,7 +144,7 @@ This is a lightweight Streamlit dashboard for visualizing medical image datasets
 
 ## Features
 
-The file data_dashboard/app2.py is a Streamlit app that helps us view medical image datasets stored in OpenStack Swift object storage. It uses OS_TOKEN and STORAGE_URL from CHI@TACC Jupyter to connect securely to the object storage. It connects to the container object-persist-project42, where images are organized into folders like train, val, test, and final_eval, and each of these folders contains subfolders for different classes.
+The file app2.py [data_dashboard/app2.py] is a Streamlit app that helps us view medical image datasets stored in OpenStack Swift object storage. It uses OS_TOKEN and STORAGE_URL from CHI@TACC Jupyter to connect securely to the object storage. It connects to the container object-persist-project42, where images are organized into folders like train, val, test, and final_eval, and each of these folders contains subfolders for different classes.
 When app2.py runs, it lists all the files in the container and groups them by subset and class. It then shows how many images are in each group and displays up to three random images per class. The container runs on port 9002 using Docker, and it’s useful for checking how our dataset is organized and quickly seeing sample images in each group, especially for medical imaging experts to understand the data distribution and image quality.
 
 This dashboard is useful for monitoring data distributions and visually inspecting data quality across different dataset splits, especially in MLOps workflows that rely on object storage as the dataset backend.
