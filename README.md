@@ -991,18 +991,6 @@ In [`ci/deploy_pipeline.yml`](production-pipeline/simulate_requests_3.py), we de
 
 This script effectively simulates real-time user input and closes the feedback loop by persisting prediction data to block storage.
 
-- Reads up to 100 images from the `final_eval` subset stored in object storage (`/mnt/object/final_eval`)
-- Sends images one by one to the FastAPI endpoint (`http://129.114.27.23:8265/predict/`) with 30-second intervals
-- Applies image preprocessing (resize, grayscale, normalization) before sending
-- Parses the predicted class from the server's JSON response
-- Saves a copy of the original image to the path:
-  
-      /mnt/data/production_data/unlabeled/
-  
-  with a new filename format:
-
-      <timestamp>_<original-name>_pred-<class>_unlabeled.jpg
-  And then, these image will be send to the production bucket in Minio for further retraining use
  ![image](https://github.com/user-attachments/assets/b7973bdc-105e-46f3-9fd1-50e087fbdeab)
 
 
@@ -1029,9 +1017,6 @@ docker run --rm -v /mnt/object:/mnt/object simulate-inference
 ```bash
 docker run -it --rm -v /mnt/object:/mnt/object -e PYTHONUNBUFFERED=1 simulate-inference
 ```
-
-
-
 
 
 ## Unit 6 & 7: Online Evaluation & Monitoring
