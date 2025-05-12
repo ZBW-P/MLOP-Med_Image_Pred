@@ -64,6 +64,8 @@ Our pipeline integrates chest X-ray and OCT datasets with persistent storage, de
 | Floating IPs       | 2 (one for services, one for training access)     | Ensure continuous connectivity for APIs; allow flexible allocation for Ray/TorchTrainer during training                                                          |
 | Persistent Storage | ≥100 GB throughout project                        | Store high-resolution medical images, intermediate artifacts, and model checkpoints for reproducibility                                                          |
 
+#### Infrastructure Use and System Build Diagram
+![infrastructure_build](https://github.com/user-attachments/Diagram.png)
 
 ## Unit 2/3: Cloud-Native Infrastructure
 
