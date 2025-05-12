@@ -65,7 +65,7 @@ Our pipeline integrates chest X-ray and OCT datasets with persistent storage, de
 | Persistent Storage | ≥100 GB throughout project                        | Store high-resolution medical images, intermediate artifacts, and model checkpoints for reproducibility                                                          |
 
 #### Infrastructure Use and System Build Diagram
-![infrastructure_build](https://github.com/user-attachments/Diagram.png)
+![infrastructure_build](https://github.com/ZBW-P/MLOP-Med_Image_Pred/blob/main/Diagram.png)
 
 ## Unit 2/3: Cloud-Native Infrastructure
 
