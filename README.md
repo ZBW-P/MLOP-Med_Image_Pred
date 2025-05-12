@@ -1006,6 +1006,14 @@ This process represents the online feedback loop in a production MLOps workflow,
 
 - Real-time evaluation of deployed model performance
 - Collection of unlabeled samples for human review or retraining
+#### How to run
+```bash
+docker run --rm -v /mnt/object:/mnt/object simulate-inference
+```
+
+```bash
+docker run -it --rm -v /mnt/object:/mnt/object -e PYTHONUNBUFFERED=1 simulate-inference
+```
 
 
 
