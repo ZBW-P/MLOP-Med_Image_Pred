@@ -50,7 +50,7 @@ Our pipeline integrates chest X-ray and OCT datasets with persistent storage, de
 
 | Resource           | Quantity & Timing                                 | Justification                                                                                                                                                     |
 |--------------------|---------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `m1.xlarge` VMs    | 3 VMs for project duration                        | Host persistent storage pipeline, evaluation & monitoring, and one dedicated for model training & retraining                                                       |
+| `m1.xlarge` VMs    | 3 VMs for project duration, 1 VM  for Training                      | Host persistent storage pipeline, evaluation & monitoring, and one dedicated for model training & retraining                                                       |
 | `gpu_m100` GPUs    | 2 GPUs during training phases                     | Enable distributed training (DDP/FSDP) of the ViT model on large datasets                                                                                       |
 | Floating IPs       | 2 (one for services, one for training access)     | Ensure continuous connectivity for APIs; allow flexible allocation for Ray/TorchTrainer during training                                                          |
 | Persistent Storage | ≥100 GB throughout project                        | Store high-resolution medical images, intermediate artifacts, and model checkpoints for reproducibility                                                          |
