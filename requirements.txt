@@ -7,3 +7,7 @@ pillow
 einops
 pytorch-lightning
 prometheus-fastapi-instrumentator
+onnx
+onnxruntime
+onnx-simplifier
+onnxoptimizer
