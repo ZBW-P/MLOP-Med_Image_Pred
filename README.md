@@ -135,17 +135,9 @@ Used for storing all dataset splits for model training and evaluation.
 This object store is read-only mounted into the Jupyter container at `/mnt/medical-data` for training and inference.
 ## Offline Data
 
-This project uses a combined dataset consisting of OCT scans and chest X-ray images for disease classification tasks. The data is processed offline through a containerized ETL pipeline to produce training, validation, test, and production evaluation sets.
-
-- **ETL Script**: [`compose/datamerge3.py`](compose/datamerge3.py)
-- **Configuration File**: [`compose/datasets_config.yaml`](compose/datasets_config.yaml)
-- **Docker Compose File**: [`compose/docker-compose-etl.yaml`](compose/docker-compose-etl.yaml)
-- **Volume Name**: `merged_medical`
-- **Output Directory**: `/app/merged_dataset`
-
 #### Datasets
-
 For dataset sources and class mappings, refer to the [Summary of Outside Materials](https://github.com/ZBW-P/MLOP-Med_Image_Pred/blob/main/README.md#summary-of-outside-materials).
+This project uses a combined dataset consisting of OCT scans and chest X-ray images for disease classification tasks. The data is processed offline through a containerized ETL pipeline to produce training, validation, test, and production evaluation sets.
 
 #### Data Lineage and Samples
 
@@ -158,15 +150,14 @@ For dataset sources and class mappings, refer to the [Summary of Outside Materia
 
 
 ### Data Pipeline
+Below is the key material we use:
 
-For full configuration, see:[compose/docker-compose-block.yaml](compose/docker-compose-block.yaml)
+- **ETL Script**: [`compose/datamerge3.py`](compose/datamerge3.py)
+- **Configuration File**: [`compose/datasets_config.yaml`](compose/datasets_config.yaml)
+- **ETL Compose File**: [`compose/docker-compose-etl.yaml`](compose/docker-compose-etl.yaml)
+- **Block Compose File**: [`compose/docker-compose-block.yaml`](compose/docker-compose-block.yaml)
 
-The full offline data pipeline is executed via Docker Compose with two services:
-
-- `merge-data`: performs offline ETL
-- `load-data`: uploads results to object storage
-
-#### Processing Steps
+#### Offline Data Pipeline Processing Steps
 
  **Download & Extract**
    - Defined in `datasets_config.yaml` and executed in `datamerge3.py`
@@ -177,6 +168,7 @@ The full offline data pipeline is executed via Docker Compose with two services:
    - Renaming ensures dataset traceability
 
  **Splitting**
+  The split ratio is **7:2:1** for train, val, and test respectively
    - OCT: patient-aware split into `train`, `val`, `test`, `final_eval`
    - Others: stratified sampling
    - `final_eval` is sampled from `val` + `test` (50%), no overlap with `train`
@@ -189,6 +181,7 @@ The full offline data pipeline is executed via Docker Compose with two services:
      ├── test/
      └── final_eval/
    ```
+#### Online Data Pipeline
 To enable scalable model serving and reproducible ML operations, we implement an online pipeline based on containerized services and persistent block storage.
 
 The pipeline uses the following block volume:
@@ -213,6 +206,7 @@ To launch the online pipeline services (MinIO, PostgreSQL, MLflow, etc.), run:
 HOST_IP=$(curl --silent http://169.254.169.254/latest/meta-data/public-ipv4)
 docker compose -f ~/MLOP-Med_Image_Pred/compose/docker-compose-block.yaml up -d
 ```
+This launches services like MinIO, PostgreSQL, and MLflow, enabling cloud-based model serving and reproducible MLOps workflows.
 
 ### Medical Image Dashboard (Swift API via Streamlit)
 This is a lightweight Streamlit dashboard for visualizing medical image datasets stored in OpenStack Swift object storage.
