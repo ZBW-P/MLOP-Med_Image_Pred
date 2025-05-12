@@ -79,15 +79,15 @@ for idx, image_path in enumerate(selected_images, 1):
         time.sleep(30)
 
 # ==== Added for rclone upload ====
-print("\n🔁 Uploading production data to MinIO bucket 'production'...")
+print("\n Uploading production data to MinIO bucket 'production'...")
 
 try:
     upload_command = "rclone copy /mnt/data/production_data/unlabeled minio:production --progress --transfers=8 --checkers=8 --fast-list"
     exit_code = os.system(upload_command)
     if exit_code == 0:
-        print("✅ Upload completed successfully.")
+        print(" Upload completed successfully.")
     else:
-        print(f"⚠️ Upload failed with exit code {exit_code}. Please check rclone config.")
+        print(f" Upload failed with exit code {exit_code}. Please check rclone config.")
 except Exception as e:
-    print(f"❌ Exception during upload: {e}")
+    print(f"Exception during upload: {e}")
 # ==== End of modification ====
