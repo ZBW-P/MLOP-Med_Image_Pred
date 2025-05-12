@@ -135,13 +135,12 @@ Used for storing all dataset splits for model training and evaluation.
 This object store is read-only mounted into the Jupyter container at `/mnt/medical-data` for training and inference.
 
 ### Offline Dataset
-### 🧾 Offline Dataset
 
 This project utilizes a multi-source medical image dataset consisting of OCT scans and chest X-ray images (COVID-19 and tuberculosis) to support disease classification model training. All offline processing steps are implemented as containerized services and versioned under the `compose/` directory.
 
-- **ETL Script**: [`compose/datamerge3.py`](./path/to/compose/datamerge3.py)
-- **Configuration**: [`compose/datasets_config.yaml`](./path/to/compose/datasets_config.yaml)
-- **Docker Compose File**: [`compose/docker-compose-etl.yaml`](./path/to/compose/docker-compose-etl.yaml)
+- **ETL Script**: [`compose/datamerge3.py`](compose/datamerged3.py)
+- **Configuration**: [`compose/datasets_config.yaml`](compose/datasets_config.yaml)
+- **Docker Compose File**: [`compose/docker-compose-etl.yaml`](compose/docker-compose-etl.yaml)
 - **Shared Volume Name**: `merged_medical`
 - **Output Directory in Container**: `/app/merged_dataset`
 
@@ -150,7 +149,7 @@ This project utilizes a multi-source medical image dataset consisting of OCT sca
 **Workflow Overview**
 
 1. **Dataset Acquisition**  
-   Public datasets are automatically downloaded via Python `requests` inside [`datamerge3.py`](./path/to/compose/datamerge3.py), using dataset URLs specified in [`datasets_config.yaml`](./path/to/compose/datasets_config.yaml). Archives are stored under `downloads/` and extracted based on type (`.zip` or `.tar.gz`).
+   Public datasets are automatically downloaded via Python `requests` inside [`datamerge3.py`](compose/datamerged3.py), using dataset URLs specified in [`datasets_config.yaml`](compose/datasets_config.yaml). Archives are stored under `downloads/` and extracted based on type (`.zip` or `.tar.gz`).
 
 2. **Category Mapping**  
    Folder paths from different datasets (e.g., `COVID/images`, `TB/Normal`, `OCT/train/CNV`) are mapped into unified categories like `lung-covid`, `lung-tuberculosis`, and `lung-oct-dme`, as defined in the YAML config.
@@ -177,21 +176,6 @@ This project utilizes a multi-source medical image dataset consisting of OCT sca
      └── final_eval/
    ```
    This folder is mounted to a shared Docker volume `merged_medical`.
-
----
-
-**File Relationships**
-
-- [`datamerge3.py`](./path/to/compose/datamerge3.py):  
-  Main processing script — handles download, extraction, renaming, patient-level splitting, and final dataset writing.
-
-- [`datasets_config.yaml`](./path/to/compose/datasets_config.yaml):  
-  Contains the list of dataset URLs, archive formats, and mappings from original dataset folder structure to final category labels. Also specifies which classes are OCT-type and require patient-aware handling.
-
-- [`docker-compose-etl.yaml`](./path/to/compose/docker-compose-etl.yaml):  
-  Defines the `merge-data` service that runs the ETL process in a clean `python:3.11` container. Mounts all relevant paths and installs necessary dependencies (`requests`, `pyyaml`, `scikit-learn`).
-
----
 
 **Execution Commands**
 
@@ -220,12 +204,6 @@ This project utilizes a multi-source medical image dataset consisting of OCT sca
   - COVID-19 and TB images are stratified randomly.
   - `final_eval` (20%) is reserved for simulating production.
 - **Renaming Convention**: `{dataset}-{category}-{original_filename}`
-- **Output Structure**:
-
-**Data Pipeline**  
-- Source → Preprocessing → Object Storage  
-- Splitting strategy: train/val/test/final_eval (mention person ID integrity if applicable)  
-- Data cleaning steps (resizing, normalization, etc.)
 
 ### Medical Image Dashboard (Swift API via Streamlit)
 This is a lightweight Streamlit dashboard for visualizing medical image datasets stored in OpenStack Swift object storage.
