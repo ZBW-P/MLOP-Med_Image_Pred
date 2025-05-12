@@ -3,10 +3,10 @@
 ## Unit 1: Value Propositions & Proposal
 
 
-## Key Value Propositions
+### Key Value Propositions
 
 
-### Disclaimer
+#### Disclaimer
 
 **Important Notice for Patients:**  
 Our model is a medium-sized model designed for easy deployment on websites and mobile apps. However, its accuracy is not guaranteed. The outputs provided by the system serve as a preliminary preview and should not replace professional medical advice. **Always consult with a professional doctor before relying on these results.**
