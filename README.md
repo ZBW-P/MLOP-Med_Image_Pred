@@ -726,9 +726,11 @@ The Comparsion with parameters setting is shown in Figure below:
 ## Unit 6 & 7: Model Serving and Evaluation
 
 **API Endpoint**  
-- Script: [`serve/inference_api.py`](link)  
+- Script: [`app.py`](link)  
 - Input format: image URL or file  
 - Output format: JSON prediction
+- ['http://129.114.27.23:8265/'](link)
+- <img width="1018" alt="image" src="https://github.com/user-attachments/assets/95d4527c-5446-4c23-961b-689c2c42290f" />
 
 **Customer Requirements**  
 - Low-latency (<500ms), high-confidence, interpretable outputs
