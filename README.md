@@ -218,7 +218,7 @@ docker run -p 9002:9002 \
   -v $(pwd):/app \
   swift-dashboard
 ```
-Access the Dashboard on http://129.114.27.23/:9002
+Access the Dashboard on http://129.114.27.23:9002
 
 ## Unit 4 & 5: Modeling, Training, and Experiment Tracking
 
