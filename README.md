@@ -975,13 +975,44 @@ c2dfb949dd7e   prom/prometheus        Up 4d   0.0.0.0:9090->9090/tcp
 ---
 
 ## Unit 8 (Online): Real-Time Data and Feedback
+## Unit 8 (Online): Real-Time Data and Feedback
 
-**Online Data Flow**  
-- Real-time inputs pushed via: [`data/send_live.py`](link)  
-- Storage: MinIO “inference-inputs” bucket  
-- Connected to FastAPI service
+### 📡 Production Data Pipeline
 
----
+This module simulates real-time inference by sending images from the `final_eval` dataset to a deployed FastAPI prediction service. It mimics production behavior where new data points are continuously sent to the model and predictions are stored for later review.
+
+#### Key Features
+
+- Reads up to 100 images from the `final_eval` subset stored in object storage (`/mnt/object/final_eval`)
+- Sends images one by one to the FastAPI endpoint (`http://129.114.27.23:8265/predict/`) with 30-second intervals
+- Applies image preprocessing (resize, grayscale, normalization) before sending
+- Parses the predicted class from the server's JSON response
+- Saves a copy of the original image to the path:
+  
+      /mnt/data/production_data/unlabeled/
+  
+  with a new filename format:
+
+      <timestamp>_<original-name>_pred-<class>_unlabeled.jpg
+
+#### Technologies Used
+
+- `torchvision.datasets.ImageFolder` for structured image access
+- `transforms` for preprocessing and un-normalization
+- `requests` for HTTP communication
+- `PIL` and `io.BytesIO` for image format conversion
+- `shutil` and `datetime` for production-style file handling
+
+#### Purpose
+
+This process represents the online feedback loop in a production MLOps workflow, enabling:
+
+- Real-time evaluation of deployed model performance
+- Collection of unlabeled samples for human review or retraining
+
+
+
+
 
 ## Unit 6 & 7: Online Evaluation & Monitoring
 
