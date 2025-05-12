@@ -20,6 +20,20 @@ services:
     command: server /data --console-address ":9001"
     volumes:
       - /mnt/block/minio_data:/data
+  # minio-create-bucket:
+  #   image: minio/mc
+  #   depends_on:
+  #     minio:
+  #       condition: service_healthy
+  #   entrypoint: >
+  #     /bin/sh -c "
+  #     mc alias set minio http://minio:9000 your-access-key your-secret-key &&
+  #     if ! mc ls minio/mlflow-artifacts; then
+  #       mc mb minio/mlflow-artifacts &&
+  #       echo 'Bucket mlflow-artifacts created'
+  #     else
+  #       echo 'Bucket mlflow-artifacts already exists';
+  #     fi"
   minio-create-bucket:
     image: minio/mc
     depends_on:
@@ -27,13 +41,24 @@ services:
         condition: service_healthy
     entrypoint: >
       /bin/sh -c "
-      mc alias set minio http://minio:9000 your-access-key your-secret-key &&
+      mc alias set minio http://minio:9000 your-access-key your-secret-key
+
+      # Create mlflow-artifacts bucket
       if ! mc ls minio/mlflow-artifacts; then
-        mc mb minio/mlflow-artifacts &&
+        mc mb minio/mlflow-artifacts
         echo 'Bucket mlflow-artifacts created'
       else
-        echo 'Bucket mlflow-artifacts already exists';
+        echo 'Bucket mlflow-artifacts already exists'
+      fi
+
+      # Create production bucket
+      if ! mc ls minio/production; then
+        mc mb minio/production
+        echo 'Bucket production created'
+      else
+        echo 'Bucket production already exists'
       fi"
+
   postgres:
     image: postgres:latest
     container_name: postgres
