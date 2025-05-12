@@ -32,7 +32,7 @@ production_dir = "/mnt/data/production_data/unlabeled"
 os.makedirs(production_dir, exist_ok=True)
 
 # Limit to the first 50 images
-max_images = 50
+max_images = 100
 selected_images = image_paths[:max_images]
 
 # Loop to send requests every 5 seconds
@@ -76,4 +76,4 @@ for idx, image_path in enumerate(selected_images, 1):
         print(f"[{idx}/{max_images}] Error processing {os.path.basename(image_path)}: {e}", flush=True)
 
     if idx < max_images:
-        time.sleep(5)
+        time.sleep(30)
