@@ -2,21 +2,7 @@
 
 ## Unit 1: Value Propositions & Proposal
 
-### 1. Scale
-- **Data (Medium-scale):**  
-  - **Internal Lung X-ray & OCT**: ~15 000 chest X-rays + ~5 000 lung OCT scans, each labeled independently by two radiologists.  
-  - **VinDr-CXR**: 18 000 chest X-rays with Five-radiologist annotations (VinBigData, 2021).[Original](https://vindr.ai/datasets/cxr) 
-  - **Total**: ~38 000 de-identified images, all consent-approved and split into train/val/test.
-
-- **Model (Medium-scale system of smaller models):**  
-  - **Custom ViT classifier (~5 M parameters):** predicts pulmonary conditions on segmented inputs.  
-
-- **Deployment (Medium-scale):**  
-  - **Compute:** 3 × `m1.xlarge` VMs (Docker + Kubernetes); 2 × `gpu_m100` GPUs for training.  
-  - **Networking:** 2 floating IPs for API endpoints & training cluster.  
-  - **Storage:** ≥ 100 GB persistent volume for images, checkpoints, and logs.
-
-### 2. Value Proposition
+### 1. Value Proposition
 - **Status quo:** Every lung scan (X-ray or OCT) requires two independent physician reads, causing delays, variable workload, and extra cost.  
 - **Our system:** Acts as a “second reader” alongside the first physician:  
   - **Agree →** bypass second read → **reduces** workload & turnaround.  
