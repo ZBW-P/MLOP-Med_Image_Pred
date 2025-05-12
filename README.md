@@ -780,31 +780,109 @@ The Comparsion with parameters setting is shown in Figure below:
 - Output format: JSON prediction
 - ['http://129.114.27.23:8265/'](link)
 - <img width="1018" alt="image" src="https://github.com/user-attachments/assets/95d4527c-5446-4c23-961b-689c2c42290f" />
+- **Root**  
+  - `GET /`  
+  - Serves the static UI: `static/index.html`
+- **Predict**  
+  - `POST /predict/`  
+  - **Input**: multipart/form-data with field `file` (an image file, converted to grayscale internally)  
+  - **Output**: JSON  
+    ```json
+    {
+      "pred_idx": 2,  
+      "pred_class": "glioma",  
+      "probabilities": {
+        "glioma": 0.75,
+        "meningioma": 0.15,
+        "pituitary": 0.10,
+        // …other classes
+      }
+    }
+    ```
+- **Evaluate**  
+  - `GET /evaluate?dataset=<name>`  
+  - Triggers background evaluation of all images under `/mnt/object/<name>`  
+  - Responds immediately with:
+    ```json
+    { "status": "evaluation started for <name>" }
+    ```
+  - Metrics (`model_overall_accuracy` and `model_accuracy_per_class`) are updated in Prometheus when evaluation completes.
+- **Health Check**  
+  - `GET /health`  
+  - Returns:
+    ```json
+    { "status": "ok" }
+    ```
+- **Metrics**  
+  - `GET /metrics`  
+  - Exposes Prometheus‑style gauges:
+    - `model_overall_accuracy{dataset="<name>"}`
+    - `model_accuracy_per_class{dataset="<name>",class_name="<class>"}`
+  - Also includes default HTTP‑request metrics from `prometheus_fastapi_instrumentator`.
+### Model Optimizations
 
-**Customer Requirements**  
-- Low-latency (<500ms), high-confidence, interpretable outputs
+- **Framework**:  
+  - Built in PyTorch → Exported to ONNX (opset 13)  
+  - Simplified via `onnx-simplifier`  
+  - Served with `onnxruntime` CPUExecutionProvider
+- **Workflow on Startup**  
+  1. Load `model.pth` into your `ViT` PyTorch model.  
+  2. If `model_simplified.onnx` doesn’t exist:
+     - Export to `model.onnx`
+     - Simplify and save as `model_simplified.onnx`
+  3. Create an ONNX‑runtime `InferenceSession` on `model_simplified.onnx`
+- **Benefits**:  
+  - Lower inference latency (no Python‑level graph execution)  
+  - Reduced binary size/graph complexity after simplification
 
-**Model Optimizations**  
-- Tools: TorchScript, ONNX, etc.  
-- Results: reduced inference latency or model size
+### Offline Evaluation
 
-**Offline Evaluation**  
-- Test suite: [`tests/offline_eval.py`](link)  
-- Metrics: accuracy, AUC, per-class F1, etc.  
-- Latest results: [MLflow link](link)
+- **Endpoint**: `/evaluate?dataset=<name>`  
+- **Process** (in `run_evaluation`):
+  1. Scan `/mnt/object/<name>/<class_name>/*.png/.jpg/.jpeg`
+  2. Preprocess each image with your `transform_medical`
+  3. Run it through ONNX‑runtime, apply softmax
+  4. Compare argmax to the true class directory
+  5. Accumulate:
+     - `total_images`
+     - `total_correct`
+     - `correct_per_class[class_name]`
+     - `total_per_class[class_name]`
+  6. Compute:
+     - **Overall Accuracy** = `total_correct / total_images`
+     - **Per‑Class Accuracy** = `correct_per_class[c] / total_per_class[c]`
+  7. Update Prometheus gauges:
+     - `model_overall_accuracy.labels(dataset=<name>).set(...)`
+     - `model_accuracy_per_class.labels(dataset=<name>,class_name=c).set(...)`
 
-**Load Test (Staging)**  
-- Script: [`tests/load_test.py`](link)  
-- Results: screenshot or link to logs/dashboard
+### Load Test (Staging)
 
-**Business-Specific Metric**  
-- Define: e.g. “% correct urgent diagnoses within 1 minute”  
-- Reasoning behind the metric
+- **Service**:  
+  - Container `vit-service` (from `app.py`)  
+  - Listens on `0.0.0.0:8265`
+- **Prometheus**:  
+  - Container `prom/prometheus` scraping `vit-service:8265/metrics`  
+  - Exposed on `0.0.0.0:9090`
+- **Grafana**:  
+  - Container `grafana/grafana`  
+  - Dashboards on `0.0.0.0:3000`  
+  - Visualizes HTTP latency, throughput, plus your accuracy gauges
 
-**(Optional) Multi-Serving Options**  
-- REST vs gRPC implementation and performance comparison  
-- Cost analysis: link to cloud calculator or spreadsheet
+### Business‑Specific Metric
 
+- **Key KPI**: **Model Accuracy**  
+  - **Overall**: `model_overall_accuracy`  
+  - **By Class**: `model_accuracy_per_class`  
+
+---
+
+### Docker Containers
+
+```bash
+$ docker ps
+3400f6caef8e   vit-service    "uvicorn app:app --h…"   Up 1h   0.0.0.0:8265->8265/tcp
+c2dfb949dd7e   prom/prometheus        Up 4d   0.0.0.0:9090->9090/tcp
+9c6b1707eee6   grafana/grafana        Up 4d   0.0.0.0:3000->3000/tcp
 ---
 
 ## Unit 2/3: Staged Deployment
