@@ -968,8 +968,8 @@ c2dfb949dd7e   prom/prometheus        Up 4d   0.0.0.0:9090->9090/tcp
 
 **Deployment Flow**  
 - Staging → Canary → Production  
-- Tracking tool: MLflow versioning or GitHub tags  
-- Script/CI: [`ci/deploy_pipeline.yml`](link)
+- Tracking tool: MLflow versioning
+
 
 ---
 ## Unit 8 (Online): Real-Time Data and Feedback
@@ -1046,7 +1046,6 @@ docker run -it --rm -v /mnt/object:/mnt/object -e PYTHONUNBUFFERED=1 simulate-in
 
 **Continuous Pipeline**  
 - New data in MinIO triggers GitHub Action  
-- Script: [`ci/continuous_train.yml`](link)  
 - End-to-end: Data → Retrain → Deploy → Monitor
 
 
