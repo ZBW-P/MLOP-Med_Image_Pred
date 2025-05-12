@@ -1,6 +1,6 @@
 # Project Title: [Your Project Name]
 
-## Project Overview
+## Unit 1: Value Propositions & Proposal
 
 Our project develops a **hybrid machine learning system** that integrates a Vision Transformer (ViT) for initial disease classification from chest X-ray images with a Large Language Model (LLM) for interpretability and actionable insights. In current clinical settings, radiologists manually assess chest X-rays—a process that is time-consuming, subjective, and prone to inconsistency. Our system addresses these issues while satisfying the project’s requirements for scale in data, model complexity, and deployment.
 
