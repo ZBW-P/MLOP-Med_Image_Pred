@@ -701,8 +701,8 @@ def add(train_loader, val_loader, test_loader, batch_size, file_path, num_worker
     """
 ```
 
-The Retrain terminal operation of adding lung-viral-pneumonia(10% of eval dataset) is shown in Figure below:
-![Retrain 1](./Training_part/Image_Saved/Retrain_lung-viral-pneumonia.png)
+The Retrain terminal success status is shown in Figure below:
+![Retrain 1](./Training_part/Image_Saved/Retrain_lung-viral-pneumonia_finished.png)
 
 The Retrain Mlflow record resources is shown in Figure below:
 ![Retrain 2](./Training_part/Image_Saved/Retrain_lung-viral-pneumoniaGPU.png)
