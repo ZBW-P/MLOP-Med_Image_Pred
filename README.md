@@ -217,7 +217,6 @@ Ensure the following:
 ---
 To launch the online pipeline services (MinIO, PostgreSQL, MLflow, etc.), run:
 ```bash
-HOST_IP=$(curl --silent http://169.254.169.254/latest/meta-data/public-ipv4)
 docker compose -f ~/MLOP-Med_Image_Pred/compose/docker-compose-block.yaml up -d
 ```
 This launches services like MinIO, PostgreSQL, and MLflow, enabling cloud-based model serving and reproducible MLOps workflows.
