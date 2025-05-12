@@ -1,4 +1,4 @@
-## MLOP based on VIT and LLM
+## MLOP based on VIT
 
 ### Project Overview
 
