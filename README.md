@@ -96,7 +96,7 @@ This object store is read-only mounted into the Jupyter container at `/mnt/medic
 - Splitting strategy: train/val/test/final_eval (mention person ID integrity if applicable)  
 - Data cleaning steps (resizing, normalization, etc.)
 
-**Data Dashboard**
+### Data Dashboard
 # Medical Image Dashboard (Swift API via Streamlit)
 This is a lightweight Streamlit dashboard for visualizing medical image datasets stored in OpenStack Swift object storage.
 
