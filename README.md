@@ -178,7 +178,8 @@ This object store is read-only mounted into the Jupyter container at `/mnt/medic
 # Medical Image Dashboard (Swift API via Streamlit)
 This is a lightweight Streamlit dashboard for visualizing medical image datasets stored in OpenStack Swift object storage.
 
-![dashboard preview](https://github.com/user-attachments/assets/6619c926-3e7d-4f4a-8c8c-859dba869f26)
+![image](https://github.com/user-attachments/assets/2c192ca6-91c0-47b3-8969-cca51c03a8b9)
+
 
 ## Features
 - Connects to a Swift container using token-based authentication
