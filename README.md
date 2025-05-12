@@ -993,6 +993,10 @@ This module simulates real-time inference by sending images from the `final_eval
   with a new filename format:
 
       <timestamp>_<original-name>_pred-<class>_unlabeled.jpg
+  And then, these image will be send to the production bucket in Minio for further retraining use
+ ![image](https://github.com/user-attachments/assets/b7973bdc-105e-46f3-9fd1-50e087fbdeab)
+
+
 
 #### Technologies Used
 
