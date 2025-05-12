@@ -4,7 +4,7 @@
 
 ### 1. Value Proposition
 - **Status quo:** Every lung scan (X-ray or OCT) is independently read by two physicians, creating delays, uneven workloads, and additional cost.  
-- **Our system:** We deploy a lightweight Vision Transformer (ViT) model as an automated “second reader” to assist the first physician in real time:  
+- **Our system:** We deploy a medium size Vision Transformer (ViT) model as an automated “second reader” to assist the first physician in real time:  
   - **If model and physician agree:** the scan is cleared without needing a second human read → **reduces** turnaround time and reviewer workload.  
   - **If model and physician disagree:** the scan is flagged for review by a second physician → **maintains** diagnostic safety.  
 - **How it works in practice:**  
