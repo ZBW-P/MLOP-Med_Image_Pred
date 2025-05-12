@@ -161,7 +161,7 @@ This project addresses the challenge of classifying nine distinct lung disease c
   - Three 3×3 Conv → BN → ReLU blocks, followed by two stride-2 convs, downsampling the input by 4× in each spatial dimension.  
   - Preserves local edge and texture features, while reducing sequence length (and quadratic attention cost) by ≈16×.  
 - **Patch Embedding.**  
-  - Flatten the \(C \times \tfrac{H}{4} \times \tfrac{W}{4}\) feature map into \(\tfrac{H}{4} \times \tfrac{W}{4}\) tokens, each projected to a \(D\)-dimensional embedding. 
+  - Flatten the \((C \times \tfrac{H}{4} \times \tfrac{W}{4})\) feature map into \((\tfrac{H}{4} \times \tfrac{W}{4})\) tokens, each projected to a \((D)\)-dimensional embedding.  
   - Learnable positional embeddings and a **[CLS]** token for global classification.  
 - **Transformer Backbone.**  
   - **Depth:** `depth` layers; **Heads:** `heads`; **MLP dim:** `mlp_dim`.  
