@@ -2,77 +2,59 @@
 
 ## Unit 1: Value Propositions & Proposal
 
-
 ### Key Value Propositions
-
 
 #### Disclaimer
 
 **Important Notice for Patients:**  
-Our model is a medium-sized model designed for easy deployment on websites and mobile apps. However, its accuracy is not guaranteed. The outputs provided by the system serve as a preliminary preview and should not replace professional medical advice. **Always consult with a professional doctor before relying on these results.**
+Our model is medium-sized and designed for easy deployment on websites and mobile apps. However, its accuracy is not guaranteed. The outputs provided by this system are for preliminary review only and should not replace professional medical advice. **Always consult a licensed physician before relying on these results.**
 
 #### Contributors
 
-<!-- Table of contributors and their roles. 
-First row: define responsibilities that are shared by the team. 
-Then, each row after that is: name of contributor, their role, and in the third column, 
-you will link to their contributions. If your project involves multiple repos, you will 
-link to their contributions in all repos here. -->
+| Name              | Role                                      | Link to Commits                                                                                                                 |
+|-------------------|-------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------|
+| All team members  | Overall project development               | N/A                                                                                                                             |
+| Qin Huai          | Model training & training platform setup  | [Commits](https://github.com/ZBW-P/MLOP-Med_Image_Pred?tab=readme-ov-file#model-training-and-training-platforms)                 |
+| Zhaochen Yang     | Model serving, evaluation & monitoring    | [Commits](https://github.com/ZBW-P/MLOP-Med_Image_Pred/blob/main/README.md#model-serving-and-monitoring-platforms)              |
+| Junjie Mai        | Data pipeline development                 | [Commits](https://github.com/ZBW-P/MLOP-Med_Image_Pred/blob/main/README.md#data-pipeline)                                       |
+| Hongshang Fan     | Continuous integration & deployment (CI/CD)| [Commits](https://github.com/ZBW-P/MLOP-Med_Image_Pred/blob/main/README.md#continuous-x)                                        |
 
-| Name                            | Responsible for | Link to their commits in this repo |
-|---------------------------------|-----------------|------------------------------------|
-| All team members                |                 |                                    |
-| Qin Huai               |Model training and training platforms                 | https://github.com/ZBW-P/MLOP-Med_Image_Pred?tab=readme-ov-file#model-training-and-training-platforms                                  |
-| Zhaochen Yang                  |Model Serving, Evaluation and Monitoring                |https://github.com/ZBW-P/MLOP-Med_Image_Pred/blob/main/README.md#model-serving-and-monitoring-platforms                                    |
-| Junjie Mai                   |Data Pipeline                 |https://github.com/ZBW-P/MLOP-Med_Image_Pred/blob/main/README.md#data-pipeline                                    |
-| Hongshang Fan |Continuous X                 |https://github.com/ZBW-P/MLOP-Med_Image_Pred/blob/main/README.md#Continuous-X                                    |
+#### System Diagram
 
+![System Diagram](https://github.com/ZBW-P/MLOP-Med_Image_Pred/blob/main/System.png)
 
+### Summary of Outside Materials
 
-#### System diagram
+Our pipeline integrates chest X-ray and OCT datasets with persistent storage, device-based preprocessing, and Docker orchestration for training, evaluation, and validation. We will:
 
+- **Centralize data storage:**  
+  Organize all images into `train/`, `val/`, and `test/` folders on persistent storage for easy access.
 
-![Diagram](https://github.com/ZBW-P/MLOP-Med_Image_Pred/blob/main/System.png)
+- **Train & evaluate models:**  
+  - Fine-tune a custom Vision Transformer (ViT) on chest X-ray images.  
+  - Use an LLM derived from LitGPT to generate diagnostic explanations and recommendations.  
+  - Support continuous retraining on new or updated data.
 
-#### Summary of outside materials
+- **Integrate with infrastructure:**  
+  - Use Python scripts to load and preprocess images on GPU-enabled servers.  
+  - Orchestrate tasks via Docker for reproducible pipelines.
 
-<!-- In a table, a row for each dataset, foundation model. 
-Name of data/model, conditions under which it was created (ideally with links/references), 
-conditions under which it may be used. -->
+| Dataset / Model                                | Creation & Source                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | Conditions of Use                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+|------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **OCT (Optical Coherence Tomography)**         | From “Deep learning-based classification and referral of treatable human diseases.” Split into CNV, DME, DRUSEN, NORMAL; training/test split by patient. [Dataset Page](https://data.mendeley.com/datasets/rscbjbr9sj/2)                                                                                                                                                                                                                                                                                     | CC BY 4.0: share/modify with attribution and link to license; do not imply endorsement; third-party content may require extra permission.                                                                                                                                                                                                                                                                                                                                                         |
+| **COVID-19 Radiography Database**              | Aggregates chest X-rays for COVID-19, Normal, Viral Pneumonia. Initial release: 219 COVID-19, 1,341 Normal, 1,345 Viral. Updated to 3,616 COVID-19 images with lung masks. [Kaggle Page](https://www.kaggle.com/datasets/tawsifurrahman/covid19-radiography-database/data)                                                                                                                                                                                                                              | Academic & non-commercial use; must cite Chowdhury et al. (IEEE Access, 2020) and Rahman et al. (2021); follow usage guidelines in metadata.                                                                                                                                                                                                                                                                                                                                                       |
+| **TB Chest X-ray Database**                     | 700 public TB images + 2,800 via NIAID agreement + 3,500 Normal images. Compiled from NLM, Belarus, NIAID TB, RSNA datasets. Used in “Reliable Tuberculosis Detection…” (IEEE Access, 2020). [Kaggle Page](https://www.kaggle.com/datasets/tawsifurrahman/tuberculosis-tb-chest-xray-dataset)                                                                                                                                                                                                                | Academic & non-commercial use; cite Rahman et al. (2020, IEEE Access); adhere to data-sharing agreements.                                                                                                                                                                                                                                                                                                                                                                                        |
+| **Vision Transformer (ViT) Demo Model**        | PyTorch implementation in Prof. Hegde’s `visual_transformers.ipynb` (dl-demos). Includes 16×16 patch embedding, positional embeddings, multi-head attention, Transformer encoder, and MLP head.                                                                                                                                                                                                                                                                                                                | For academic/course use only; not for commercial distribution.                                                                                                                                                                                                                                                                                                                                                                                                                                   |
 
-Our overall approach is to leverage the dataset detailed in the table below as the foundation for our ML operations system. Our pipeline integrates persistent storage, device-based processing, and Docker orchestration to streamline training, evaluation, and validation. Specifically, we plan to:
+### Infrastructure Requirements
 
-- **Centralize Data Storage:**  
-  Store the collected chest X-ray and OCT images in a clear and organized library on persistent storage. The data will be segmented into three zipped folders (`train`, `test`, and `val`), ensuring that all training, evaluation, and testing sets are easily accessible to our system.
-  
-- **Model training and evaluation:**
-  We will train a custom Vision Transformer (ViT) model on chest X-ray images for accurate medical image classification. A LitGPT-derived LLM will be employed to generate diagnostic derivations and actionable recommendations based on the outputs of the ViT model. Our training pipeline will support continuous training, evaluation, and re-training on new or updated data to ensure that both models remain current and adapt to evolving clinical requirements.
-    
-- **Integration with Our Pipeline and Device Infrastructure:**  
-  Use Python scripts to read and preprocess images from the persistent storage. These scripts will run on dedicated devices (e.g., GPU-enabled servers) that are integrated into our Docker-based ML operations system. The images will be resized and formatted as needed based on our model requirements, ensuring that data is properly prepared for ingestion into our training pipeline.
+| Resource           | Quantity & Timing                                 | Justification                                                                                                                                                     |
+|--------------------|---------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `m1.xlarge` VMs    | 3 VMs for project duration                        | Host persistent storage pipeline, evaluation & monitoring, and one dedicated for model training & retraining                                                       |
+| `gpu_m100` GPUs    | 2 GPUs during training phases                     | Enable distributed training (DDP/FSDP) of the ViT model on large datasets                                                                                       |
+| Floating IPs       | 2 (one for services, one for training access)     | Ensure continuous connectivity for APIs; allow flexible allocation for Ray/TorchTrainer during training                                                          |
+| Persistent Storage | ≥100 GB throughout project                        | Store high-resolution medical images, intermediate artifacts, and model checkpoints for reproducibility                                                          |
 
-
-The table below summarizes the datasets we plan to use, including details on how each dataset was created and the conditions under which it may be used.
-
-| Name of Data/Model                              | How it was Created                                                                                                                                                                                                                                                                                                                                                                                                                 | Conditions of Use                                                                                                                                                                                                                                                       |
-|-------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Labeled Optical Coherence Tomography (OCT)**              | Dataset of validated OCT described and analyzed in "Deep learning-based classification and referral of treatable human diseases". The OCT Images are split into a training set and a testing set of independent patients. OCT Images are labeled as (disease)-(randomized patient ID)-(image number by this patient) and split into 4 directories: CNV, DME, DRUSEN, and NORMAL. More details can be found on the [Dataset Page](https://data.mendeley.com/datasets/rscbjbr9sj/2)). |The files associated with this dataset are licensed under a Creative Commons Attribution 4.0 International licence. You can share, copy and modify this dataset so long as you give appropriate credit, provide a link to the CC BY license, and indicate if changes were made, but you may not do so in a way that suggests the rights holder has endorsed you or your use of the dataset. Note that further permission may be required for any content within the dataset that is identified as belonging to a third party.                                                                  |
-| **COVID-19 Radiography Database**              | Developed by a collaborative team from Qatar University, the University of Dhaka, and partner institutions, this dataset aggregates chest X-ray images for COVID-19, Normal, and Viral Pneumonia cases. The initial release provided 219 COVID-19, 1341 Normal, and 1345 Viral Pneumonia images, with updates increasing the COVID-19 cases to 3616 and including corresponding lung masks. More details can be found on the [Kaggle Dataset Page](https://www.kaggle.com/datasets/tawsifurrahman/covid19-radiography-database/data). | Released for academic and non-commercial use. Users must cite the original publications (Chowdhury et al., IEEE Access, 2020; Rahman et al., 2020[Publication1](https://ieeexplore.ieee.org/document/9144185),[Publication2](https://www.sciencedirect.com/science/article/pii/S001048252100113X?via%3Dihub) and adhere to the dataset usage guidelines provided in its metadata.                                                                     |
-| **Tuberculosis (TB) Chest X-ray Database** | Developed by a collaborative research team from Qatar University, University of Dhaka, Malaysia, and affiliated medical institutions, this database comprises chest X-ray images for TB-positive cases and Normal images. The current release includes 700 publicly accessible TB images, 2800 additional TB images available via a data-sharing agreement through the NIAID TB portal, and 3500 Normal images. The dataset is compiled from multiple sources (including the NLM, Belarus, NIAID TB, and RSNA CXR datasets) and was used in the study “Reliable Tuberculosis Detection using Chest X-ray with Deep Learning, Segmentation and Visualization” published in IEEE Access. For further details, refer to the [Kaggle Dataset Page](https://www.kaggle.com/datasets/tawsifurrahman/tuberculosis-tb-chest-xray-dataset). | Licensed for academic and non-commercial research use. Users must provide proper citation to the original publication: Tawsifur Rahman, Amith Khandakar, Muhammad A. Kadir, Khandaker R. Islam, Khandaker F. Islam, Zaid B. Mahbub, Mohamed Arselene Ayari, Muhammad E. H. Chowdhury. (2020) “Reliable Tuberculosis Detection using Chest X-ray with Deep Learning, Segmentation and Visualization”. IEEE Access, Vol. 8, pp 191586–191601 (DOI: 10.1109/ACCESS.2020.3031384), and adhere to the dataset usage guidelines. |
-| **Vision Transformer (ViT) Demo Model**        | Defined in PyTorch in Prof. Hegde’s `visual_transformers.ipynb` (dl-demos repository). It implements: patch embedding (16×16), positional embeddings, multi-head self-attention, transformer encoder layers, and an MLP head. The notebook provides a full training loop (DataLoader, Adam optimizer, cross-entropy loss, scheduler) for experimentation on standard image datasets. | For academic/course use only, per the deep-learning course guidelines; not for commercial distribution.|
-
-#### Summary of infrastructure requirements
-
-<!-- Itemize all your anticipated requirements: What (`m1.medium` VM, `gpu_mi100`), 
-how much/when, justification. Include compute, floating IPs, persistent storage. 
-The table below shows an example, it is not a recommendation. -->
-
-| Requirement     | How many/when                                     | Justification |
-|-----------------|---------------------------------------------------|---------------|
-| `m1.xlarge` VMs | 3 for entire project duration; 1 for model training                   | 3-node presistant storage pipeline, evaluation and monitoring; Training model and retraining         |
-| `gpu_m100`     | 2 GPUs for model training (using DDP/FSDP)   |The ViT model's training on a large dataset with significant parameters benefits from parallel GPU processing (2 GPUs) to efficiently handle computations|
-| Floating IPs    | 1 for the entire project duration and 1 for training use | One persistent IP ensures continuous connectivity to services throughout the project, while an additional floating IP offers flexibility for Ray train and model training needs.                |
-| Outside memory / storage            | 100 g storage during all project duration                                           | Large update medical image data need to be saved and used to update for server and user interacter.               |
 
 ## Unit 2/3: Cloud-Native Infrastructure
 
