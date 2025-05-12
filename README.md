@@ -159,7 +159,9 @@ For dataset sources and class mappings, refer to the [Summary of Outside Materia
 
 ### Data Pipeline
 
-The full data pipeline is executed via Docker Compose with two services:
+For full configuration, see:[compose/docker-compose-block.yaml](compose/docker-compose-block.yaml)
+
+The full offline data pipeline is executed via Docker Compose with two services:
 
 - `merge-data`: performs offline ETL
 - `load-data`: uploads results to object storage
@@ -194,8 +196,6 @@ The pipeline uses the following block volume:
     Volume Name: persist-block-project42
     Mount Path: /mnt/block
 
-For full configuration, see:[compose/docker-compose-block.yaml](compose/docker-compose-block.yaml)
-
 #### Running the Pipeline
 
 ```bash
@@ -209,15 +209,10 @@ Ensure the following:
 
 ---
 To launch the online pipeline services (MinIO, PostgreSQL, MLflow, etc.), run:
-This pipeline guarantees:
-- `HOST_IP=$(curl --silent http://169.254.169.254/latest/meta-data/public-ipv4)
-- `docker compose -f ~/MLOP-Med_Image_Pred/compose/docker-compose-block.yaml up -d
-
-- No data leakage across splits
-- Clean and reproducible preprocessing
-- Cloud-accessible data for training and inference
-
-
+```bash
+HOST_IP=$(curl --silent http://169.254.169.254/latest/meta-data/public-ipv4)
+docker compose -f ~/MLOP-Med_Image_Pred/compose/docker-compose-block.yaml up -d
+```
 
 ### Medical Image Dashboard (Swift API via Streamlit)
 This is a lightweight Streamlit dashboard for visualizing medical image datasets stored in OpenStack Swift object storage.
