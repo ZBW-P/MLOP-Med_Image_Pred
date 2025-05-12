@@ -878,7 +878,7 @@ The Comparsion with parameters setting is shown in Figure below:
 - **Grafana**:  
   - Container `grafana/grafana`  
   - Dashboards on `0.0.0.0:3000`  
-  - Visualizes HTTP latency, throughput, plus your accuracy gauges
+  - Visualizes HTTP latency, throughput, plus our accuracy gauges
 
 ### Business‑Specific Metric
 
@@ -918,21 +918,24 @@ c2dfb949dd7e   prom/prometheus        Up 4d   0.0.0.0:9090->9090/tcp
 
 ## Unit 6 & 7: Online Evaluation & Monitoring
 
-**Monitoring and Evaluation**  
-- Monitoring setup: Prometheus + Grafana  
-- Dashboard: [Grafana link](http://your-server:3000)
+- **Prometheus**  
+  - Scrapes the FastAPI `/metrics` endpoint (e.g. `http://vit-service:8265/metrics`) at a regular interval.  
+  - Collects both built‑in HTTP metrics (request count, latency histograms, status codes) from `prometheus_fastapi_instrumentator` and our custom gauges:  
+    - `model_overall_accuracy{dataset="<name>"}`  
+    - `model_accuracy_per_class{dataset="<name>",class_name="<class>"}`  
 
-**Feedback Loop**  
-- Online labels (if applicable) collected via: [`feedback/collect_labels.py`](link)  
-- Used to trigger re-training or evaluation
+- **Grafana**  
+  - **Data Source**: Prometheus (`http://prometheus:9090`)  
+  - **Dashboard URL**: [http://your-server:3000](http://your-server:3000)  
+  - **Key Panels**:   
+    - **Per‑Class Accuracy**  
+      - Table or multi‑series line chart of `model_accuracy_per_class`, showing each class’s accuracy.  
+    - **Latency & Throughput**  
+      - <img width="1491" alt="image" src="https://github.com/user-attachments/assets/51554546-337a-4fa8-8d46-fd6bbaab805d" />
+    - **user usage**
+      - <img width="1474" alt="image" src="https://github.com/user-attachments/assets/8655490d-feff-47d4-a3c8-f30293463242" />
 
-**(Optional) Data Drift Monitoring**  
-- Code: [`monitoring/check_drift.py`](link)  
-- Visualization: Grafana dashboard
 
-**(Optional) Model Degradation Monitoring**  
-- Accuracy/AUC tracked over time  
-- Alerts set in Prometheus
 
 ---
 
