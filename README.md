@@ -135,6 +135,74 @@ Used for storing all dataset splits for model training and evaluation.
 This object store is read-only mounted into the Jupyter container at `/mnt/medical-data` for training and inference.
 
 ### Offline Dataset
+### 🧾 Offline Dataset
+
+This project utilizes a multi-source medical image dataset consisting of OCT scans and chest X-ray images (COVID-19 and tuberculosis) to support disease classification model training. All offline processing steps are implemented as containerized services and versioned under the `compose/` directory.
+
+- **ETL Script**: [`compose/datamerge3.py`](./path/to/compose/datamerge3.py)
+- **Configuration**: [`compose/datasets_config.yaml`](./path/to/compose/datasets_config.yaml)
+- **Docker Compose File**: [`compose/docker-compose-etl.yaml`](./path/to/compose/docker-compose-etl.yaml)
+- **Shared Volume Name**: `merged_medical`
+- **Output Directory in Container**: `/app/merged_dataset`
+
+---
+
+**Workflow Overview**
+
+1. **Dataset Acquisition**  
+   Public datasets are automatically downloaded via Python `requests` inside [`datamerge3.py`](./path/to/compose/datamerge3.py), using dataset URLs specified in [`datasets_config.yaml`](./path/to/compose/datasets_config.yaml). Archives are stored under `downloads/` and extracted based on type (`.zip` or `.tar.gz`).
+
+2. **Category Mapping**  
+   Folder paths from different datasets (e.g., `COVID/images`, `TB/Normal`, `OCT/train/CNV`) are mapped into unified categories like `lung-covid`, `lung-tuberculosis`, and `lung-oct-dme`, as defined in the YAML config.
+
+3. **Patient-Aware Splitting Strategy**  
+   - OCT images include patient IDs (e.g., `DME-2567-3.jpeg`). These are grouped and split by patient to avoid cross-set leakage.
+   - COVID-19 and TB datasets are split using stratified random sampling to maintain label balance.
+   - A `final_eval` subset (20% of data) is reserved to simulate production-time inference input.
+
+4. **Renaming Convention**  
+   Each image is renamed using the format:  
+   ```
+   {dataset}-{category}-{original_filename}
+   ```
+   Example: `OCT2017-lung-oct-dme-DME-2567-3.jpeg`.
+
+5. **Output Directory Structure**  
+   The processed images are saved to the following structure:
+   ```
+   merged_dataset/
+     ├── train/
+     ├── val/
+     ├── test/
+     └── final_eval/
+   ```
+   This folder is mounted to a shared Docker volume `merged_medical`.
+
+---
+
+**File Relationships**
+
+- [`datamerge3.py`](./path/to/compose/datamerge3.py):  
+  Main processing script — handles download, extraction, renaming, patient-level splitting, and final dataset writing.
+
+- [`datasets_config.yaml`](./path/to/compose/datasets_config.yaml):  
+  Contains the list of dataset URLs, archive formats, and mappings from original dataset folder structure to final category labels. Also specifies which classes are OCT-type and require patient-aware handling.
+
+- [`docker-compose-etl.yaml`](./path/to/compose/docker-compose-etl.yaml):  
+  Defines the `merge-data` service that runs the ETL process in a clean `python:3.11` container. Mounts all relevant paths and installs necessary dependencies (`requests`, `pyyaml`, `scikit-learn`).
+
+---
+
+**Execution Commands**
+
+To run the offline pipeline:
+
+```bash
+docker compose -f compose/docker-compose-etl.yaml up merge-data
+```
+
+Once complete, the processed dataset will be saved to `merged_dataset/` and ready for upload or training.
+
 This project utilizes a multi-source medical image dataset consisting of OCT scans and chest X-ray images (COVID-19 and tuberculosis) to support disease classification model training. The entire data lifecycle is divided into two major stages: Offline Data Preparation and Online Data Loading, both implemented as containerized services defined in `compose/`.
 
 - **ETL Script**: `compose/datamerge3.py`
