@@ -2,28 +2,9 @@
 
 ## Unit 1: Value Propositions & Proposal
 
-Our project develops a **hybrid machine learning system** that integrates a Vision Transformer (ViT) for initial disease classification from chest X-ray images with a Large Language Model (LLM) for interpretability and actionable insights. In current clinical settings, radiologists manually assess chest X-rays—a process that is time-consuming, subjective, and prone to inconsistency. Our system addresses these issues while satisfying the project’s requirements for scale in data, model complexity, and deployment.
 
 ## Key Value Propositions
 
-### 1. User Preview and Enhanced Communication
-- **Preliminary Results:** Provides users with an immediate preliminary assessments of potential chest abnormalities from their X-ray images.
-- **Improved Communication:** Helps patients articulate their symptoms more effectively during consultations, especially while in the waiting room.
-- **Fast, Accessible Feedback:** Thanks to the model’s efficient design and quick update mechanism, users receive real-time preliminary assessments. Although the model may trade off some accuracy compared to professional-grade systems, its speed and ease-of-access allow patients to obtain useful insights promptly.
-
-### 2. Reduction of Patient Revisits
-- **Initial Prediction:** Offers an early indication of whether findings are mild or severe, which can reduce the need for multiple doctor visits (reducing the cost per visit).
-- **Feedback Loop:** Physician-confirmed feedback is incorporated to refine future predictions, ensuring that the system’s recommendations remain safe and reliable.
-
-### 3. Lightweight and Accessible Deployment
-- **Balanced Performance:** Our model is designed to be medium-sized, striking a balance between computational efficiency and performance. This enables easy deployment on websites and mobile applications without requiring extensive hardware resources.
-- **Multi-Platform Use:** Its lightweight nature means it can be integrated into various devices, ensuring that users have quick access to preliminary predictions.
-- **Efficient Model Size & Storage:** Unlike professional models that are large and resource-intensive, our system is optimized for lower storage needs and faster computation. This makes it easier to update and maintain, while still delivering valuable insights.
-
-### 4. Automated Feedback and Model Upgrades
-- **Continuous Improvement:** User interactions and professional feedback are automatically managed via our dedicated web platform and server, creating a self-improving system.
-- **Model Supervision:** Ongoing monitoring and regular upgrades ensure that the model remains clinically relevant over time.
-- **Optimized Update Mechanism:** By leveraging an online server infrastructure for both image storage and model updates, the system maintains a balanced trade-off between model size and accuracy. This allows patients, who might otherwise face repeated doctor visits, to benefit from timely and cost-effective preliminary assessments.
 
 ### Disclaimer
 
@@ -50,9 +31,7 @@ link to their contributions in all repos here. -->
 
 ### System diagram
 
-<!-- Overall digram of system. Doesn't need polish, does need to show all the pieces. 
-Must include: all the hardware, all the containers/software platforms, all the models, 
-all the data. -->
+
 ![Diagram](https://github.com/ZBW-P/MLOP-Med_Image_Pred/blob/main/System.png)
 
 ### Summary of outside materials
@@ -90,7 +69,7 @@ The table below shows an example, it is not a recommendation. -->
 
 | Requirement     | How many/when                                     | Justification |
 |-----------------|---------------------------------------------------|---------------|
-| `m1.xlarge` VMs | 3 for entire project duration, 1 for model training                   |           |
+| `m1.xlarge` VMs | 3 for entire project duration; 1 for model training                   | 3-node presistant storage pipeline, evaluation and monitoring; Training model and retraining         |
 | `gpu_m100`     | 2 GPUs for model training (using DDP/FSDP)   |The ViT model's training on a large dataset with significant parameters benefits from parallel GPU processing (2 GPUs) to efficiently handle computations|
 | Floating IPs    | 1 for the entire project duration and 1 for training use | One persistent IP ensures continuous connectivity to services throughout the project, while an additional floating IP offers flexibility for Ray train and model training needs.                |
 | Outside memory / storage            | 100 g storage during all project duration                                           | Large update medical image data need to be saved and used to update for server and user interacter.               |
